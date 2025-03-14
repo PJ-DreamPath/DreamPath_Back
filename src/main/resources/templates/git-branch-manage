@@ -1,6 +1,6 @@
 받아올떄
-git fetch
-git pull
+git fetch origin dev
+git pull origin dev
 
 
 
