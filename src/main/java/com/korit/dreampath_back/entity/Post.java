@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,7 +19,7 @@ public class Post {
     private int postId;
     private int boardId;
     private int userId;
-    private int boardCategoryId;
+    private int mentoringCategoryId;
     private String title;
     private String content;
     private int starPoint;
