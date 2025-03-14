@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardCategory {
-    private int boardCategoryId;
-    private String boardCategoryName;
+public class MentoringCategory {
+    private int mentoringCategoryId;
+    private String mentoringCategoryName;
 }
