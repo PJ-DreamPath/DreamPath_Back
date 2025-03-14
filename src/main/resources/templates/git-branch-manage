@@ -1,0 +1,13 @@
+받아올떄
+git fetch
+git pull
+
+
+
+푸쉬할떄
+git add .
+git commit -m "커밋메세지"
+git push origin dev
+
+
+
