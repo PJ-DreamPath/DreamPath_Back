@@ -28,7 +28,6 @@ public class Post {
     private Date endDate;
     private int status;
     private int viewCount;
-    private List<Comment> commentList;
 
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
