@@ -4,5 +4,57 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.dreampath_back.mapper.UserMapper">
 
+    <select id="selectAllUser" resultType="com.korit.dreampath_back.entity.User">
+        select
+            user_id,
+            username,
+            email,
+            nickname,
+            oauth2_name,
+            phone_number,
+            created_at,
+            remain_point
+        from
+            user_tb
+    </select>
 
+    <select id="selectUserById" resultType="com.korit.dreampath_back.entity.User">
+        select
+            user_id,
+            username,
+            email,
+            nickname,
+            oauth2_name,
+            phone_number,
+            created_at,
+            remain_point
+        from
+            user_tb
+        where
+            user_id = #{userId}
+    </select>
+
+    <select id="selectUserByUserName" resultType="com.korit.dreampath_back.entity.User">
+        select
+            user_id,
+            username,
+            email,
+            nickname,
+            oauth2_name,
+            phone_number,
+            created_at,
+            remain_point
+        from
+            user_tb
+        where
+            username = #{username}
+    </select>
+
+    <delete id="deleteById">
+        delete
+        from
+            user_tb
+        where
+            user_id = #{userId}
+    </delete>
 </mapper>
