@@ -2,6 +2,7 @@ package com.korit.dreampath_back.controller;
 
 import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
+import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
 import com.korit.dreampath_back.dto.response.post.RespPostListDto;
 import com.korit.dreampath_back.entity.Post;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
@@ -64,5 +65,21 @@ public class PostController {
         return postService.getPostDetail(postId).isPresent()
                 ? ResponseEntity.ok().body(postService.getPostDetail(postId).get())
                 : ResponseEntity.badRequest().body(postService.getPostDetail(postId).get()) ;
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "게시글 수정")
+    public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, ReqPostUpdateDto updateDto) {
+        return postService.updatedPost(principalUser.getUser(), updateDto)
+                ? ResponseEntity.ok().body("수정완료")
+                : ResponseEntity.badRequest().body("수정실패");
+    }
+
+    @DeleteMapping("/delete/{postId}")
+    @Operation(summary = "게시글 삭제")
+    public ResponseEntity<String> deletePost(@PathVariable int postId) {
+        return postService.deletePost(postId)
+                ? ResponseEntity.ok().body("삭제완료")
+                : ResponseEntity.badRequest().body("삭제실패");
     }
 }

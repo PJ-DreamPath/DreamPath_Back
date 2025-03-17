@@ -30,7 +30,7 @@
             #{mentoringCategoryId},
             #{title},
             #{content},
-            #{starPoint},
+            0,
             #{mentoringAddress},
             #{startDate},
             #{endDate},
@@ -41,8 +41,6 @@
             #{attachedFiles}
         )
     </insert>
-
-
 
     <select id="selectPostList" resultType="com.korit.dreampath_back.dto.response.post.RespPostList">
         select
@@ -122,4 +120,26 @@
         where
             post_id = #{postId}
     </select>
+
+    <update id="updatedPost">
+        update post_tb
+        set
+            title = #{title},
+            content = #{content},
+            mentoring_category_id = #{mentoringCategoryId},
+            mentoring_address = #{mentoringAddress},
+            end_date = #{endDate},
+            status = #{status},
+            update_at = now()
+        where
+            post_id = #{postId}
+            and user_id = #{userId}
+    </update>
+
+    <delete id="deletePost">
+        delete from post_tb
+        where
+            post_id = #{postId}
+    </delete>
+
 </mapper>
