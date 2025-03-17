@@ -5,4 +5,29 @@
 <mapper namespace="com.korit.dreampath_back.mapper.UserMapper">
 
 
+    <resultMap id="userResultMap" type="com.korit.dreampath_back.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="nickname" column="nickname" />
+        <result property="phoneNumber" column="phone_number" />
+        <result property="profileImg" column="profile_img" />
+        <result property="ticketId" column="ticker_id" />
+        <result property="oAuth2Name" column="oauth2_name" />
+        <result property="oAuth2Provider" column="oauth2_provider" />
+        <result property="remaining" column="remaining" />
+        <result property="starPoint" column="star_point" />
+        <result property="accountExpired" column="account_expired" />
+        <result property="accountLocked" column="account_locked" />
+        <result property="credentialsExpired" column="credentials_expired" />
+        <result property="accountEnabled" column="account_enabled" />
+        <result property="createdAt" column="created_at" />
+    </resultMap>
+
+
+
+
+
+
 </mapper>
