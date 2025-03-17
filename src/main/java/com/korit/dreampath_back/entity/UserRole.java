@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,5 +17,5 @@ public class UserRole {
     private int userId;
     private int roleId;
     private LocalDateTime createdAt;
-
+    private Role role;
 }
