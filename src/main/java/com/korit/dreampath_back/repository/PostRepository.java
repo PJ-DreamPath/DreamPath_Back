@@ -22,7 +22,6 @@ public class PostRepository {
 
 //    게시글 등록
     public int addPost(Post post) {
-        System.out.println(post);
         return postMapper.createPost(post);
     }
 
@@ -35,6 +34,16 @@ public class PostRepository {
 //    게시글 상세 조회
     public Post findPostDetail(int postId) {
         return postMapper.selectPostDetail(postId);
+    }
+
+//    게시글 수정
+    public int updatedPost(Post post) {
+        return postMapper.updatedPost(post);
+    }
+
+//    게시글 삭제
+    public int deletePost(int postId) {
+        return postMapper.deletePost(postId);
     }
 
 }

@@ -27,4 +27,10 @@ public interface PostMapper {
     Post selectPostDetail(
             @Param("postId") int postId
     );
+
+//    게시글 수정
+    int updatedPost(Post post);
+
+//    게시글 삭제
+    int deletePost(int postId);
 }
