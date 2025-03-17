@@ -15,27 +15,52 @@
         <result property="startDate" column="start_date"/>
         <result property="endDate" column="end_date"/>
         <result property="status" column="status"/>
-        <result property="createAt" column="create_at"/>
-        <result property="updateAt" column="update_at"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
         <result property="viewCount" column="view_count"/>
+        <result property="attachedFiles" column="attached_files"/>
     </resultMap>
 
-    <select id="selectPostList" resultType="com.korit.dreampath_back.entity.Post">
+    <insert id="createPost" useGeneratedKeys="true" keyProperty="postId">
+        insert into post_tb
+        values(
+            default,
+            #{boardId},
+            #{userId},
+            #{mentoringCategoryId},
+            #{title},
+            #{content},
+            #{starPoint},
+            #{mentoringAddress},
+            #{startDate},
+            #{endDate},
+            #{status},
+            now(),
+            #{updateAt},
+            #{viewCount},
+            #{attachedFiles}
+        )
+    </insert>
+
+
+
+    <select id="selectPostList" resultMap="postResultMap">
         select
-            post_id
-            board_id
-            user_id
-            mentoring_category_id
-            title
-            content
-            star_point
-            mentoring_address
-            start_date
-            end_date
-            status
-            create_at
-            update_at
-            view_count
+            post_id,
+            board_id,
+            user_id,
+            mentoring_category_id,
+            title,
+            content,
+            star_point,
+            mentoring_address,
+            start_date,
+            end_date,
+            status,
+            created_at,
+            updated_at,
+            view_count,
+            attached_files
         from
             post_tb
         <where>
@@ -53,22 +78,33 @@
         order by
             <choose>
                 <when test="order == 'asc'">
-                    postId asc,
+                    post_id asc,
                 </when>
-                <when test="order == 'countDesc'">
-                    viewCount desc,
+                <when test="order == 'startDesc'">
+                    star_point desc,
                 </when>
-                <when test="order == 'countAcs'">
-                    viewCount asc,
+                <when test="order == 'commentDesc'">
+                    viewCount asc
                 </when>
-                <when test="order == 'likeDesc'">
-                    likeCount desc,
-                </when>
-                <when test="order == 'likeAcs'">
-                    likeCount asc
-                </when>
+<!--                <when test="order == 'commentDesc'">-->
+<!--                    likeCount desc,-->
+<!--                </when>-->
+<!--                <when test="order == 'likeDesc'">-->
+<!--                    likeCount asc-->
+<!--                </when>-->
             </choose>
-            postId desc
+            post_id desc
         limit #{startIdx}, #{limitCount}
+    </select>
+    <select id="selectPostListCountAllBySearchTxt" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            post_tb
+        <where>
+            <if test="searchTxt != null and searchTxt != ''">
+                title like concat("%", #{searchTxt} , "%")
+            </if>
+        </where>
     </select>
 </mapper>
