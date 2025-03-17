@@ -11,25 +11,28 @@ import com.korit.dreampath_back.repository.UserRoleRepository;
 import com.korit.dreampath_back.security.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserService {
+
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserRoleRepository userRoleRepository;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private FileService fileService;
 
     public boolean duplicatedUsername(String username) {
         System.out.println("서비스 duplicatedUsername 호출");
@@ -56,7 +59,7 @@ public class UserService {
         }
         User user = User.builder()
                 .username(dto.getUsername())
-                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
                 .build();
@@ -70,12 +73,39 @@ public class UserService {
         return user;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void updateProfileImg(User user, MultipartFile file) {
+        final String PROFILE_IMG_FILE_PATH = "/upload/user/profile";
+        String savedFileName = fileService.saveFile(PROFILE_IMG_FILE_PATH, file);
+        userRepository.updateProfileImg(user.getUserId(), savedFileName);
+
+        if (user.getProfileImg() != null) {
+            fileService.deleteFile(PROFILE_IMG_FILE_PATH + " / " + user.getProfileImg());
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateNickname(User user, String nickname) {
+        userRepository.updateNickname(user.getUserId(), nickname);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePassword(User user, String password) {
+        String encodedPassword = passwordEncoder.encode(password);
+        userRepository.updatePassword(user.getUserId(), encodedPassword);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEmail(User user, String email) {
+        userRepository.updateEmail(user.getUserId(), email);
+    }
+
     public String login(ReqLoginDto dto) {
         User user = userRepository
                 .findByUsername(dto.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("사용자 정보를 다시 확인하세요."));
 
-        if(!bCryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) {
+        if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("사용자 정보를 다시 확인하세요.");
         }
 

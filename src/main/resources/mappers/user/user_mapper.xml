@@ -36,6 +36,38 @@
         <collection property="userRoles" javaType="java.util.Set" resultMap="userRoleResultMap" />
     </resultMap>
 
+    <update id="updateProfileImgById">
+        update user_tb
+        set
+            profile_img = #{profileImg}
+        where
+            user_id = #{userId}
+    </update>
+
+    <update id="updateNicknameById">
+        update user_tb
+        set
+            nickname = #{nickname}
+        where
+            user_id = #{userId}
+    </update>
+
+    <update id="updatePasswordById">
+        update user_tb
+        set
+            password = #{password}
+        where
+            user_id = #{userId}
+    </update>
+
+    <update id="updateEmailById">
+        update user_tb
+        set
+            email = #{email}
+        where
+            user_id = #{userId}
+    </update>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
         insert into user_tb
         values(
