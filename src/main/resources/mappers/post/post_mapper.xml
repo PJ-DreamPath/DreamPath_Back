@@ -30,37 +30,28 @@
             #{mentoringCategoryId},
             #{title},
             #{content},
-            #{starPoint},
+            0,
             #{mentoringAddress},
             #{startDate},
             #{endDate},
             #{status},
             now(),
-            #{updateAt},
+            #{updatedAt},
             #{viewCount},
             #{attachedFiles}
         )
     </insert>
 
-
-
-    <select id="selectPostList" resultMap="postResultMap">
+    <select id="selectPostList" resultType="com.korit.dreampath_back.dto.response.post.RespPostList">
         select
-            post_id,
-            board_id,
-            user_id,
-            mentoring_category_id,
+            post_id as postId,
+            board_id as boardId,
+            user_id as userId,
+            mentoring_category_id as mentoringCategoryId,
             title,
-            content,
-            star_point,
-            mentoring_address,
-            start_date,
-            end_date,
-            status,
-            created_at,
-            updated_at,
-            view_count,
-            attached_files
+            star_point as starPoint,
+            created_at as createdAt,
+            view_count as viewCount
         from
             post_tb
         <where>
@@ -107,4 +98,48 @@
             </if>
         </where>
     </select>
+    <select id="selectPostDetail" resultMap="postResultMap">
+        select
+            post_id,
+            board_id,
+            user_id,
+            mentoring_category_id,
+            title,
+            content,
+            star_point,
+            mentoring_address,
+            start_date,
+            end_date,
+            status,
+            created_at,
+            updated_at,
+            view_count,
+            attached_files
+        from
+            post_tb
+        where
+            post_id = #{postId}
+    </select>
+
+    <update id="updatedPost">
+        update post_tb
+        set
+            title = #{title},
+            content = #{content},
+            mentoring_category_id = #{mentoringCategoryId},
+            mentoring_address = #{mentoringAddress},
+            end_date = #{endDate},
+            status = #{status},
+            update_at = now()
+        where
+            post_id = #{postId}
+            and user_id = #{userId}
+    </update>
+
+    <delete id="deletePost">
+        delete from post_tb
+        where
+            post_id = #{postId}
+    </delete>
+
 </mapper>

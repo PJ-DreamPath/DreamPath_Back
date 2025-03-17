@@ -2,15 +2,17 @@ package com.korit.dreampath_back.controller;
 
 import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
-import com.korit.dreampath_back.dto.response.post.RespPostDto;
+import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
+import com.korit.dreampath_back.dto.response.post.RespPostListDto;
 import com.korit.dreampath_back.entity.Post;
+import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
@@ -20,29 +22,32 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> addPost(@RequestBody ReqPostCreateDto createDto) {
-        System.out.println(createDto);
-        return postService.addPost(createDto)
+    @Operation(summary = "게시글 등록")
+    public ResponseEntity<String> addPost(@AuthenticationPrincipal PrincipalUser principalUser,
+                                          @RequestBody ReqPostCreateDto createDto) {
+
+        return postService.addPost(principalUser.getUser(), createDto)
                 ? ResponseEntity.ok().body("등록완료")
                 : ResponseEntity.badRequest().body("등록실패");
     }
 
     @GetMapping("/list/{boardId}")
-    public ResponseEntity<RespPostDto> getPostList(
+    @Operation(summary = "게시글 전체, 다건 조회")
+    public ResponseEntity<RespPostListDto> getPostList(
             @PathVariable int boardId,
             @ModelAttribute ReqPostSearchDto searchDto
     ) throws NotFoundException {
 
-        int totalBoardListCount = postService.getPostListCountAllBySearchTxt(searchDto.getSearchTxt());
-        int totalPages = totalBoardListCount % searchDto.getLimitCount() == 0
-                ? totalBoardListCount / searchDto.getLimitCount()
-                : totalBoardListCount / searchDto.getLimitCount() + 1;
+        int totalPostListCount = postService.getPostListCountAllBySearchTxt(searchDto.getSearchTxt());
+        int totalPages = totalPostListCount % searchDto.getLimitCount() == 0
+                ? totalPostListCount / searchDto.getLimitCount()
+                : totalPostListCount / searchDto.getLimitCount() + 1;
 
-        RespPostDto newRespDto = RespPostDto.builder()
+        RespPostListDto newRespDto = RespPostListDto.builder()
                 .page(searchDto.getPage())
                 .limitCount(searchDto.getLimitCount())
                 .totalPages(totalPages)
-                .totalElements(totalBoardListCount)
+                .totalElements(totalPostListCount)
                 .isFirstPage(searchDto.getPage() == 1)
                 .isLastPage(searchDto.getPage() == totalPages)
                 .nextPage(searchDto.getPage() != totalPages ? searchDto.getPage() + 1 : 0)
@@ -50,5 +55,31 @@ public class PostController {
                 .build();
         return ResponseEntity.ok().body(newRespDto);
 
+    }
+
+    @GetMapping("/{postId}")
+    @Operation(summary = "게시글 상세 조회")
+    public ResponseEntity<Post> getPostDetail(
+            @PathVariable int postId
+    ) {
+        return postService.getPostDetail(postId).isPresent()
+                ? ResponseEntity.ok().body(postService.getPostDetail(postId).get())
+                : ResponseEntity.badRequest().body(postService.getPostDetail(postId).get()) ;
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "게시글 수정")
+    public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, ReqPostUpdateDto updateDto) {
+        return postService.updatedPost(principalUser.getUser(), updateDto)
+                ? ResponseEntity.ok().body("수정완료")
+                : ResponseEntity.badRequest().body("수정실패");
+    }
+
+    @DeleteMapping("/delete/{postId}")
+    @Operation(summary = "게시글 삭제")
+    public ResponseEntity<String> deletePost(@PathVariable int postId) {
+        return postService.deletePost(postId)
+                ? ResponseEntity.ok().body("삭제완료")
+                : ResponseEntity.badRequest().body("삭제실패");
     }
 }
