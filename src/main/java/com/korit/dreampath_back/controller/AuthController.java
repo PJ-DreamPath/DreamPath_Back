@@ -1,6 +1,8 @@
 package com.korit.dreampath_back.controller;
 
+import com.korit.dreampath_back.dto.request.ReqLoginDto;
 import com.korit.dreampath_back.dto.request.ReqSignupDto;
+import com.korit.dreampath_back.dto.response.RespTokenDto;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,5 +24,19 @@ public class AuthController {
     public ResponseEntity<?> signup(@RequestBody ReqSignupDto dto) {
         System.out.println("컨트롤러 호출");
         return ResponseEntity.ok().body(userService.save(dto));
+    }
+
+
+    @Operation(summary = "로그인", description = "로그인 설명")
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody ReqLoginDto dto) {
+
+        RespTokenDto respTokenDto = RespTokenDto.builder()
+                .type("JWT")
+                .name("AccessToken")
+                .token(userService.login(dto))
+                .build();
+
+        return ResponseEntity.ok().body(respTokenDto);
     }
 }
