@@ -1,10 +1,12 @@
 package com.korit.dreampath_back.controller;
 
 import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
+import com.korit.dreampath_back.dto.request.post.ReqPostLikeDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
 import com.korit.dreampath_back.dto.response.post.RespPostListDto;
 import com.korit.dreampath_back.entity.Post;
+import com.korit.dreampath_back.entity.PostLike;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
@@ -61,15 +65,13 @@ public class PostController {
     @Operation(summary = "게시글 상세 조회")
     public ResponseEntity<Post> getPostDetail(
             @PathVariable int postId
-    ) {
-        return postService.getPostDetail(postId).isPresent()
-                ? ResponseEntity.ok().body(postService.getPostDetail(postId).get())
-                : ResponseEntity.badRequest().body(postService.getPostDetail(postId).get()) ;
+    ) throws NotFoundException {
+        return ResponseEntity.ok().body(postService.getPostDetail(postId));
     }
 
     @PutMapping("/update")
     @Operation(summary = "게시글 수정")
-    public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, ReqPostUpdateDto updateDto) {
+    public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPostUpdateDto updateDto) {
         return postService.updatedPost(principalUser.getUser(), updateDto)
                 ? ResponseEntity.ok().body("수정완료")
                 : ResponseEntity.badRequest().body("수정실패");
@@ -81,5 +83,36 @@ public class PostController {
         return postService.deletePost(postId)
                 ? ResponseEntity.ok().body("삭제완료")
                 : ResponseEntity.badRequest().body("삭제실패");
+    }
+
+    @PutMapping("/viewCount")
+    @Operation(summary = "게시글 조회수")
+    public void updatePostViewCount(@RequestBody int postId) {
+        postService.updatePostViewCount(postId);
+    }
+
+    @PostMapping("/like")
+    @Operation(summary = "게시글 좋아요")
+    public ResponseEntity<String> likePost(
+            @AuthenticationPrincipal PrincipalUser principalUser,
+            @RequestBody ReqPostLikeDto likeDto) {
+        return postService.addPostLike(principalUser.getUser(), likeDto)
+                ? ResponseEntity.ok().body("좋아요완료")
+                : ResponseEntity.badRequest().body("좋아요실패");
+    }
+
+    @DeleteMapping("/like")
+    @Operation(summary = "게시글 좋아요 취소")
+    public ResponseEntity<String> likePostCancel(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPostLikeDto likeDto) {
+        return postService.deletePostLike(principalUser.getUser(), likeDto)
+                ? ResponseEntity.ok().body("좋아요취소완료")
+                : ResponseEntity.badRequest().body("좋아요취소실패");
+    }
+
+    @GetMapping("/myLike")
+    @Operation(summary = "게시글의 내 좋아요 조회")
+    public ResponseEntity<List<PostLike>> selectPostMyLike(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqPostLikeDto likeDto) {
+        System.out.println(likeDto);
+        return ResponseEntity.ok().body(postService.findPostMyLike(principalUser.getUser(), likeDto));
     }
 }

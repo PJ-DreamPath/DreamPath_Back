@@ -129,11 +129,18 @@
             mentoring_category_id = #{mentoringCategoryId},
             mentoring_address = #{mentoringAddress},
             end_date = #{endDate},
-            status = #{status},
-            update_at = now()
+            updated_at = now()
         where
             post_id = #{postId}
             and user_id = #{userId}
+    </update>
+
+    <update id="updatePostViewCount">
+        update post_tb
+        set
+            view_count = view_count + 1
+        where
+            post_id = #{postId}
     </update>
 
     <delete id="deletePost">

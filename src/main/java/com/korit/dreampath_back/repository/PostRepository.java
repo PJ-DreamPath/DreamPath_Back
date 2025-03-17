@@ -32,8 +32,8 @@ public class PostRepository {
     }
 
 //    게시글 상세 조회
-    public Post findPostDetail(int postId) {
-        return postMapper.selectPostDetail(postId);
+    public Optional<Post> findPostDetail(int postId) {
+        return Optional.ofNullable(postMapper.selectPostDetail(postId));
     }
 
 //    게시글 수정
@@ -44,6 +44,11 @@ public class PostRepository {
 //    게시글 삭제
     public int deletePost(int postId) {
         return postMapper.deletePost(postId);
+    }
+
+//    게시글 조회수
+    public void updatePostViewCount(int postId) {
+        postMapper.updatePostViewCount(postId);
     }
 
 }
