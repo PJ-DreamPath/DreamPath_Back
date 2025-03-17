@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
@@ -27,8 +26,9 @@ public class Post {
     private Date startDate;
     private Date endDate;
     private int status;
-    private int viewCount;
 
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
+
+    private int viewCount;
 }
