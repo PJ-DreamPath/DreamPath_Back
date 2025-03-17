@@ -2,14 +2,17 @@ package com.korit.dreampath_back.service;
 
 import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
-import com.korit.dreampath_back.dto.response.post.RespPostDto;
 import com.korit.dreampath_back.entity.Post;
+import com.korit.dreampath_back.dto.response.post.RespPostList;
+import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.repository.PostRepository;
+import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -20,10 +23,10 @@ public class PostService {
     public int getPostListCountAllBySearchTxt(String searchTxt) {
         return postRepository.findPostListCountAllBySearchTxt(searchTxt);
     }
-    public boolean addPost(ReqPostCreateDto createDto) {
+    public boolean addPost(User user, ReqPostCreateDto createDto) {
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
-                .userId(createDto.getUserId())
+                .userId(user.getUserId())
                 .mentoringCategoryId(createDto.getMentoringCategoryId())
                 .title(createDto.getTitle())
                 .content(createDto.getContent())
@@ -39,10 +42,14 @@ public class PostService {
         return postRepository.addPost(newPost) > 0 ? true : false;
     }
 
-    public List<Post> getPostList(int boardId, ReqPostSearchDto searchDto) throws NotFoundException {
+    public List<RespPostList> getPostList(int boardId, ReqPostSearchDto searchDto) throws NotFoundException {
         int startIdx = (searchDto.getPage() - 1) * searchDto.getLimitCount();
 
         return postRepository.findPostList(boardId, startIdx, searchDto.getLimitCount(), searchDto.getOrder(), searchDto.getSearchTxt())
                 .orElseThrow(() -> new NotFoundException("검색된 게시글이 없습니다."));
+    }
+
+    public Optional<Post> getPostDetail(int postId) {
+        return Optional.of(postRepository.findPostDetail(postId));
     }
 }

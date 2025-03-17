@@ -10,8 +10,6 @@ import java.util.Date;
 public class ReqPostCreateDto {
     @Schema(description = "게시판 타입 아이디", required = true)
     private int boardId;
-    @Schema(description = "작성자 고유 아이디", required = true)
-    private int userId;
     @Schema(description = "멘토링 카데고리 아이디")
     private int mentoringCategoryId;
     @Schema(description = "게시글 제목", required = true)
