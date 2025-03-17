@@ -15,6 +15,7 @@ public class PostRepository {
     @Autowired
     private PostMapper postMapper;
 
+//    searchTxt로 찾은 postList count
     public int findPostListCountAllBySearchTxt(String searchTxt) {
         return postMapper.selectPostListCountAllBySearchTxt(searchTxt);
     }
