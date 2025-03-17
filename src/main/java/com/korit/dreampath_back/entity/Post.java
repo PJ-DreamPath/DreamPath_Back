@@ -25,10 +25,11 @@ public class Post {
     private String mentoringAddress;
     private Date startDate;
     private Date endDate;
-    private int status;
+    private String status;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     private int viewCount;
+    private String attachedFiles;
 }

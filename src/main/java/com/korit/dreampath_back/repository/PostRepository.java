@@ -15,10 +15,20 @@ public class PostRepository {
     @Autowired
     private PostMapper postMapper;
 
+    public int findPostListCountAllBySearchTxt(String searchTxt) {
+        return postMapper.selectPostListCountAllBySearchTxt(searchTxt);
+    }
+
+//    게시글 등록
+    public int addPost(Post post) {
+        System.out.println(post);
+        return postMapper.createPost(post);
+    }
+
 
 //    전체 조회 (검색 조회 포함)
-    public Optional<List<Post>> findPostList(int boardId, int startIdx, int limitCount, String Order, String searchTxt) {
-        return Optional.ofNullable(postMapper.selectPostList(boardId, startIdx, limitCount, Order, searchTxt));
+    public Optional<List<Post>> findPostList(int boardId, int startIdx, int limitCount, String order, String searchTxt) {
+        return Optional.ofNullable(postMapper.selectPostList(boardId, startIdx, limitCount, order, searchTxt));
     }
 
 }
