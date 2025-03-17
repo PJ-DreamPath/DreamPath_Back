@@ -12,6 +12,8 @@ import lombok.Data;
 @Builder
 @Valid
 public class ReqSignupDto {
+    @Min(value = 1, message = "roleId 유효성 실패")
+    private int roleId;
     @Schema(description = "사용자이름")
     @Pattern(regexp="^[a-zA-Z0-9]{3,20}$",
             message = "사용자이름은 3자 이상, 20자 이하이며, 알파벳과 숫자만 포함해야 합니다.")
@@ -25,6 +27,4 @@ public class ReqSignupDto {
     private String email;
     @Schema(description = "닉네임")
     private String nickname;
-    @Min(value = 1, message = "roleId 유효성 실패")
-    private int roleId;
 }
