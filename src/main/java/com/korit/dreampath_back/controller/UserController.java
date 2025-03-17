@@ -11,10 +11,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,13 +23,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/admin/list/user")
+    @GetMapping("/admin/list/user")
     @ApiOperation(value = "회원 전체 조회", notes = "회원 전체를 조회 합니다.")
     public ResponseEntity<SuccessResponseDto<List<User>>> getUsers() throws NotFoundException {
         return ResponseEntity.ok().body(new SuccessResponseDto<>(userService.getAllUsers()));
     }
 
-    @GetMapping("/api/admin/list/user/{userId}")
+    @GetMapping("/admin/list/user/{userId}")
     @ApiOperation(value = "회원 ID 조회")
     public ResponseEntity<SuccessResponseDto<User>> getUserById(
             @Min(value = 1, message = "회원 ID는 1이상 정수 입니다.")
@@ -41,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok().body(new SuccessResponseDto<>(userService.getUserById(userId)));
     }
 
-    @GetMapping("/api/admin/user/delete/{userId}")
+    @DeleteMapping("/admin/user/delete/{userId}")
     @ApiOperation(value = "회원 삭제")
     public ResponseEntity<SuccessResponseDto<?>> deleteUserById(
             @Min(value = 1, message = "회원 ID는 1이상 정수 입니다.")
