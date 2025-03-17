@@ -1,4 +1,5 @@
-package com.korit.dreampath_back.entity;
+package com.korit.dreampath_back.dto.response.post;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +12,15 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class RespPostList {
 
-    private int commentId;
-    private int userId;
     private int postId;
-    private String content;
+    private int boardId;
+    private int userId;
+    private String title;
     private int starPoint;
-    private LocalDateTime updatedAt;
+
     private LocalDateTime createdAt;
 
+    private int viewCount;
 }
