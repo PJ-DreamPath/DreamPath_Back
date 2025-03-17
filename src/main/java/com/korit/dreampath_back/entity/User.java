@@ -27,6 +27,7 @@ public class User {
     private int ticketId;
     private String oAuth2Name;
     private String oAuth2Provider;
+    private int remaining;
     private int starPoint;
     private int remainPoint;
 

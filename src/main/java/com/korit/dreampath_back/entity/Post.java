@@ -6,9 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
@@ -24,11 +24,13 @@ public class Post {
     private String content;
     private int starPoint;
     private String mentoringAddress;
-    private Date startDate;
-    private Date endDate;
-    private int status;
-    private int viewCount;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String status;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private int viewCount;
+    private String attachedFiles;
 }

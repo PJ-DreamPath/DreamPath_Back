@@ -18,7 +18,7 @@ public class Comment {
     private int postId;
     private String content;
     private int starPoint;
-    private LocalDateTime updateAt;
-    private LocalDateTime createAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 
 }

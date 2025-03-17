@@ -1,4 +1,5 @@
-package com.korit.dreampath_back.entity;
+package com.korit.dreampath_back.dto.response.post;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,13 +10,17 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserRole {
+@NoArgsConstructor
+public class RespPostList {
 
-    private int userRoleId;
+    private int postId;
+    private int boardId;
     private int userId;
-    private int roleId;
+    private String title;
+    private int starPoint;
+
     private LocalDateTime createdAt;
-    private Role role;
+
+    private int viewCount;
 }
