@@ -16,14 +16,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity<?> getLoginUser(@AuthenticationPrincipal PrincipalUser principalUser) {
-
-        if (principalUser.getUser().getProfileImg() == null) {
-            principalUser.getUser().setProfileImg("default.png");
-        }
-
-        return ResponseEntity.ok().body(principalUser.getUser());
-    }
 
     @PostMapping("/user/profile/img")
     public ResponseEntity<?> changeProfileImg(

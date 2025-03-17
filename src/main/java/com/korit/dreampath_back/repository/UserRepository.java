@@ -21,6 +21,7 @@ public class UserRepository {
         return Optional.ofNullable(userMapper.selectByUsername(username));
     }
 
+
     public void updateProfileImg(int userId, String profileImg) {
         userMapper.updateProfileImgById(userId, profileImg);
     }
