@@ -2,6 +2,7 @@ package com.korit.dreampath_back.mapper;
 
 import com.korit.dreampath_back.entity.Post;
 import com.korit.dreampath_back.dto.response.post.RespPostList;
+import com.korit.dreampath_back.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,7 @@ public interface PostMapper {
 
 //    게시글 삭제
     int deletePost(int postId);
+
+//    게시글 조회수
+    int updatePostViewCount(int postId);
 }
