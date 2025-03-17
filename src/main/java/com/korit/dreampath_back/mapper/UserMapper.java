@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
 
     int insert(User user);
+
     User selectById(int userId);
     User selectByUsername(String username);
     User selectByNickname(String nickname);
