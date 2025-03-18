@@ -2,6 +2,7 @@ package com.korit.dreampath_back.controller;
 
 import com.korit.dreampath_back.dto.response.RespPointPurchaseDto;
 import com.korit.dreampath_back.entity.PointPurchase;
+import com.korit.dreampath_back.entity.PointPurchaseSearch;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import java.util.List;
 public class PointController {
     @Autowired
     private PointService pointService;
-    @GetMapping("/api/point")
-    public ResponseEntity<List<RespPointPurchaseDto>> getPointPurchase(@AuthenticationPrincipal PrincipalUser principalUser) {
+    @GetMapping("/point")
+    public ResponseEntity<List<PointPurchaseSearch>> getPointPurchase(@AuthenticationPrincipal PrincipalUser principalUser) {
         int userId = principalUser.getUser().getUserId();
 
         return ResponseEntity.ok().body(pointService.getPointPurchase(userId));
