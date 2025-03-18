@@ -34,8 +34,10 @@ public class PostService {
     @Autowired
     private BoardRepository boardRepository;
 
-    public int getPostListCountAllBySearchTxt(String searchTxt) {
-        return postRepository.findPostListCountAllBySearchTxt(searchTxt);
+    public int getPostListCountAllBySearchTxt(String boardName, String searchTxt) {
+        int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
+        System.out.println(boardId);
+        return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
     public boolean addPost(User user, ReqPostCreateDto createDto) {
         Post newPost = Post.builder()

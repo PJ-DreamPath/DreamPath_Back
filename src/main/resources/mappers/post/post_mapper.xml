@@ -93,8 +93,9 @@
         from
             post_tb
         <where>
+            board_id = #{boardId}
             <if test="searchTxt != null and searchTxt != ''">
-                title like concat("%", #{searchTxt} , "%")
+                and title like concat("%", #{searchTxt} , "%")
             </if>
         </where>
     </select>
