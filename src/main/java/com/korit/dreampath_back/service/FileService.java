@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Service
 public class FileService {
 
+    @Value("${user.dir}")
     private String rootPath;
 
     public String saveFile(String path, MultipartFile file) {
