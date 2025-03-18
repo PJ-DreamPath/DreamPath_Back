@@ -16,4 +16,7 @@ public class PointPurchase {
     private int pointId;
     private int userId;
     Date createdAt;
+
+    private Point point;
+    private User user;
 }
