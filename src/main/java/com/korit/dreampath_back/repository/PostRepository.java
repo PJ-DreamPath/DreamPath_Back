@@ -16,8 +16,8 @@ public class PostRepository {
     private PostMapper postMapper;
 
 //    searchTxt로 찾은 postList count
-    public int findPostListCountAllBySearchTxt(String searchTxt) {
-        return postMapper.selectPostListCountAllBySearchTxt(searchTxt);
+    public int findPostListCountAllBySearchTxt(int boardId, String searchTxt) {
+        return postMapper.selectPostListCountAllBySearchTxt(boardId, searchTxt);
     }
 
 //    게시글 등록

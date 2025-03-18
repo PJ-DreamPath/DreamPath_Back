@@ -11,7 +11,10 @@ import java.util.List;
 @Mapper
 public interface PostMapper {
 
-    int selectPostListCountAllBySearchTxt(@Param("searchTxt") String searchTxt);
+    int selectPostListCountAllBySearchTxt(
+            @Param("boardId") int boardId,
+            @Param("searchTxt") String searchTxt
+    );
 //    게시글 등록
     int createPost(Post post);
 

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,8 @@ public class PostController {
             @ModelAttribute ReqPostSearchDto searchDto
     ) throws NotFoundException {
 
-        int totalPostListCount = postService.getPostListCountAllBySearchTxt(searchDto.getSearchTxt());
+        int totalPostListCount = postService.getPostListCountAllBySearchTxt(boardName, searchDto.getSearchTxt());
+
         int totalPages = totalPostListCount % searchDto.getLimitCount() == 0
                 ? totalPostListCount / searchDto.getLimitCount()
                 : totalPostListCount / searchDto.getLimitCount() + 1;
@@ -61,7 +63,7 @@ public class PostController {
 
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/post/{postId}")
     @Operation(summary = "게시글 상세 조회")
     public ResponseEntity<Post> getPostDetail(
             @PathVariable int postId
