@@ -1,8 +1,7 @@
 package com.korit.dreampath_back.mapper;
 
 import com.korit.dreampath_back.entity.Post;
-import com.korit.dreampath_back.dto.response.post.RespPostList;
-import com.korit.dreampath_back.entity.User;
+import com.korit.dreampath_back.entity.PostListPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +18,7 @@ public interface PostMapper {
     int createPost(Post post);
 
 //    전체 리스트 조회 (검색 조회 포함)
-    List<RespPostList> selectPostList(
+    List<PostListPage> selectPostList(
             @Param("boardId") int boardId,
             @Param("startIdx") int startIdx,
             @Param("limitCount") int limitCount,

@@ -1,7 +1,6 @@
-package com.korit.dreampath_back.dto.response.post;
+package com.korit.dreampath_back.entity;
 
 
-import com.korit.dreampath_back.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RespPostList {
+public class PostListPage {
     private int postId;
     private int boardId;
     private int userId;

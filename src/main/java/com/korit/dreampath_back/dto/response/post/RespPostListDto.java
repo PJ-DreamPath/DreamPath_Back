@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.dto.response.post;
 
+import com.korit.dreampath_back.entity.PostListPage;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class RespPostListDto {
     private boolean isFirstPage;
     private boolean isLastPage;
     private int nextPage;
-    private List<RespPostList> postList;
+    private List<PostListPage> postList;
 }
