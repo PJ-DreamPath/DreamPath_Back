@@ -9,6 +9,7 @@ import com.korit.dreampath_back.dto.response.post.RespPostList;
 import com.korit.dreampath_back.entity.PostLike;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.mapper.PostLikeMapper;
+import com.korit.dreampath_back.repository.BoardRepository;
 import com.korit.dreampath_back.repository.PostLikeRepository;
 import com.korit.dreampath_back.repository.PostRepository;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
@@ -30,6 +31,9 @@ public class PostService {
     @Autowired
     private PostLikeRepository postLikeRepository;
 
+    @Autowired
+    private BoardRepository boardRepository;
+
     public int getPostListCountAllBySearchTxt(String searchTxt) {
         return postRepository.findPostListCountAllBySearchTxt(searchTxt);
     }
@@ -50,7 +54,10 @@ public class PostService {
         return postRepository.addPost(newPost) > 0 ? true : false;
     }
 
-    public List<RespPostList> getPostList(int boardId, ReqPostSearchDto searchDto) throws NotFoundException {
+    public List<RespPostList> getPostList(String boardName, ReqPostSearchDto searchDto) throws NotFoundException {
+
+        int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
+
         int startIdx = (searchDto.getPage() - 1) * searchDto.getLimitCount();
 
         return postRepository.findPostList(boardId, startIdx, searchDto.getLimitCount(), searchDto.getOrder(), searchDto.getSearchTxt())
