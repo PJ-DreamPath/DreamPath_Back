@@ -25,9 +25,8 @@ public class ReqPostCreateDto {
     private LocalDate endDate;
     @Schema(description = "멘토링 신청 상태",
             allowableValues = {
-                "pending: 대기",
-                "accept: 승인",
-                "reject: 거절"
+                "recruiting: 모집중",
+                "closedRecruitment: 모집마감"
             }
     )
     private String status;
