@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -15,7 +16,7 @@ public class PointPurchase {
     private int pointPurchaseId;
     private int pointId;
     private int userId;
-    Date createdAt;
+    private LocalDateTime createdAt;
 
     private Point point;
     private User user;
