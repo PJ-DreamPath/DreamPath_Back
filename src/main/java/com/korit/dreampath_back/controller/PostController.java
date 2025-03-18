@@ -35,10 +35,10 @@ public class PostController {
                 : ResponseEntity.badRequest().body("등록실패");
     }
 
-    @GetMapping("/posts/{boardId}")
+    @GetMapping("/posts/{boardName}")
     @Operation(summary = "게시글 전체, 다건 조회")
     public ResponseEntity<RespPostListDto> getPostList(
-            @PathVariable int boardId,
+            @PathVariable String boardName,
             @ModelAttribute ReqPostSearchDto searchDto
     ) throws NotFoundException {
 
@@ -55,7 +55,7 @@ public class PostController {
                 .isFirstPage(searchDto.getPage() == 1)
                 .isLastPage(searchDto.getPage() == totalPages)
                 .nextPage(searchDto.getPage() != totalPages ? searchDto.getPage() + 1 : 0)
-                .postList(postService.getPostList(boardId, searchDto))
+                .postList(postService.getPostList(boardName, searchDto))
                 .build();
         return ResponseEntity.ok().body(newRespDto);
 
