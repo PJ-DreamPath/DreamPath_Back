@@ -21,8 +21,10 @@ public class PointController {
     @GetMapping("/api/point")
     public ResponseEntity<List<PointPurchase>> getPointPurchase(@AuthenticationPrincipal PrincipalUser principalUser) {
         int userId = principalUser.getUser().getUserId();
-        System.out.println(userId);
         List<PointPurchase> pointPurchases = pointService.getPointPurchase(userId);
+        for(PointPurchase pointPurchase : pointPurchases){
+            System.out.println(pointPurchase);
+        }
         return ResponseEntity.ok().body(pointPurchases);
     }
 }

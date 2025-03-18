@@ -7,15 +7,7 @@
         <id property="pointId" column="point_id" />
         <result property="pointName" column="point_name" />
         <result property="pointPrice" column="point_price" />
-        <result property="pointPrice" column="point_price" />
 
-    </resultMap>
-
-    <resultMap id="pointPurchaseResultMap" type="com.korit.dreampath_back.entity.PointPurchase">
-        <id property="pointPurchaseId" column="point_purchase_id" />
-        <result property="pointId" column="point_id" />
-        <result property="userId" column="user_id" />
-        <association property="point" resultMap="pointResultMap" />
     </resultMap>
 
     <resultMap id="userResultMap" type="com.korit.dreampath_back.entity.User">
@@ -36,13 +28,20 @@
         <result property="credentialsExpired" column="credentials_expired" />
         <result property="accountEnabled" column="account_enabled" />
         <result property="createdAt" column="created_at" />
-        <collection property="userRoles" javaType="java.util.Set" resultMap="userRoleResultMap" />
+    </resultMap>
+
+    <resultMap id="pointPurchaseResultMap" type="com.korit.dreampath_back.entity.PointPurchase">
+        <id property="pointPurchaseId" column="point_purchase_id" />
+        <result property="pointId" column="point_id" />
+        <result property="userId" column="user_id" />
+        <association property="point" resultMap="pointResultMap" />
+        <association property="user" resultMap="userResultMap" />
     </resultMap>
 
     <select id="getPointPurchase" resultMap="pointPurchaseResultMap">
         select
             pt.point_name,
-            pt.point_price
+            pt.point_price,
             ppt.created_at
         from
             point_purchase_tb ppt
