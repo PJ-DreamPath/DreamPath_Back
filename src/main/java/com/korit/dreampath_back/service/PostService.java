@@ -59,6 +59,7 @@ public class PostService {
 
     @Transactional(rollbackFor = Exception.class)
     public Post getPostDetail(int postId) throws NotFoundException {
+//        조회수 올리기
         postRepository.updatePostViewCount(postId);
         return postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));
     }
@@ -84,9 +85,9 @@ public class PostService {
     }
 
 
-    public void updatePostViewCount(int postId) {
-        postRepository.updatePostViewCount(postId);
-    }
+//    public void updatePostViewCount(int postId) {
+//        postRepository.updatePostViewCount(postId);
+//    }
 
     public boolean addPostLike(User user, ReqPostLikeDto likeDto) {
         if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).isPresent()) {
