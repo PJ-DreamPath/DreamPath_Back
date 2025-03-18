@@ -15,6 +15,7 @@ import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,9 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException("검색된 게시글이 없습니다."));
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Post getPostDetail(int postId) throws NotFoundException {
+        postRepository.updatePostViewCount(postId);
         return postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));
     }
 
