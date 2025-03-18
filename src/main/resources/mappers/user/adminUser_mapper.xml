@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.dreampath_back.mapper.AdminUserMapper">
+    <resultMap id="roleResultMap" type="com.korit.dreampath_back.entity.Role">
+        <id property="roleId" column="role_id" />
+        <result property="roleName" column="role_name" />
+    </resultMap>
+
+    <resultMap id="userRoleResultMap" type="com.korit.dreampath_back.entity.UserRole">
+        <id property="userRoleId" column="user_role_id" />
+        <result property="userId" column="urt_user_id" />
+        <result property="roleId" column="urt_role_id" />
+        <association property="role" resultMap="roleResultMap" />
+    </resultMap>
+
+    <resultMap id="userResultMap" type="com.korit.dreampath_back.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="nickname" column="nickname" />
+        <result property="phoneNumber" column="phone_number" />
+        <result property="profileImg" column="profile_img" />
+        <result property="ticketId" column="ticket_id" />
+        <result property="oAuth2Name" column="oauth2_name" />
+        <result property="oAuth2Provider" column="oauth2_provider" />
+        <result property="remaining" column="remaining" />
+        <result property="starPoint" column="star_point" />
+        <result property="accountExpired" column="account_expired" />
+        <result property="accountLocked" column="account_locked" />
+        <result property="credentialsExpired" column="credentials_expired" />
+        <result property="accountEnabled" column="account_enabled" />
+        <result property="createdAt" column="created_at" />
+        <collection property="userRoles" javaType="java.util.Set" resultMap="userRoleResultMap" />
+    </resultMap>
+
+    <delete id="deleteById">
+        delete
+        from
+            user_tb
+        where
+            user_id = #{userId}
+    </delete>
+
+    <select id="findAll" resultMap="userResultMap">
+        select
+            ut.user_id,
+            ut.username,
+            ut.email,
+            ut.nickname,
+            ut.phone_number,
+            ut.created_at,
+            ut.remain_point
+        from
+            user_tb ut
+    </select>
+    <select id="findUserRoleByUserId" resultType="java.lang.String">
+        select
+            rt.role_name
+        from
+            user_tb ut
+            left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+            left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+            ut.user_id = #{userId};
+    </select>
+
+</mapper>
