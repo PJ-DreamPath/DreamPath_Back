@@ -34,6 +34,7 @@
         <id property="pointPurchaseId" column="point_purchase_id" />
         <result property="pointId" column="point_id" />
         <result property="userId" column="user_id" />
+        <result property="createdAt" column="created_at" />
         <association property="point" resultMap="pointResultMap" />
         <association property="user" resultMap="userResultMap" />
     </resultMap>

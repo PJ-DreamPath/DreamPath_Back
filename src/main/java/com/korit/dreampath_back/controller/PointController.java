@@ -19,12 +19,9 @@ public class PointController {
     @Autowired
     private PointService pointService;
     @GetMapping("/api/point")
-    public ResponseEntity<List<PointPurchase>> getPointPurchase(@AuthenticationPrincipal PrincipalUser principalUser) {
+    public ResponseEntity<List<RespPointPurchaseDto>> getPointPurchase(@AuthenticationPrincipal PrincipalUser principalUser) {
         int userId = principalUser.getUser().getUserId();
-        List<PointPurchase> pointPurchases = pointService.getPointPurchase(userId);
-        for(PointPurchase pointPurchase : pointPurchases){
-            System.out.println(pointPurchase);
-        }
-        return ResponseEntity.ok().body(pointPurchases);
+
+        return ResponseEntity.ok().body(pointService.getPointPurchase(userId));
     }
 }

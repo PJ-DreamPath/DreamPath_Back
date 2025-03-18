@@ -3,6 +3,7 @@ package com.korit.dreampath_back.dto.response;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -10,5 +11,5 @@ import java.util.Date;
 public class RespPointPurchaseDto {
     String pointName;
     int pointPrice;
-    Date createdAt;
+    LocalDateTime createdAt;
 }
