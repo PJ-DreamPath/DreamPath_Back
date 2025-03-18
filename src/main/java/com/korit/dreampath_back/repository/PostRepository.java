@@ -1,7 +1,7 @@
 package com.korit.dreampath_back.repository;
 
 import com.korit.dreampath_back.entity.Post;
-import com.korit.dreampath_back.dto.response.post.RespPostList;
+import com.korit.dreampath_back.entity.PostListPage;
 import com.korit.dreampath_back.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ public class PostRepository {
 
 
 //    전체 조회 (검색 조회 포함)
-    public Optional<List<RespPostList>> findPostList(int boardId, int startIdx, int limitCount, String order, String searchTxt) {
+    public Optional<List<PostListPage>> findPostList(int boardId, int startIdx, int limitCount, String order, String searchTxt) {
         return Optional.ofNullable(postMapper.selectPostList(boardId, startIdx, limitCount, order, searchTxt));
     }
 

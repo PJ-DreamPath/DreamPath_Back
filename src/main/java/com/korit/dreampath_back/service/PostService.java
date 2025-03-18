@@ -6,14 +6,12 @@ import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
 import com.korit.dreampath_back.entity.Board;
 import com.korit.dreampath_back.entity.Post;
-import com.korit.dreampath_back.dto.response.post.RespPostList;
+import com.korit.dreampath_back.entity.PostListPage;
 import com.korit.dreampath_back.entity.PostLike;
 import com.korit.dreampath_back.entity.User;
-import com.korit.dreampath_back.mapper.PostLikeMapper;
 import com.korit.dreampath_back.repository.BoardRepository;
 import com.korit.dreampath_back.repository.PostLikeRepository;
 import com.korit.dreampath_back.repository.PostRepository;
-import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostService {
@@ -57,7 +54,7 @@ public class PostService {
         return postRepository.addPost(newPost) > 0 ? true : false;
     }
 
-    public List<RespPostList> getPostList(String boardName, ReqPostSearchDto searchDto) throws NotFoundException {
+    public List<PostListPage> getPostList(String boardName, ReqPostSearchDto searchDto) throws NotFoundException {
 
         int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
 
