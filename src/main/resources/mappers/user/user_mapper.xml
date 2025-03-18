@@ -68,6 +68,7 @@
             user_id = #{userId}
     </update>
 
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
         insert into user_tb
         values(
@@ -152,6 +153,37 @@
         where
             ut.username = #{username}
     </select>
+
+    <select id="selectByPassword" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.password = #{password}
+    </select>
+
     <select id="selectByNickname" resultMap="userResultMap">
         select
             ut.user_id,
@@ -184,14 +216,242 @@
 
     <select id="selectByEmail" resultMap="userResultMap">
         select
-            ut.user_id,
-            ut.username,
-            ut.password,
-            ut.email,
-            ut.nickname,
-            ut.oauth2_name,
-            ut.oauth2_provider,
-            ut.profile
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.email = #{email}
+    </select>
+
+    <select id="selectByPhoneNumber" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.phoneNumber = #{phoneNumber}
+    </select>
+
+    <select id="selectByAccountNumber" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.accountNumber = #{accountNumber}
+    </select>
+
+    <select id="selectByAddress" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.nickname = #{address}
+    </select>
+
+    <select id="selectByProfileImg" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.profileImg = #{profileImg}
+    </select>
+
+    <select id="selectByTicketId" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.ticketId = #{ticketId}
+    </select>
+
+    <select id="selectByStarPoint" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.starpoint = #{starpoint}
+    </select>
+
+    <select id="selectByRoleList" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.email,
+        ut.nickname,
+        ut.oauth2_name,
+        ut.oauth2_provider,
+        ut.profile_img,
+        ut.account_expired,
+        ut.account_locked,
+        ut.credentials_expired,
+        ut.account_enabled,
+        ut.created_at,
+
+        urt.user_role_id,
+        urt.user_id as urt_user_id,
+        urt.role_id as urt_role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on (urt.user_id = ut.user_id)
+        left outer join role_tb rt on (rt.role_id = urt.role_id)
+        where
+        ut.roleList = #{roleList}
     </select>
 
 

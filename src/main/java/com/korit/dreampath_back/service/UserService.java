@@ -2,6 +2,7 @@ package com.korit.dreampath_back.service;
 
 import com.korit.dreampath_back.dto.request.ReqLoginDto;
 import com.korit.dreampath_back.dto.request.ReqSignupDto;
+import com.korit.dreampath_back.dto.response.User.RespUserDto;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.entity.UserRole;
 import com.korit.dreampath_back.exception.DuplicatedValueException;
@@ -33,6 +34,19 @@ public class UserService {
     private JwtUtil jwtUtil;
     @Autowired
     private FileService fileService;
+
+    public RespUserDto getUserInfo(int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+
+        return RespUserDto.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .profileImg(user.getProfileImg() == null ? "default.png" : user.getProfileImg())
+                .build();
+    }
 
     public boolean duplicatedUsername(String username) {
         System.out.println("서비스 duplicatedUsername 호출");
@@ -73,15 +87,32 @@ public class UserService {
         return user;
     }
 
+    public String login(ReqLoginDto dto) {
+        User user = userRepository
+                .findByUsername(dto.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("사용자 정보를 다시 확인하세요."));
+
+        if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new BadCredentialsException("사용자 정보를 다시 확인하세요.");
+        }
+
+        Date expires = new Date(new Date().getTime() + (1000l * 60 * 60 * 24 * 7));
+
+        return jwtUtil.generateToken(
+                user.getUsername(),
+                Integer.toString(user.getUserId()),
+                expires);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void updateProfileImg(User user, MultipartFile file) {
         final String PROFILE_IMG_FILE_PATH = "/upload/user/profile";
         String savedFileName = fileService.saveFile(PROFILE_IMG_FILE_PATH, file);
         userRepository.updateProfileImg(user.getUserId(), savedFileName);
 
-        if (user.getProfileImg() != null) {
+        if (user.getProfileImg() == null) {return;}
             fileService.deleteFile(PROFILE_IMG_FILE_PATH + " / " + user.getProfileImg());
-        }
+
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -98,22 +129,5 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public void updateEmail(User user, String email) {
         userRepository.updateEmail(user.getUserId(), email);
-    }
-
-    public String login(ReqLoginDto dto) {
-        User user = userRepository
-                .findByUsername(dto.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("사용자 정보를 다시 확인하세요."));
-
-        if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("사용자 정보를 다시 확인하세요.");
-        }
-
-        Date expires = new Date(new Date().getTime() + (1000l * 60 * 60 * 24 * 7));
-
-        return jwtUtil.generateToken(
-                user.getUsername(),
-                Integer.toString(user.getUserId()),
-                expires);
     }
 }

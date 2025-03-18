@@ -21,6 +21,47 @@ public class UserRepository {
         return Optional.ofNullable(userMapper.selectByUsername(username));
     }
 
+    public Optional<User> findByPassword(String password) {
+        return Optional.ofNullable(userMapper.selectByPassword(password));
+    }
+
+    public Optional<User> findByNickname(String nickname) {
+        return Optional.ofNullable(userMapper.selectByNickname(nickname));
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return Optional.ofNullable(userMapper.selectByEmail(email));
+    }
+
+    public Optional<User> findByAccountNumber(String accountNumber) {
+        return Optional.ofNullable(userMapper.selectByAccountNumber(accountNumber));
+    }
+
+    public Optional<User> findByPhoneNumber(String phoneNumber) {
+        return Optional.ofNullable(userMapper.selectByPhoneNumber(phoneNumber));
+    }
+
+    public Optional<User> findByAddress(String address) {
+        return Optional.ofNullable(userMapper.selectByAddress(address));
+    }
+
+    public Optional<User> findByProfileImg(String profileImg) {
+        return Optional.ofNullable(userMapper.selectByProfileImg(profileImg));
+    }
+
+    public Optional<User> findByTicket(String ticketId) {
+        return Optional.ofNullable(userMapper.selectByTicketId(ticketId));
+    }
+
+    public Optional<User> findByStarPoint(String starPoint) {
+        return Optional.ofNullable(userMapper.selectByStarPoint(starPoint));
+    }
+
+    public Optional<User> findByRoleList(String roleList) {
+        return Optional.ofNullable(userMapper.selectByRoleList(roleList));
+    }
+
+
 
     public void updateProfileImg(int userId, String profileImg) {
         userMapper.updateProfileImgById(userId, profileImg);
@@ -34,13 +75,12 @@ public class UserRepository {
         userMapper.updatePasswordById(userId, password);
     }
 
+
     public void updateEmail(int userId, String email) {
         userMapper.updateEmailById(userId, email);
     }
 
-    public Optional<User> findByNickname(String nickname) {
-        return Optional.ofNullable(userMapper.selectByNickname(nickname));
-    }
+
 
     public User save(User user){
         System.out.println(user+"!!!!!!!!!!!!!!!!!");
