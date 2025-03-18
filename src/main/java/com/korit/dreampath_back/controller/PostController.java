@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping("/api")
 public class PostController {
 
     @Autowired
     private PostService postService;
 
-    @PostMapping("/create")
+    @PostMapping("/post")
     @Operation(summary = "게시글 등록")
     public ResponseEntity<String> addPost(@AuthenticationPrincipal PrincipalUser principalUser,
                                           @RequestBody ReqPostCreateDto createDto) {
@@ -35,7 +35,7 @@ public class PostController {
                 : ResponseEntity.badRequest().body("등록실패");
     }
 
-    @GetMapping("/list/{boardId}")
+    @GetMapping("/posts/{boardId}")
     @Operation(summary = "게시글 전체, 다건 조회")
     public ResponseEntity<RespPostListDto> getPostList(
             @PathVariable int boardId,
@@ -61,7 +61,7 @@ public class PostController {
 
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
     public ResponseEntity<Post> getPostDetail(
             @PathVariable int postId
@@ -69,7 +69,7 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getPostDetail(postId));
     }
 
-    @PutMapping("/update")
+    @PutMapping("/posts/{postId}")
     @Operation(summary = "게시글 수정")
     public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPostUpdateDto updateDto) {
         return postService.updatedPost(principalUser.getUser(), updateDto)
@@ -77,7 +77,7 @@ public class PostController {
                 : ResponseEntity.badRequest().body("수정실패");
     }
 
-    @DeleteMapping("/delete/{postId}")
+    @DeleteMapping("/posts/{postId}")
     @Operation(summary = "게시글 삭제")
     public ResponseEntity<String> deletePost(@PathVariable int postId) {
         return postService.deletePost(postId)
@@ -85,13 +85,13 @@ public class PostController {
                 : ResponseEntity.badRequest().body("삭제실패");
     }
 
-    @PutMapping("/viewCount")
-    @Operation(summary = "게시글 조회수")
-    public void updatePostViewCount(@RequestBody int postId) {
-        postService.updatePostViewCount(postId);
-    }
+//    @PutMapping("/posts/view/count")
+//    @Operation(summary = "게시글 조회수")
+//    public void updatePostViewCount(@RequestBody int postId) {
+//        postService.updatePostViewCount(postId);
+//    }
 
-    @PostMapping("/like")
+    @PostMapping("/posts/{postId}/like")
     @Operation(summary = "게시글 좋아요")
     public ResponseEntity<String> likePost(
             @AuthenticationPrincipal PrincipalUser principalUser,
@@ -101,7 +101,7 @@ public class PostController {
                 : ResponseEntity.badRequest().body("좋아요실패");
     }
 
-    @DeleteMapping("/like")
+    @DeleteMapping("/posts/{postId}/like")
     @Operation(summary = "게시글 좋아요 취소")
     public ResponseEntity<String> likePostCancel(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPostLikeDto likeDto) {
         return postService.deletePostLike(principalUser.getUser(), likeDto)
@@ -109,7 +109,7 @@ public class PostController {
                 : ResponseEntity.badRequest().body("좋아요취소실패");
     }
 
-    @GetMapping("/myLike")
+    @GetMapping("/posts/my/like")
     @Operation(summary = "게시글의 내 좋아요 조회")
     public ResponseEntity<List<PostLike>> selectPostMyLike(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqPostLikeDto likeDto) {
         System.out.println(likeDto);
