@@ -21,6 +21,38 @@
         <result property="attachedFiles" column="attached_files"/>
     </resultMap>
 
+    <resultMap id="RespPostListResultMap" type="com.korit.dreampath_back.dto.response.post.RespPostList">
+        <id property="postId" column="post_id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="viewCount" column="view_count"/>
+        <association property="user" resultMap="userResultMap"/>
+    </resultMap>
+
+    <resultMap id="userResultMap" type="com.korit.dreampath_back.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="nickname" column="nickname" />
+        <result property="phoneNumber" column="phone_number" />
+        <result property="profileImg" column="profile_img" />
+        <result property="ticketId" column="ticket_id" />
+        <result property="oAuth2Name" column="oauth2_name" />
+        <result property="oAuth2Provider" column="oauth2_provider" />
+        <result property="remaining" column="remaining" />
+        <result property="starPoint" column="star_point" />
+        <result property="accountExpired" column="account_expired" />
+        <result property="accountLocked" column="account_locked" />
+        <result property="credentialsExpired" column="credentials_expired" />
+        <result property="accountEnabled" column="account_enabled" />
+        <result property="createdAt" column="created_at" />
+    </resultMap>
+
     <insert id="createPost" useGeneratedKeys="true" keyProperty="postId">
         insert into post_tb
         values(
@@ -42,18 +74,35 @@
         )
     </insert>
 
-    <select id="selectPostList" resultType="com.korit.dreampath_back.dto.response.post.RespPostList">
+    <select id="selectPostList" resultMap="RespPostListResultMap">
         select
-            post_id as postId,
-            board_id as boardId,
-            user_id as userId,
-            mentoring_category_id as mentoringCategoryId,
-            title,
-            star_point as starPoint,
-            created_at as createdAt,
-            view_count as viewCount
+            pt.post_id,
+            pt.board_id,
+            pt.user_id,
+            pt.mentoring_category_id,
+            pt.title,
+            pt.content,
+            pt.status,
+            pt.star_point,
+            pt.created_at,
+            pt.view_count,
+
+            ut.user_id,
+            ut.username,
+            ut.password,
+            ut.email,
+            ut.nickname,
+            ut.oauth2_name,
+            ut.oauth2_provider,
+            ut.profile_img,
+            ut.account_expired,
+            ut.account_locked,
+            ut.credentials_expired,
+            ut.account_enabled,
+            ut.created_at
         from
-            post_tb
+            post_tb pt
+            left outer join user_tb ut on(ut.user_id = pt.user_id)
         <where>
             board_id = #{boardId}
             <if test="searchTxt != null and searchTxt != ''">
