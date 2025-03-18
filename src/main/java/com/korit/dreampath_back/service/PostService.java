@@ -4,6 +4,7 @@ import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostLikeDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
+import com.korit.dreampath_back.entity.Board;
 import com.korit.dreampath_back.entity.Post;
 import com.korit.dreampath_back.dto.response.post.RespPostList;
 import com.korit.dreampath_back.entity.PostLike;
@@ -115,6 +116,10 @@ public class PostService {
             return new ArrayList<>();
         }
         return postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).get();
+    }
+
+    public List<Board> findAllBoard() {
+        return boardRepository.findAll();
     }
 
 }
