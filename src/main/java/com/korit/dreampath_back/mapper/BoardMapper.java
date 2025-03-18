@@ -10,4 +10,5 @@ import java.util.List;
 public interface BoardMapper {
 
     Board selectBoardIdByBoardName(@Param("boardName") String boardName);
+    List<Board> findAll();
 }

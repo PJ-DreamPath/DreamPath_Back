@@ -6,6 +6,8 @@ import com.korit.dreampath_back.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class BoardRepository {
 
@@ -14,7 +16,14 @@ public class BoardRepository {
 
 
 //    boardName으로 찾은 boardId
-public Board findBoardIdByBoardName(String boardNme) {
+    public Board findBoardIdByBoardName(String boardNme) {
+
         return boardMapper.selectBoardIdByBoardName(boardNme);
     }
+
+    public List<Board> findAll() {
+        return boardMapper.findAll();
+    }
 }
+
+
