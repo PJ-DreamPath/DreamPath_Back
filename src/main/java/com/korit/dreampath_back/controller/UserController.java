@@ -25,9 +25,7 @@ public class UserController {
     @Operation(summary = "사용자 정보 조회")
     public ResponseEntity<RespUserDto> getLoginUser(@AuthenticationPrincipal PrincipalUser principalUser) {
 
-
-
-        if (principalUser.getUser().getProfileImg() == null) {
+        if (principalUser != null && principalUser.getUser().getProfileImg() == null) {
             principalUser.getUser().setProfileImg("default.png");
         }
 
