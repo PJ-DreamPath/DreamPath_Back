@@ -15,7 +15,7 @@ public class Point {
 
     private int pointId;
     private String pointName;
-    private int pointPrice;
+    private String pointPrice;
 
     private LocalDateTime createAt;
 
