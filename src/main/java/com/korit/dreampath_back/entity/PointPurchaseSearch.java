@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 @Builder
 public class PointPurchaseSearch {
     String pointName;
-    String pointPrice;
+    int pointPrice;
     LocalDateTime createdAt;
 }
