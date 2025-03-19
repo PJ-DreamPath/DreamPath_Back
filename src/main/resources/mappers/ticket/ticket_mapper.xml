@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.dreampath_back.mapper.TicketMapper">
+    <resultMap id="ticketResultMap" type="com.korit.dreampath_back.entity.TicketPurchase">
+        <id property="ticketId" column="ticket_id" />
+        <result property="ticketName" column="ticket_name" />
+        <result property="price" column="price" />
+
+    </resultMap>
+
+    <resultMap id="userResultMap" type="com.korit.dreampath_back.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="nickname" column="nickname" />
+        <result property="phoneNumber" column="phone_number" />
+        <result property="profileImg" column="profile_img" />
+        <result property="ticketId" column="ticket_id" />
+        <result property="oAuth2Name" column="oauth2_name" />
+        <result property="oAuth2Provider" column="oauth2_provider" />
+        <result property="remaining" column="remaining" />
+        <result property="starPoint" column="star_point" />
+        <result property="accountExpired" column="account_expired" />
+        <result property="accountLocked" column="account_locked" />
+        <result property="credentialsExpired" column="credentials_expired" />
+        <result property="accountEnabled" column="account_enabled" />
+        <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <resultMap id="ticketPurchaseResultMap" type="com.korit.dreampath_back.entity.TicketPurchase">
+        <id property="pointPurchaseId" column="point_purchase_id" />
+        <result property="ticketId" column="ticket_id" />
+        <result property="userId" column="user_id" />
+        <result property="createdAt" column="created_at" />
+        <association property="ticket" resultMap="ticketResultMap" />
+        <association property="user" resultMap="userResultMap" />
+    </resultMap>
+
+    <select id="getTicketPurchase" resultMap="ticketPurchaseResultMap">
+        select
+            tt.ticket_name,
+            tt.ticket_price,
+            ppt.created_at
+        from
+            point_purchase_tb ppt
+            left outer join ticket_tb tt on( tt.ticket_id = ppt.ticket_id )
+            left outer join user_tb ut on (ppt.user_id = ut.user_id)
+        where
+            ut.user_id = #{userId}
+    </select>
+
+
+</mapper>

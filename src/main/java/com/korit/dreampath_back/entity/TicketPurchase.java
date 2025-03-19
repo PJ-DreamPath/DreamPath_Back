@@ -1,6 +1,5 @@
 package com.korit.dreampath_back.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +11,19 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ticket {
+public class TicketPurchase {
 
+    private int pointPurchaseId;
     private int ticketId;
+    private int userId;
     private String ticketName;
+
+
     private int price;
     private int entryCount;
+
+    private Ticket ticket;
+    private User user;
 
     private LocalDateTime createdAt;
 }

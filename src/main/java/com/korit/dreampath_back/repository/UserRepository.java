@@ -62,7 +62,6 @@ public class UserRepository {
     }
 
 
-
     public void updateProfileImg(int userId, String profileImg) {
         userMapper.updateProfileImgById(userId, profileImg);
     }
