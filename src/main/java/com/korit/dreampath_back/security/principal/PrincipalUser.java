@@ -67,6 +67,10 @@ public class PrincipalUser implements UserDetails, OAuth2User {
     public boolean isEnabled() {
         return user.getAccountEnabled() == 1;
     }
+
+    public int getRoleId() {
+        return user.getUserRoles().iterator().next().getRole().getRoleId();
+    }
 }
 
 
