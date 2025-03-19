@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,9 +28,11 @@ public class PostController {
 
     @PostMapping("/post")
     @Operation(summary = "게시글 등록")
-    public ResponseEntity<String> addPost(@AuthenticationPrincipal PrincipalUser principalUser,
-                                          @RequestBody ReqPostCreateDto createDto) {
-
+    public ResponseEntity<String> addPost(
+            @AuthenticationPrincipal PrincipalUser principalUser,
+            ReqPostCreateDto createDto
+    ) {
+        System.out.println(createDto);
         return postService.addPost(principalUser.getUser(), createDto)
                 ? ResponseEntity.ok().body("등록완료")
                 : ResponseEntity.badRequest().body("등록실패");

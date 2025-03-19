@@ -15,7 +15,7 @@ public class FileService {
 
     public String saveFile(String path, MultipartFile file) {
 
-        if (file.isEmpty()) {
+        if (file == null || file.isEmpty()) {
             return null;
         }
 

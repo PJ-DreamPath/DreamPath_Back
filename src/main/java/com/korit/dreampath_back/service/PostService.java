@@ -16,6 +16,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ import java.util.List;
 
 @Service
 public class PostService {
+
+    @Autowired
+    private FileService fileService;
 
     @Autowired
     private PostRepository postRepository;
@@ -39,7 +43,13 @@ public class PostService {
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
     public boolean addPost(User user, ReqPostCreateDto createDto) {
+
+        final String PROFILE_IMG_FILE_PATH = "/upload/user/mentoring";
+        String saveFilename = fileService.saveFile(PROFILE_IMG_FILE_PATH, createDto.getFile()); // 폴더에 저정
+
         LocalDate today = LocalDate.now();
+
+        System.out.println(createDto);
 
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
@@ -51,7 +61,7 @@ public class PostService {
                 .startDate(createDto.getStartDate())
                 .endDate(createDto.getEndDate())
                 .status(createDto.getStartDate().isBefore(today) && createDto.getEndDate().isAfter(today) ? "recruiting" : "closedRecruitment")
-                .attachedFiles(createDto.getAttachedFiles())
+                .attachedFiles(saveFilename)
                 .build();
 
         return postRepository.addPost(newPost) > 0 ? true : false;

@@ -2,6 +2,7 @@ package com.korit.dreampath_back.dto.request.post;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,5 +25,5 @@ public class ReqPostCreateDto {
     @Schema(description = "멘토링 종료 날짜")
     private LocalDate endDate;
     @Schema(description = "게시글 첨부 파일")
-    private String attachedFiles;
+    private MultipartFile file;
 }
