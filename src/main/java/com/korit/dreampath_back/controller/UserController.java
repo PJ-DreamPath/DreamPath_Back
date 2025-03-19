@@ -30,6 +30,9 @@ public class UserController {
         }
 
         RespUserDto response = userService.getUserInfo(principalUser.getUser().getUserId());
+        int roleId = principalUser.getRoleId();
+        response.setRoleId(roleId);
+
 
         return ResponseEntity.ok(response);
     }

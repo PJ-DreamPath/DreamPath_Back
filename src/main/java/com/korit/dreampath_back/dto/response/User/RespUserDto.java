@@ -12,6 +12,9 @@ public class RespUserDto {
     @Schema(description = "사용자 ID", example = "1")
     private int userId;
 
+    @Schema(description = "사용자역할 ID", example = "1")
+    private int roleId;
+
     @Schema(description = "사용자명", example = "user12")
     private String username;
 
