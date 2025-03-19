@@ -10,9 +10,12 @@ import java.time.LocalDateTime;
 @Builder
 public class TicketPurchaseHistory {
 
-    String ticketName;
-    int entryCount;
-    int price;
+    private int purchaseId;
+    private int ticketId;
+    private int userId;
+    private LocalDateTime createdAt;
 
-    LocalDateTime createdAt;
+    private String ticketName;
+    private int price;
+
 }
