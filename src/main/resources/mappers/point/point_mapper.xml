@@ -48,9 +48,26 @@
             point_purchase_tb ppt
             left outer join point_tb pt on( pt.point_id = ppt.point_id )
             left outer join user_tb ut on (ppt.user_id = ut.user_id)
-        where
-            ut.user_id = #{userId}
+        order by
+            <choose>
+                <when test="order == 'asc'">
+                    point_purchase_id asc,
+                </when>
+            </choose>
+            point_purchase_id desc
+        limit #{startIndex}, #{limitCount}
     </select>
+
+    <select id="findAllPointPurchase" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            point_purchase_tb
+        where
+            user_id = #{userId}
+    </select>
+
+
 
 
 </mapper>
