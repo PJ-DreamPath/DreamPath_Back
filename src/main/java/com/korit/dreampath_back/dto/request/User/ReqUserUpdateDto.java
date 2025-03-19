@@ -8,6 +8,7 @@ import lombok.Data;
 @Schema(description = "사용자 조회 수정 DTO")
 public class ReqUserUpdateDto {
 
+
     @Schema(description = "사용자 ID", example = "1")
     private int userId;
     @Schema(description = "비밀번호 수정", example = "newPass11")
