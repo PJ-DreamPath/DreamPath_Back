@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class PostService {
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
     public boolean addPost(User user, ReqPostCreateDto createDto) {
+        LocalDate today = LocalDate.now();
+
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
                 .userId(user.getUserId())
@@ -47,7 +50,7 @@ public class PostService {
                 .mentoringAddress(createDto.getMentoringAddress())
                 .startDate(createDto.getStartDate())
                 .endDate(createDto.getEndDate())
-                .status(createDto.getStatus())
+                .status(createDto.getStartDate().isBefore(today) && createDto.getEndDate().isAfter(today) ? "recruiting" : "closedRecruitment")
                 .attachedFiles(createDto.getAttachedFiles())
                 .build();
 
