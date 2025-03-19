@@ -28,7 +28,7 @@ public class PointController {
         int totalPages = totalPointPurchaseListCount % dto.getLimitCount() == 0
                 ? totalPointPurchaseListCount / dto.getLimitCount()
                 : totalPointPurchaseListCount / dto.getLimitCount() + 1;
-        System.out.println(pointService.getPointPurchase(userId, dto));
+
         RespPointPurchaseListDto pointPurchaseListDto = RespPointPurchaseListDto.builder()
                 .page(dto.getPage())
                 .limitCount(dto.getLimitCount())

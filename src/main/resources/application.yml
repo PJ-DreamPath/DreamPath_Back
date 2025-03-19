@@ -78,6 +78,7 @@ mybatis:
     - /mappers/user/*.xml
     - /mappers/post/*.xml
     - /mappers/point/*.xml
+    - /mappers/ticket/*.xml
 
 springdoc:
   override-with-generic-response: false
