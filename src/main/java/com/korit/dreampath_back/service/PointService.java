@@ -1,12 +1,10 @@
 package com.korit.dreampath_back.service;
 
-import com.korit.dreampath_back.dto.response.RespPointPurchaseDto;
-import com.korit.dreampath_back.entity.Point;
+import com.korit.dreampath_back.dto.request.point.ReqPointPurchaseDto;
 import com.korit.dreampath_back.entity.PointPurchase;
 import com.korit.dreampath_back.entity.PointPurchaseSearch;
 import com.korit.dreampath_back.repository.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +16,9 @@ public class PointService {
     @Autowired
     private PointRepository pointRepository;
 
-    public List<PointPurchaseSearch> getPointPurchase(int userId) {
-        List<PointPurchase> pointPurchaseList = pointRepository.getPointPurchase(userId);
+    public List<PointPurchaseSearch> getPointPurchase(int userId, ReqPointPurchaseDto dto) {
+        int startIndex = (dto.getPage() - 1 ) * dto.getLimitCount();
+        List<PointPurchase> pointPurchaseList = pointRepository.getPointPurchase(userId,startIndex,dto.getLimitCount(), dto.getOrder());
         List<PointPurchaseSearch> pointPurchaseSearches = new ArrayList<>();
         for(PointPurchase pointPurchase : pointPurchaseList){
             PointPurchaseSearch pointPurchaseSearch = PointPurchaseSearch.builder()
@@ -31,4 +30,9 @@ public class PointService {
         }
         return pointPurchaseSearches;
     }
+
+    public int findAllPointPurchase(int userId) {
+        return pointRepository.findAllPointPurchase(userId);
+    }
+
 }
