@@ -23,13 +23,6 @@ public class ReqPostCreateDto {
     private LocalDate startDate;
     @Schema(description = "멘토링 종료 날짜")
     private LocalDate endDate;
-    @Schema(description = "멘토링 신청 상태",
-            allowableValues = {
-                "recruiting: 모집중",
-                "closedRecruitment: 모집마감"
-            }
-    )
-    private String status;
     @Schema(description = "게시글 첨부 파일")
     private String attachedFiles;
 }
