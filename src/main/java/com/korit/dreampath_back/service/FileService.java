@@ -15,14 +15,14 @@ public class FileService {
 
     public String saveFile(String path, MultipartFile file) {
 
-        if (file == null || file.isEmpty()) {
+        if (file.isEmpty()) {
             return null;
         }
 
         String newFilename = null;
         try {
             String originalFilename = file.getOriginalFilename();
-            newFilename = UUID.randomUUID().toString().replaceAll("-", "") + originalFilename;
+            newFilename = UUID.randomUUID().toString().replaceAll("-", "") + "_" + originalFilename;
 
             File newFilePath = new File(rootPath + "/" + path);
             if (!newFilePath.exists()) {
