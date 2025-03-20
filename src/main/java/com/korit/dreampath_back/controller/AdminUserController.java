@@ -1,9 +1,11 @@
 package com.korit.dreampath_back.controller;
 
+import com.korit.dreampath_back.dto.request.admin.ReqAdminPostDto;
 import com.korit.dreampath_back.dto.request.admin.ReqAdminUserDto;
 import com.korit.dreampath_back.dto.response.admin.RespAdminUserDto;
 import com.korit.dreampath_back.dto.response.admin.RespAdminPostListDto;
 import com.korit.dreampath_back.dto.response.admin.RespUserListPageDto;
+import com.korit.dreampath_back.entity.PostAdmin;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.AdminPostService;
@@ -48,8 +50,26 @@ public class AdminUserController {
 
     @GetMapping("/posts")
     @Operation(summary = "관리자 게시글 전체 조회")
-    public ResponseEntity<List<RespAdminPostListDto>> findAllPosts() throws NotFoundException {
-        return ResponseEntity.ok().body(adminPostService.getAdminPostList());
+    public ResponseEntity<?> findAllPosts(@ModelAttribute ReqAdminPostDto dto, @AuthenticationPrincipal PrincipalUser principalUser) {
+        int userId = principalUser.getUser().getUserId();
+
+        int totalPostListCount = adminPostService.findAllAdminPostCount();
+        int totalPages = totalPostListCount % dto.getLimitCount() == 0
+                ? totalPostListCount / dto.getLimitCount()
+                : totalPostListCount / dto.getLimitCount() + 1;
+
+        RespAdminPostListDto respAdminPostListDto = RespAdminPostListDto.builder()
+                .page(dto.getPage())
+                .limitCount(dto.getLimitCount())
+                .totalPages(totalPages)
+                .totalElements(totalPostListCount)
+                .isFirstPage(dto.getPage() == 1)
+                .isLastPage(dto.getPage() == totalPages)
+                .nextPage(dto.getPage() != totalPages ? dto.getPage() + 1 : dto.getPage())
+                .postList(adminPostService.getAdminPostList(dto))
+                .build();
+
+        return ResponseEntity.ok().body(respAdminPostListDto);
     }
 
     @DeleteMapping("/post/{postId}")

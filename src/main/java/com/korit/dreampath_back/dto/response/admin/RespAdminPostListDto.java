@@ -1,22 +1,25 @@
 package com.korit.dreampath_back.dto.response.admin;
 
-import lombok.AllArgsConstructor;
+import com.korit.dreampath_back.entity.PostAdmin;
+import com.korit.dreampath_back.entity.User;
+import com.korit.dreampath_back.entity.UserAdmin;
+import com.korit.dreampath_back.entity.UserSearch;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class RespAdminPostListDto {
-    private int postId;
-    private String title;
-    private String nickname;
-    private String boardName;
-    private LocalDateTime createdAt;
-    private int commentCount;
-    private int viewCount;
+
+    private int page;
+    private int limitCount;
+    private int totalPages;
+    private int totalElements;
+    private boolean isFirstPage;
+    private boolean isLastPage;
+
+    private int nextPage;
+    private List<PostAdmin> postList;
 }

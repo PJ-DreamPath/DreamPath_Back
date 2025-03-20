@@ -1,6 +1,9 @@
 package com.korit.dreampath_back.service;
 
+import com.korit.dreampath_back.dto.request.admin.ReqAdminPostDto;
+import com.korit.dreampath_back.dto.request.admin.ReqAdminUserDto;
 import com.korit.dreampath_back.dto.response.admin.RespAdminPostListDto;
+import com.korit.dreampath_back.entity.PostAdmin;
 import com.korit.dreampath_back.repository.AdminPostRepository;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,17 @@ public class AdminPostService {
     @Autowired
     private AdminPostRepository adminPostRepository;
 
-    public List<RespAdminPostListDto> getAdminPostList() {
-        return adminPostRepository.getAdminPostList();
+    public List<PostAdmin> getAdminPostList(ReqAdminPostDto dto) {
+
+        int startIndex = (dto.getPage() - 1) * dto.getLimitCount();
+
+        List<PostAdmin> postList = adminPostRepository.getAdminPostList(startIndex, dto.getLimitCount(), dto.getOrder());
+
+        return postList;
+    }
+
+    public int findAllAdminPostCount() {
+        return adminPostRepository.findAllPostCount();
     }
 
     @Transactional(rollbackFor = Exception.class)
