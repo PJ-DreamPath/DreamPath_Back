@@ -6,6 +6,7 @@ import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
 import com.korit.dreampath_back.dto.response.post.RespPostListDto;
 import com.korit.dreampath_back.entity.Post;
+import com.korit.dreampath_back.entity.PostDetail;
 import com.korit.dreampath_back.entity.PostLike;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PostService;
@@ -67,7 +68,7 @@ public class PostController {
 
     @GetMapping("/post/{postId}")
     @Operation(summary = "게시글 상세 조회")
-    public ResponseEntity<Post> getPostDetail(
+    public ResponseEntity<PostDetail> getPostDetail(
             @PathVariable int postId
     ) throws NotFoundException {
         return ResponseEntity.ok().body(postService.getPostDetail(postId));

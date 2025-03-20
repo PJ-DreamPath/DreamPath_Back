@@ -1,6 +1,7 @@
 package com.korit.dreampath_back.mapper;
 
 import com.korit.dreampath_back.entity.Post;
+import com.korit.dreampath_back.entity.PostDetail;
 import com.korit.dreampath_back.entity.PostListPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,7 +28,7 @@ public interface PostMapper {
     );
 
 //    게시글 상세 조회
-    Post selectPostDetail(
+    PostDetail selectPostDetail(
             @Param("postId") int postId
     );
 
