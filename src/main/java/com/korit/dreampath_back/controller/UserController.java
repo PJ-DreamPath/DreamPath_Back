@@ -2,6 +2,7 @@ package com.korit.dreampath_back.controller;
 
 import com.korit.dreampath_back.dto.request.User.ReqUserUpdateDto;
 import com.korit.dreampath_back.dto.response.User.RespUserDto;
+import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -78,4 +79,14 @@ public class UserController {
         userService.updateEmail(principalUser.getUser(), reqUserUpdateDto.getEmail());
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/user")
+    @Operation(summary = "회원탈퇴")
+    public ResponseEntity<?> deleteUser(
+            @AuthenticationPrincipal PrincipalUser principalUser) {
+
+        userService.deleteUser(principalUser.getUser());
+        return ResponseEntity.ok().build();
+    }
+
 }

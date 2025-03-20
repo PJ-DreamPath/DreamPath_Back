@@ -74,10 +74,11 @@ public class UserRepository {
         userMapper.updatePasswordById(userId, password);
     }
 
-
     public void updateEmail(int userId, String email) {
         userMapper.updateEmailById(userId, email);
     }
+
+    public void deleteUser(int userId) {userMapper.deleteUserById(userId); }
 
 
 

@@ -10,6 +10,7 @@ import com.korit.dreampath_back.exception.FieldError;
 import com.korit.dreampath_back.repository.UserRepository;
 import com.korit.dreampath_back.repository.UserRoleRepository;
 import com.korit.dreampath_back.security.jwt.JwtUtil;
+import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -130,4 +131,10 @@ public class UserService {
     public void updateEmail(User user, String email) {
         userRepository.updateEmail(user.getUserId(), email);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteUser(User user) {
+        userRepository.deleteUser(user.getUserId());
+    }
+
 }

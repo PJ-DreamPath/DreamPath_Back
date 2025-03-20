@@ -10,6 +10,8 @@ public interface UserMapper {
 
     int insert(User user);
 
+    int deleteUserById(int userId);
+
     User selectById(int userId);
     User selectByUsername(String username);
     User selectByPassword(String password);
@@ -37,6 +39,7 @@ public interface UserMapper {
 
         int updateEmailById(
                 @Param("userId") int userId,
-                @Param("email") String email
-    );
+                @Param("email") String email);
+
+
 }

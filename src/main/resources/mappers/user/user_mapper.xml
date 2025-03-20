@@ -68,6 +68,15 @@
             user_id = #{userId}
     </update>
 
+    <delete id="deleteUserById">
+        delete
+        from
+            user_tb
+        where
+            user_id = #{userId}
+
+    </delete>
+
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
         insert into user_tb
