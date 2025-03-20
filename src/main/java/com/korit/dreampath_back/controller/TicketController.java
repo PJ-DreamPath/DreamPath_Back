@@ -20,12 +20,12 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-    @GetMapping("/history")
+    @GetMapping("/purchase")
     public ResponseEntity<RespTicketPurchaseListDto> findAllByUserId(
             @AuthenticationPrincipal PrincipalUser principalUser,
             @ModelAttribute ReqTicketPurchaseDto dto
     ) {
-
+        System.out.println("호출됨 ");
        return ResponseEntity.ok().body(ticketService.getPointPurchase(principalUser, dto));
     }
 

@@ -25,7 +25,7 @@ react:
   server:
     protocol: http
     host: localhost
-    port: 5175
+    port: 5173
 
 ---
 
@@ -39,7 +39,7 @@ react:
   server:
     protocol: https
     host: ??? ?? ?? ??(ip ?? ???)
-    port: 5175
+    port: 5173
 
 ---
 
