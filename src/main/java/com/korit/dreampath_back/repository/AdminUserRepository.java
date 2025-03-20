@@ -1,6 +1,7 @@
 package com.korit.dreampath_back.repository;
 
 import com.korit.dreampath_back.entity.User;
+import com.korit.dreampath_back.entity.UserAdmin;
 import com.korit.dreampath_back.mapper.AdminUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,12 +20,17 @@ public class AdminUserRepository {
 
         return userRoleName;
     }
-    public Optional<List<User>> findAll() {
-        List<User> foundAllUsers = adminUserMapper.findAll();
-        return foundAllUsers.isEmpty() ? Optional.empty() : Optional.of(foundAllUsers);
-    }
 
     public Optional<Boolean>deleteById(int userId) {
         return adminUserMapper.deleteById(userId) < 1 ? Optional.empty() : Optional.of(true);
     }
+
+    public List<UserAdmin> getUserPageList(int startIndex, int limitCount, String order) {
+        return adminUserMapper.getAdminUserPage(startIndex, limitCount, order);
+    }
+
+    public int findAllUserCount() {
+        return adminUserMapper.findAllUserCount();
+    }
+
 }

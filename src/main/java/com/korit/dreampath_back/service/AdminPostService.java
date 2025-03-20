@@ -1,6 +1,6 @@
 package com.korit.dreampath_back.service;
 
-import com.korit.dreampath_back.dto.response.post.RespAdminPostListDto;
+import com.korit.dreampath_back.dto.response.admin.RespAdminPostListDto;
 import com.korit.dreampath_back.repository.AdminPostRepository;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,7 +7,6 @@
         <id property="pointId" column="point_id" />
         <result property="pointName" column="point_name" />
         <result property="pointPrice" column="point_price" />
-
     </resultMap>
 
     <resultMap id="userResultMap" type="com.korit.dreampath_back.entity.User">

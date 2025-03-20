@@ -1,6 +1,9 @@
 package com.korit.dreampath_back.config;
 
 import com.korit.dreampath_back.security.filter.JwtAuthenticationFilter;
+import com.korit.dreampath_back.security.handler.CustomAuthenticationEntryPoint;
+import com.korit.dreampath_back.security.oAuth2.CustomOAuth2SuccessHandler;
+import com.korit.dreampath_back.security.oAuth2.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,12 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    @Autowired
+    private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -35,7 +44,19 @@ public class SecurityConfig {
         http.formLogin(formLogin -> formLogin.disable());
         http.httpBasic(httpBasic -> httpBasic.disable());
 
+
+        http.oauth2Login(oauth2 -> {
+            oauth2.userInfoEndpoint(userInfoEndpoint -> {
+                userInfoEndpoint.userService(customOAuth2UserService);
+            });
+            oauth2.successHandler(customOAuth2SuccessHandler);
+        });
+
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling(exception -> {
+            exception.authenticationEntryPoint(customAuthenticationEntryPoint);
+        });
 
         http.authorizeHttpRequests(authorizeRequests ->{
             authorizeRequests.requestMatchers("/api/auth/**").permitAll()
