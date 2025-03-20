@@ -1,8 +1,13 @@
 package com.korit.dreampath_back.service;
 
-import com.korit.dreampath_back.dto.response.RespAdminUserDto;
+import com.korit.dreampath_back.dto.request.admin.ReqAdminUserDto;
+import com.korit.dreampath_back.dto.response.admin.RespAdminUserDto;
 import com.korit.dreampath_back.entity.User;
+import com.korit.dreampath_back.entity.UserAdmin;
+import com.korit.dreampath_back.entity.UserSearch;
+import com.korit.dreampath_back.mapper.AdminUserMapper;
 import com.korit.dreampath_back.repository.AdminUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,34 +30,22 @@ public class AdminUserService {
     }
 
 
-    public List<RespAdminUserDto> getAllUser() throws NotFoundException {
-        Optional<List<User>> optionalUsers = adminUserRepository.findAll();
-
-        List<User> users = optionalUsers.orElseThrow(() -> new NotFoundException("존재하는 회원이 없습니다."));
-        for(User user : users) {
-        }
-        List<RespAdminUserDto> dtos = new ArrayList<>();
-        for(User user : users) {
-            String userRoleName = getUserRoleName(user.getUserId());
-            RespAdminUserDto dto = RespAdminUserDto.builder()
-                    .userId(user.getUserId())
-                    .email(user.getEmail())
-                    .username(user.getUsername())
-                    .roleType(userRoleName)
-                    .nickname(user.getNickname())
-                    .createdAt(user.getCreatedAt())
-                    .phoneNumber(user.getPhoneNumber())
-                    .remainPoint(user.getRemainPoint())
-                    .build();
-            dtos.add(dto);
-        }
-
-        return dtos;
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteUser(int userId) throws NotFoundException {
         return adminUserRepository.deleteById(userId)
                 .orElseThrow(() -> new NotFoundException("해당 회원 ID가 존재하지 않습니다."));
+    }
+
+    public List<UserAdmin> getUserPageList(ReqAdminUserDto dto) {
+
+        int startIndex = (dto.getPage() - 1) * dto.getLimitCount();
+
+        List<UserAdmin> userList = adminUserRepository.getUserPageList( startIndex, dto.getLimitCount(), dto.getOrder());
+
+        return userList;
+    }
+
+    public int findAllAdminUser() {
+        return adminUserRepository.findAllUserCount();
     }
 }

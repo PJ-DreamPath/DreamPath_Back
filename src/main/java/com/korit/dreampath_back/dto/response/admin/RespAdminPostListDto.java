@@ -1,4 +1,4 @@
-package com.korit.dreampath_back.dto.response.post;
+package com.korit.dreampath_back.dto.response.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
