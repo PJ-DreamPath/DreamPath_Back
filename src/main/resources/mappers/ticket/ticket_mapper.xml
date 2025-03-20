@@ -29,19 +29,27 @@
 
     <select id="getTicketPurchaseList" resultMap="ticketPurchaseResultMap">
         select
-            pt.purchase_id,
-            pt.ticket_id,
-            pt.user_id,
             pt.created_at,
-
             tt.ticket_name,
             tt.price
         from
             purchase_tb pt
             left outer join ticket_tb tt on(tt.ticket_id = pt.ticket_id)
+        order by
+            <choose>
+                <when test="order == 'asc'">
+                    purchase_id asc,
+                </when>
+            </choose>
+            purchase_id desc
+        limit #{startIndex}, #{limitCount}
+    </select>
+    <select id="findAllTicketPurchase" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            purchase_tb
         where
-            pt.user_id = #{userid}
-
-
+            user_id = #{userId}
     </select>
 </mapper>

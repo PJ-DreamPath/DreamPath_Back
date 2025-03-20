@@ -1,6 +1,8 @@
 package com.korit.dreampath_back.controller;
 
 
+import com.korit.dreampath_back.dto.request.ReqTicketPurchaseDto;
+import com.korit.dreampath_back.dto.response.RespTicketPurchaseListDto;
 import com.korit.dreampath_back.entity.TicketPurchaseHistory;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.TicketService;
@@ -19,11 +21,12 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/history")
-    public ResponseEntity<List<TicketPurchaseHistory>> findAllByUserId(
-            @AuthenticationPrincipal PrincipalUser principalUser
+    public ResponseEntity<RespTicketPurchaseListDto> findAllByUserId(
+            @AuthenticationPrincipal PrincipalUser principalUser,
+            @ModelAttribute ReqTicketPurchaseDto dto
     ) {
 
-       return ResponseEntity.ok().body(ticketService.findAllByUserId(principalUser.getUser().getUserId()));
+       return ResponseEntity.ok().body(ticketService.getPointPurchase(principalUser, dto));
     }
 
 }
