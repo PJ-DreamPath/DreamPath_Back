@@ -27,6 +27,7 @@ import java.util.Map;
 @Validated
 @RestController
 @Api(tags = "관리자 API")
+@RequestMapping("/api/admin")
 public class AdminUserController {
 
     @Autowired
@@ -36,7 +37,7 @@ public class AdminUserController {
     private AdminPostService adminPostService;
 
 
-    @DeleteMapping("/admin/users/{userId}")
+    @DeleteMapping("/users/{userId}")
     @Operation(summary = "관리자 회원 삭제")
     public ResponseEntity<?> deleteUser(
             @Min(value = 1, message = "회원 ID는 1 이상의 정수입니다.")
@@ -45,13 +46,13 @@ public class AdminUserController {
         return ResponseEntity.ok().body(adminUserService.deleteUser(userId));
     }
 
-    @GetMapping("/admin/posts")
+    @GetMapping("/posts")
     @Operation(summary = "관리자 게시글 전체 조회")
     public ResponseEntity<List<RespAdminPostListDto>> findAllPosts() throws NotFoundException {
         return ResponseEntity.ok().body(adminPostService.getAdminPostList());
     }
 
-    @DeleteMapping("/admin/post/{postId}")
+    @DeleteMapping("/post/{postId}")
     @Operation(summary = "관리자 게시글 삭제")
     public ResponseEntity<?> deletePost(
             @Min(value = 1, message = "게시글 ID는 1 이상의 정수입니다.")
@@ -60,7 +61,7 @@ public class AdminUserController {
         return ResponseEntity.ok().body(adminPostService.deletePost(postId));
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/users")
     @Operation(summary = "관리자 회원 전체 조회")
     public ResponseEntity<?> getUserPageList(@ModelAttribute ReqAdminUserDto dto, @AuthenticationPrincipal PrincipalUser principalUser) {
         int userId = principalUser.getUser().getUserId();
