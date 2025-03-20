@@ -75,7 +75,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     User savedUser = userRepository.save(newUser);
                     UserRole userRole = UserRole.builder()
                             .userId(savedUser.getUserId())
-                            .roleId(1)
+                            .roleId(2)
                             .build();
                     userRoleRepository.save(userRole);
                     return userRepository.findByUsername(username).get();
