@@ -1,6 +1,6 @@
 package com.korit.dreampath_back.repository;
 
-import com.korit.dreampath_back.dto.response.post.RespAdminPostListDto;
+import com.korit.dreampath_back.dto.response.admin.RespAdminPostListDto;
 import com.korit.dreampath_back.mapper.AdminPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

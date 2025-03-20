@@ -1,4 +1,4 @@
-package com.korit.dreampath_back.dto.response;
+package com.korit.dreampath_back.dto.response.admin;
 
 import com.korit.dreampath_back.entity.User;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 @Data
