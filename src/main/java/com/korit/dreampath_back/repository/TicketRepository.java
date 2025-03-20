@@ -13,8 +13,12 @@ public class TicketRepository {
     @Autowired
     private TicketMapper ticketMapper;
 
-    public List<TicketPurchaseHistory> findAllByUserId(int userId) {
-        return ticketMapper.getTicketPurchaseList(userId);
+    public List<TicketPurchaseHistory> findAllByUserId(int userId, int startIndex, int limitCount, String order) {
+        return ticketMapper.getTicketPurchaseList(userId, startIndex, limitCount, order);
+    }
+
+    public int findAllTicketPurchaseCount(int userId) {
+        return ticketMapper.findAllTicketPurchase(userId);
     }
 }
 

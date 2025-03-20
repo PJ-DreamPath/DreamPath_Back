@@ -8,5 +8,12 @@ import java.util.List;
 
 @Mapper
 public interface TicketMapper {
-    List<TicketPurchaseHistory> getTicketPurchaseList( int userId);
+    List<TicketPurchaseHistory> getTicketPurchaseList(
+            int userId,
+            @Param("startIndex") int startIndex,
+            @Param("limitCount") int limitCount,
+            @Param("order") String order
+    );
+
+    int findAllTicketPurchase(int userId);
 }
