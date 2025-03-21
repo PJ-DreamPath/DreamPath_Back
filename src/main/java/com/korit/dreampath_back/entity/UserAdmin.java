@@ -31,4 +31,5 @@ public class UserAdmin {
 
     private int totalPrice;
 
+    private int totalUser;
 }

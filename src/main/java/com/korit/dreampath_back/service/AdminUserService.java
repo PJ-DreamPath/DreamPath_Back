@@ -22,6 +22,8 @@ public class AdminUserService {
 
     @Autowired
     private AdminUserRepository adminUserRepository;
+    @Autowired
+    private AdminUserMapper adminUserMapper;
 
     public String getUserRoleName(int userId) {
         String userRoleName = adminUserRepository.findUserRoleName(userId);
@@ -41,6 +43,12 @@ public class AdminUserService {
         int startIndex = (dto.getPage() - 1) * dto.getLimitCount();
 
         List<UserAdmin> userList = adminUserRepository.getUserPageList( startIndex, dto.getLimitCount(), dto.getOrder());
+
+        int totalUserCount = adminUserMapper.findAllUserCount();
+
+        for (UserAdmin userAdmin : userList) {
+            userAdmin.setTotalUser(totalUserCount);
+        }
 
         return userList;
     }
