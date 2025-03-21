@@ -109,16 +109,16 @@ public class PostController {
 
     @DeleteMapping("/posts/{postId}/like")
     @Operation(summary = "게시글 좋아요 취소")
-    public ResponseEntity<String> likePostCancel(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPostLikeDto likeDto) {
-        return postService.deletePostLike(principalUser.getUser(), likeDto)
+    public ResponseEntity<String> likePostCancel(@AuthenticationPrincipal PrincipalUser principalUser, @PathVariable int postId) {
+        return postService.deletePostLike(principalUser.getUser(), postId)
                 ? ResponseEntity.ok().body("좋아요취소완료")
                 : ResponseEntity.badRequest().body("좋아요취소실패");
     }
 
-    @GetMapping("/posts/my/like")
+    @GetMapping("/posts/{postId}/my/like")
     @Operation(summary = "게시글의 내 좋아요 조회")
-    public ResponseEntity<List<PostLike>> selectPostMyLike(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqPostLikeDto likeDto) {
-        System.out.println(likeDto);
-        return ResponseEntity.ok().body(postService.findPostMyLike(principalUser.getUser(), likeDto));
+    public ResponseEntity<PostLike> selectPostMyLike(@AuthenticationPrincipal PrincipalUser principalUser, @PathVariable int postId) {
+        System.out.println(postId);
+        return ResponseEntity.ok().body(postService.findPostMyLike(principalUser.getUser(), postId));
     }
 }
