@@ -11,9 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class MentoringCommentPostController {
 
-    @Autowired
-    private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<?>
 }
