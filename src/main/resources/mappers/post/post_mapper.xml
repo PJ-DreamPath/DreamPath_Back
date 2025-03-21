@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.dreampath_back.mapper.PostMapper">
-    <resultMap id="postResultMap" type="com.korit.dreampath_back.entity.PostDetail">
+    <resultMap id="postDetailResultMap" type="com.korit.dreampath_back.entity.PostDetail">
         <id property="postId" column="post_id"/>
         <result property="boardId" column="board_id"/>
         <result property="userId" column="user_id"/>
         <result property="categoryId" column="category_id"/>
+        <result property="categoryName" column="category_name"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="starPoint" column="star_point"/>
@@ -154,12 +155,13 @@
             </if>
         </where>
     </select>
-    <select id="selectPostDetail" resultMap="postResultMap">
+    <select id="selectPostDetail" resultMap="postDetailResultMap">
         select
             ptt.post_id,
             ptt.board_id,
             ptt.user_id,
             ptt.category_id,
+            ct.category_name as category_name,
             ptt.title,
             ptt.content,
             ptt.star_point,
@@ -191,6 +193,7 @@
             post_tb ptt
             left outer join user_tb ut on(ut.user_id = ptt.user_id)
             left outer join post_like_tb plt on(ptt.post_id = plt.post_id)
+            left outer join category_tb ct on(ct.category_id = ptt.category_id)
         where
             ptt.post_id = #{postId}
         group by
