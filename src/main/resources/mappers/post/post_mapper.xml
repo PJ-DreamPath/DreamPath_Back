@@ -7,7 +7,7 @@
         <id property="postId" column="post_id"/>
         <result property="boardId" column="board_id"/>
         <result property="userId" column="user_id"/>
-        <result property="mentoringCategoryId" column="mentoring_category_id"/>
+        <result property="categoryId" column="category_id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="starPoint" column="star_point"/>
@@ -61,7 +61,7 @@
             default,
             #{boardId},
             #{userId},
-            #{mentoringCategoryId},
+            #{categoryId},
             #{title},
             #{content},
             0,
@@ -81,7 +81,7 @@
             pt.post_id,
             pt.board_id,
             pt.user_id,
-            pt.mentoring_category_id,
+            pt.category_id,
             pt.title,
             pt.content,
             pt.status,
@@ -159,7 +159,7 @@
             ptt.post_id,
             ptt.board_id,
             ptt.user_id,
-            ptt.mentoring_category_id,
+            ptt.category_id,
             ptt.title,
             ptt.content,
             ptt.star_point,
@@ -209,7 +209,7 @@
         set
             title = #{title},
             content = #{content},
-            mentoring_category_id = #{mentoringCategoryId},
+            category_id = #{categoryId},
             mentoring_address = #{mentoringAddress},
             end_date = #{endDate},
             updated_at = now()

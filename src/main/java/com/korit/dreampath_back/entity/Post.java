@@ -19,7 +19,7 @@ public class Post {
     private int postId;
     private int boardId;
     private int userId;
-    private int mentoringCategoryId;
+    private int categoryId;
     private String title;
     private String content;
     private int starPoint;

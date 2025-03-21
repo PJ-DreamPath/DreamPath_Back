@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mentoring")
+@RequestMapping("/api/mentoring")
 public class ApplyController {
 
     @Autowired
