@@ -33,8 +33,7 @@ public class PostService {
     @Autowired
     private BoardRepository boardRepository;
 
-    public int getPostListCountAllBySearchTxt(String boardName, String searchTxt) {
-        int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
+    public int getPostListCountAllBySearchTxt(int boardId, String searchTxt) {
         System.out.println(boardId);
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
@@ -63,9 +62,9 @@ public class PostService {
         return postRepository.addPost(newPost) > 0 ? true : false;
     }
 
-    public List<PostListPage> getPostList(String boardName, ReqPostSearchDto searchDto) throws NotFoundException {
+    public List<PostListPage> getPostList(int boardId, ReqPostSearchDto searchDto) throws NotFoundException {
 
-        int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
+//        int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
 
         int startIdx = (searchDto.getPage() - 1) * searchDto.getLimitCount();
 

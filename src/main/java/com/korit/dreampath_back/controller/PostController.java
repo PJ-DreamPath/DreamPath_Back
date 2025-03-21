@@ -39,14 +39,14 @@ public class PostController {
                 : ResponseEntity.badRequest().body("등록실패");
     }
 
-    @GetMapping("/posts/{boardName}")
+    @GetMapping("/posts/{boardId}")
     @Operation(summary = "게시글 전체, 다건 조회")
     public ResponseEntity<RespPostListDto> getPostList(
-            @PathVariable String boardName,
+            @PathVariable int boardId,
             @ModelAttribute ReqPostSearchDto searchDto
     ) throws NotFoundException {
 
-        int totalPostListCount = postService.getPostListCountAllBySearchTxt(boardName, searchDto.getSearchTxt());
+        int totalPostListCount = postService.getPostListCountAllBySearchTxt(boardId, searchDto.getSearchTxt());
 
         int totalPages = totalPostListCount % searchDto.getLimitCount() == 0
                 ? totalPostListCount / searchDto.getLimitCount()
@@ -60,7 +60,7 @@ public class PostController {
                 .isFirstPage(searchDto.getPage() == 1)
                 .isLastPage(searchDto.getPage() == totalPages)
                 .nextPage(searchDto.getPage() != totalPages ? searchDto.getPage() + 1 : 0)
-                .postList(postService.getPostList(boardName, searchDto))
+                .postList(postService.getPostList(boardId, searchDto))
                 .build();
         return ResponseEntity.ok().body(newRespDto);
 
