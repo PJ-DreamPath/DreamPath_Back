@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface PostLikeMapper {
     //    postId에 해당하는 post에 post_like한 user 찾기
-    List<PostLike> findLikeUserByUserIdAndPostId (@Param("userId") int userId, @Param("postId") int postId);
+    PostLike findLikeUserByUserIdAndPostId (@Param("userId") int userId, @Param("postId") int postId);
 
 //    좋아요
     int addPostLike (@Param("userId") int userId, @Param("postId") int postId);

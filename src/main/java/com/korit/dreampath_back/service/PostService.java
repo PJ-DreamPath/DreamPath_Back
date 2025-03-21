@@ -105,23 +105,13 @@ public class PostService {
 //    }
 
     public boolean addPostLike(User user, int postId) {
-        System.out.println();
-        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), postId).get().isEmpty()) {
-            return postLikeRepository.addPostLike(user.getUserId(), postId) > 0 ? true : false;
-        }
-            return false;
-
+        return postLikeRepository.addPostLike(user.getUserId(), postId) > 0 ? true : false;
     }
-    public boolean deletePostLike(User user, ReqPostLikeDto likeDto) {
-        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).get().isEmpty()) {
-            return postLikeRepository.deletePostLike(user.getUserId(), likeDto.getPostId()) > 0 ? true : false;
-        }
-            return false;
+    public boolean deletePostLike(User user, int postId) {
+        return postLikeRepository.deletePostLike(user.getUserId(), postId) > 0 ? true : false;
     }
-    public List<PostLike> findPostMyLike(User user, ReqPostLikeDto likeDto) {
-
-            return postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).get();
-
+    public PostLike findPostMyLike(User user, int postId) {
+        return postLikeRepository.findPostLikeUserByUserId(user.getUserId(), postId);
     }
 
     public List<Board> findAllBoard() {
