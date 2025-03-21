@@ -39,12 +39,11 @@ public class PostService {
     }
     public boolean addPost(User user, ReqPostCreateDto createDto) {
 
-        final String PROFILE_IMG_FILE_PATH = "/upload/user/mentoring";
+        final String PROFILE_IMG_FILE_PATH = "/upload/user/post";
         String saveFilename = fileService.saveFile(PROFILE_IMG_FILE_PATH, createDto.getFile()); // 폴더에 저정
 
         LocalDate today = LocalDate.now();
 
-        System.out.println(createDto);
 
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
@@ -80,6 +79,14 @@ public class PostService {
     }
 
     public boolean updatedPost(User user, ReqPostUpdateDto updateDto) {
+
+
+        final String PROFILE_IMG_FILE_PATH = "/upload/user/post";
+        String saveFilename = fileService.saveFile(PROFILE_IMG_FILE_PATH, updateDto.getFile()); // 폴더에 저정
+
+        LocalDate today = LocalDate.now();
+
+
         Post newPost = Post.builder()
                 .postId(updateDto.getPostId())
                 .userId(user.getUserId())
@@ -89,7 +96,8 @@ public class PostService {
                 .mentoringAddress(updateDto.getMentoringAddress())
                 .startDate(updateDto.getStartDate())
                 .endDate(updateDto.getEndDate())
-                .attachedFiles(updateDto.getAttachedFiles())
+                .status(updateDto.getStartDate().isBefore(today) && updateDto.getEndDate().isAfter(today) ? "recruiting" : "closedRecruitment")
+                .attachedFiles(saveFilename)
                 .build();
 
         return postRepository.updatedPost(newPost) > 0 ? true : false;
