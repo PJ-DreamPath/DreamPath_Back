@@ -4,11 +4,7 @@ import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostLikeDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
-import com.korit.dreampath_back.entity.Board;
-import com.korit.dreampath_back.entity.Post;
-import com.korit.dreampath_back.entity.PostListPage;
-import com.korit.dreampath_back.entity.PostLike;
-import com.korit.dreampath_back.entity.User;
+import com.korit.dreampath_back.entity.*;
 import com.korit.dreampath_back.repository.BoardRepository;
 import com.korit.dreampath_back.repository.PostLikeRepository;
 import com.korit.dreampath_back.repository.PostRepository;
@@ -78,7 +74,7 @@ public class PostService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Post getPostDetail(int postId) throws NotFoundException {
+    public PostDetail getPostDetail(int postId) throws NotFoundException {
 //        조회수 올리기
         postRepository.updatePostViewCount(postId);
         return postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));

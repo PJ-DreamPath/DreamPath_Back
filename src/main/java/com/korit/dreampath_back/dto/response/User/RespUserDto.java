@@ -27,4 +27,13 @@ public class RespUserDto {
     @Schema(description = "프로필 이미지", example = "profile.png")
     private String profileImg;
 
+    @Schema(description = "별점", example = "5")
+    private int starPoint;
+
+    @Schema(description = "멘토링 갯수", example = "17")
+    private int remaining;
+
+    @Schema(description = "남은 포인트", example = "4000")
+    private int remainPoint;
+
 }

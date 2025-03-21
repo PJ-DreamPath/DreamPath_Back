@@ -1,6 +1,5 @@
 package com.korit.dreampath_back.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,17 +11,9 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostListPage {
-    private int postId;
-    private int boardId;
+public class MentoringRegister {
+    private int mentoringRegisterId;
     private int userId;
-    private String title;
-    private String content;
-
-    private String status;
-    private LocalDateTime createdAt;
-
-    private int likeCount;
-
-    private User user;
+    private int postId;
+    LocalDateTime applyAt;
 }

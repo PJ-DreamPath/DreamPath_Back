@@ -6,21 +6,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostListPage {
+public class PostDetail {
+
     private int postId;
     private int boardId;
     private int userId;
+    private int mentoringCategoryId;
     private String title;
     private String content;
-
+    private int starPoint;
+    private String mentoringAddress;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String status;
+
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private int viewCount;
+    private String attachedFiles;
 
     private int likeCount;
 

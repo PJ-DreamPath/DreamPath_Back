@@ -1,6 +1,7 @@
 package com.korit.dreampath_back.repository;
 
 import com.korit.dreampath_back.entity.Post;
+import com.korit.dreampath_back.entity.PostDetail;
 import com.korit.dreampath_back.entity.PostListPage;
 import com.korit.dreampath_back.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class PostRepository {
     }
 
 //    게시글 상세 조회
-    public Optional<Post> findPostDetail(int postId) {
+    public Optional<PostDetail> findPostDetail(int postId) {
         return Optional.ofNullable(postMapper.selectPostDetail(postId));
     }
 

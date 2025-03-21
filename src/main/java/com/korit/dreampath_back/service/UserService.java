@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.service;
 
+import com.korit.dreampath_back.dto.request.ReqApplyEmailDto;
 import com.korit.dreampath_back.dto.request.ReqLoginDto;
 import com.korit.dreampath_back.dto.request.ReqSignupDto;
 import com.korit.dreampath_back.dto.response.User.RespUserDto;

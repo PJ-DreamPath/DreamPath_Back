@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -12,17 +13,16 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostListPage {
+public class MentoringComment {
+
+    private int commentId;
     private int postId;
-    private int boardId;
     private int userId;
-    private String title;
     private String content;
 
-    private String status;
+    private String starPoint;
+
+    private LocalDateTime updateAt;
     private LocalDateTime createdAt;
 
-    private int likeCount;
-
-    private User user;
 }
