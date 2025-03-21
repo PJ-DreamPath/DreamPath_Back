@@ -234,7 +234,7 @@
 
     <update id="updatePostStatusRecruiting">
         update post_tb
-        set status = "Recruiting"
+        set status = "recruiting"
         where post_id = #{postId}
     </update>
 
