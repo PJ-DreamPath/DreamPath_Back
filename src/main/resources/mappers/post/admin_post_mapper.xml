@@ -25,16 +25,15 @@
         SELECT
             p.post_id,
             p.title,
-            u.nickname,
+            COALESCE(u.nickname, '존재하지 않는 닉네임 입니다.') AS nickname,
             b.board_name,
             p.created_at,
             (SELECT COUNT(*) FROM comment_tb c WHERE c.post_id = p.post_id) AS comment_count,
             p.view_count
-
         FROM post_tb p
 
-        JOIN user_tb u ON p.user_id = u.user_id
-        JOIN board_tb b ON p.board_id = b.board_id
+        LEFT OUTER JOIN user_tb u ON p.user_id = u.user_id
+        LEFT OUTER JOIN board_tb b ON p.board_id = b.board_id
 
         order by
             <choose>
