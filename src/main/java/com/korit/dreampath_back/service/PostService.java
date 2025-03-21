@@ -128,4 +128,16 @@ public class PostService {
         return boardRepository.findAll();
     }
 
+    public String updatePostStatus(int postId) {
+        String status = "";
+        if(postRepository.isRecruited(postId)){
+            postRepository.updatePostStatusRecruiting(postId);
+            status = "recruiting";
+        } else {
+            postRepository.updatePostStatusClosedRecruiting(postId);
+            status = "closedRecruitment";
+        }
+        return status;
+    }
+
 }
