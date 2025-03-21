@@ -76,7 +76,7 @@ public class PostController {
 
     @PutMapping("/posts/{postId}")
     @Operation(summary = "게시글 수정")
-    public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPostUpdateDto updateDto) {
+    public ResponseEntity<String> updatePost(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqPostUpdateDto updateDto) {
         return postService.updatedPost(principalUser.getUser(), updateDto)
                 ? ResponseEntity.ok().body("수정완료")
                 : ResponseEntity.badRequest().body("수정실패");
