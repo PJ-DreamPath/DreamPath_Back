@@ -196,6 +196,13 @@
         group by
             ptt.post_id
     </select>
+    <select id="getPostStatusByPostId" resultType="java.lang.String">
+        select
+            status
+        from post_tb
+        where
+            post_id = #{postId}
+    </select>
 
     <update id="updatedPost">
         update post_tb
@@ -217,6 +224,18 @@
             view_count = view_count + 1
         where
             post_id = #{postId}
+    </update>
+
+    <update id="updatePostStatusClosedRecruiting">
+        update post_tb
+        set status = "closedRecruitment"
+        where post_id = #{postId}
+    </update>
+
+    <update id="updatePostStatusRecruiting">
+        update post_tb
+        set status = "Recruiting"
+        where post_id = #{postId}
     </update>
 
     <delete id="deletePost">

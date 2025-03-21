@@ -21,8 +21,8 @@ public class ApplyController {
     @PostMapping("/apply")
     public ResponseEntity<?> sendApplyMail(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqApplyEmailDto reqApplyEmailDto) throws Exception {
 
-        applyService.sendApplyMail(reqApplyEmailDto, principalUser);
-        return ResponseEntity.ok().build();
+        String message = applyService.sendApplyMail(reqApplyEmailDto, principalUser);
+        return ResponseEntity.ok().body(message);
     }
 
 }

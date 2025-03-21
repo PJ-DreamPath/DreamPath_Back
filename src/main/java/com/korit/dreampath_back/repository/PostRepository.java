@@ -52,4 +52,20 @@ public class PostRepository {
         postMapper.updatePostViewCount(postId);
     }
 
+//    게시글 상태 수정
+    public int updatePostStatusClosedRecruiting(int postId) {
+        return postMapper.updatePostStatusClosedRecruiting(postId);
+    }
+
+    public int updatePostStatusRecruiting(int postId) {
+        return postMapper.updatePostStatusRecruiting(postId);
+    }
+
+    public boolean isRecruited(int postId) {
+        System.out.println(postMapper.getPostStatusByPostId(postId));
+        return postMapper.getPostStatusByPostId(postId).equals("closedRecruitment");
+    }
 }
+
+
+

@@ -40,4 +40,10 @@ public interface PostMapper {
 
 //    게시글 조회수
     int updatePostViewCount(int postId);
+
+    int updatePostStatusClosedRecruiting(int postId);
+
+    int updatePostStatusRecruiting(int postId);
+
+    String getPostStatusByPostId(int postId);
 }
