@@ -15,7 +15,7 @@ public class PostLikeRepository {
     private PostLikeMapper postLikeMapper;
 
     public Optional<List<PostLike>> findPostLikeUserByUserId(int userId, int postId) {
-        return Optional.ofNullable(postLikeMapper.findLikeUserByUserIdAndPostId(userId, postId));
+        return Optional.of(postLikeMapper.findLikeUserByUserIdAndPostId(userId, postId));
     }
 
     public int addPostLike(int userId, int postId) {

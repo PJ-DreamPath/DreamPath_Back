@@ -100,8 +100,9 @@ public class PostController {
     @Operation(summary = "게시글 좋아요")
     public ResponseEntity<String> likePost(
             @AuthenticationPrincipal PrincipalUser principalUser,
-            @RequestBody ReqPostLikeDto likeDto) {
-        return postService.addPostLike(principalUser.getUser(), likeDto)
+            @PathVariable int postId) {
+
+        return postService.addPostLike(principalUser.getUser(), postId)
                 ? ResponseEntity.ok().body("좋아요완료")
                 : ResponseEntity.badRequest().body("좋아요실패");
     }
