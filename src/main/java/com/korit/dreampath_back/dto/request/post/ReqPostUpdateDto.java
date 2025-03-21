@@ -12,7 +12,7 @@ public class ReqPostUpdateDto {
     @Schema(description = "게시글 고유 아이디", required = true)
     private int postId;
     @Schema(description = "멘토링 카데고리 아이디")
-    private int mentoringCategoryId;
+    private int categoryId;
     @Schema(description = "게시글 제목", required = true)
     private String title;
     @Schema(description = "게시글 내용", required = true)

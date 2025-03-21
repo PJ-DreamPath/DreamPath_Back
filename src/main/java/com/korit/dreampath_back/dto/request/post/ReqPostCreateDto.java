@@ -13,7 +13,7 @@ public class ReqPostCreateDto {
     @Schema(description = "게시판 타입 아이디", required = true)
     private int boardId;
     @Schema(description = "멘토링 카데고리 아이디")
-    private int mentoringCategoryId;
+    private int categoryId;
     @Schema(description = "게시글 제목", required = true)
     private String title;
     @Schema(description = "게시글 내용", required = true)
