@@ -104,23 +104,24 @@ public class PostService {
 //        postRepository.updatePostViewCount(postId);
 //    }
 
-    public boolean addPostLike(User user, ReqPostLikeDto likeDto) {
-        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).isPresent()) {
-            return false;
+    public boolean addPostLike(User user, int postId) {
+        System.out.println();
+        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), postId).get().isEmpty()) {
+            return postLikeRepository.addPostLike(user.getUserId(), postId) > 0 ? true : false;
         }
-        return postLikeRepository.addPostLike(user.getUserId(), likeDto.getPostId()) > 0 ? true : false;
+            return false;
+
     }
     public boolean deletePostLike(User user, ReqPostLikeDto likeDto) {
-        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).isEmpty()) {
-            return false;
+        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).get().isEmpty()) {
+            return postLikeRepository.deletePostLike(user.getUserId(), likeDto.getPostId()) > 0 ? true : false;
         }
-        return postLikeRepository.deletePostLike(user.getUserId(), likeDto.getPostId()) > 0 ? true : false;
+            return false;
     }
     public List<PostLike> findPostMyLike(User user, ReqPostLikeDto likeDto) {
-        if(postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).isEmpty()) {
-            return new ArrayList<>();
-        }
-        return postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).get();
+
+            return postLikeRepository.findPostLikeUserByUserId(user.getUserId(), likeDto.getPostId()).get();
+
     }
 
     public List<Board> findAllBoard() {
