@@ -19,6 +19,7 @@ public interface UserMapper {
     User selectByUsername(String username);
     User selectByPassword(String password);
     User selectByNickname(String nickname);
+    User selectByRolename(String roleName);
     User selectByEmail(String email);
     User selectByAccountNumber(String accountNumber);
     User selectByPhoneNumber(String phoneNumber);
@@ -28,9 +29,11 @@ public interface UserMapper {
     User selectByStarPoint(String starPoint);
     User selectByRoleList(String roleList);
 
+
     int updateProfileImgById(
             @Param("userId") int userId,
             @Param("profileImg") String profileImg);
+
 
     int updateNicknameById(
             @Param("userId") int userId,

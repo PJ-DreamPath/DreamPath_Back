@@ -1,6 +1,7 @@
 package com.korit.dreampath_back.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class User {
     private int userId;
 
     private String username;
+    private String roleName;
     @JsonIgnore
     private String password;
     private String email;
@@ -39,5 +41,6 @@ public class User {
     private Set<UserRole> userRoles;
 
     private LocalDateTime createdAt;
+
 
 }

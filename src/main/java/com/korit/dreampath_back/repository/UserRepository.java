@@ -23,6 +23,7 @@ public class UserRepository {
         return Optional.ofNullable(userMapper.selectByUsername(username));
     }
 
+
     public Optional<User> findByPassword(String password) {
         return Optional.ofNullable(userMapper.selectByPassword(password));
     }
@@ -62,6 +63,8 @@ public class UserRepository {
     public Optional<User> findByRoleList(String roleList) {
         return Optional.ofNullable(userMapper.selectByRoleList(roleList));
     }
+
+
 
 
     public void updateProfileImg(int userId, String profileImg) {
