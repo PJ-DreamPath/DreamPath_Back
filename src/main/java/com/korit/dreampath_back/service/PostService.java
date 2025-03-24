@@ -8,6 +8,7 @@ import com.korit.dreampath_back.entity.*;
 import com.korit.dreampath_back.repository.BoardRepository;
 import com.korit.dreampath_back.repository.PostLikeRepository;
 import com.korit.dreampath_back.repository.PostRepository;
+import com.korit.dreampath_back.repository.UserRepository;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,18 +34,25 @@ public class PostService {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public int getPostListCountAllBySearchTxt(int boardId, String searchTxt) {
         System.out.println(boardId);
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
     public boolean addPost(User user, ReqPostCreateDto createDto) {
+//        remaining이 1보다 작으면 등록 안됨
+        if(user.getRemaining() < 1 ) {
+            return false;
+        }
 
         final String PROFILE_IMG_FILE_PATH = "/upload/user/post";
         String saveFilename = fileService.saveFile(PROFILE_IMG_FILE_PATH, createDto.getFile()); // 폴더에 저정
 
         LocalDate today = LocalDate.now();
 
-
+        userRepository.remainingCountByUserId(user.getUserId());
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
                 .userId(user.getUserId())
@@ -87,6 +95,7 @@ public class PostService {
         LocalDate today = LocalDate.now();
 
 
+
         Post newPost = Post.builder()
                 .postId(updateDto.getPostId())
                 .userId(user.getUserId())
@@ -99,6 +108,8 @@ public class PostService {
                 .status((updateDto.getStartDate().isBefore(today) || updateDto.getStartDate().isEqual(today)) && (updateDto.getEndDate().isAfter(today) || updateDto.getEndDate().isEqual(today)) ? "recruiting" : "closedRecruitment")
                 .attachedFiles(saveFilename)
                 .build();
+
+
 
         return postRepository.updatedPost(newPost) > 0 ? true : false;
     }
