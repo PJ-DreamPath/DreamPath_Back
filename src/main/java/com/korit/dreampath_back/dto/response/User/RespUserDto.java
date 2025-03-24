@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Data
 @Schema(description = "사용자 조회 수정 DTO")
@@ -17,6 +19,9 @@ public class RespUserDto {
 
     @Schema(description = "사용자명", example = "user12")
     private String username;
+
+    @Schema(description = "사용자 역할명", example = "멘토")
+    private String roleName;
 
     @Schema(description = "닉네임", example = "nickname")
     private String nickname;
@@ -36,4 +41,6 @@ public class RespUserDto {
     @Schema(description = "남은 포인트", example = "4000")
     private int remainPoint;
 
+    @Schema(description = "가입 날짜")
+    private LocalDateTime createdAt;
 }
