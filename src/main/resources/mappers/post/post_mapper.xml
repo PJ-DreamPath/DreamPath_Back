@@ -108,7 +108,7 @@
         from
             post_tb pt
             left outer join user_tb ut on(ut.user_id = pt.user_id)
-            left outer join post_like_tb plt on(pt.post_id = plt.post_id)
+            left outer join post_like_tb plt on(plt.post_id = pt.post_id)
         <where>
             pt.board_id = #{boardId}
             <if test="searchTxt != null and searchTxt != ''">
@@ -143,11 +143,8 @@
                 <when test="order == 'startDesc'">
                     star_point desc,
                 </when>
-                <when test="order == 'commentDesc'">
-                    viewCount desc,
-                </when>
                 <when test="order == 'likeDesc'">
-                    likeCount desc
+                    like_count desc,
                 </when>
             </choose>
             post_id desc
