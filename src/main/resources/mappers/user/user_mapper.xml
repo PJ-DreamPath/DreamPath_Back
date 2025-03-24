@@ -463,6 +463,43 @@
         ut.roleList = #{roleList}
     </select>
 
+    <select id="findAllMyMentoring" resultType="com.korit.dreampath_back.entity.MyMentoringSearch">
+        select
+            pt.status as status,
+            pt.title as title,
+            pt.created_at as createdAt,
+            (select count(*) from comment_tb ct where ct.post_id = pt.post_id) as commentCount,
+            (select count(*) from post_like_tb plt where plt.post_id = pt.post_id) as likeCount,
+            pt.view_count as viewCount
+        from
+            post_tb pt
+        where
+            pt.user_id = #{userId}
+            <if test ="searchText != null and searchText != ''">
+                and pt.title like concat("%", #{searchText}, "%")
+            </if>
+        order by
+            <choose>
+                <when test="order == 'asc'">
+                    post_id asc,
+                </when>
+            </choose>
+            post_id desc
+        limit #{startIndex}, #{limitCount}
+    </select>
+
+    <select id="getMyMentoringListCountBySearchText" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            post_tb
+        <where>
+            user_id = #{userId}
+            <if test="searchText != null and searchText != ''">
+                and title like concat("%", #{searchText}, "%")
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

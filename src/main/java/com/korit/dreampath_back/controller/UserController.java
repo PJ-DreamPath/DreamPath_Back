@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.controller;
 
+import com.korit.dreampath_back.dto.request.ReqMyMentoringSearchDto;
 import com.korit.dreampath_back.dto.request.User.ReqUserUpdateDto;
 import com.korit.dreampath_back.dto.response.User.RespUserDto;
 import com.korit.dreampath_back.entity.User;
@@ -87,6 +88,17 @@ public class UserController {
 
         userService.deleteUser(principalUser.getUser());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/user/me/mentoring")
+    @Operation(summary = "내 멘토링 내역 조회")
+    public ResponseEntity<?> getMyMentoring(
+            @AuthenticationPrincipal PrincipalUser principalUser,
+            @ModelAttribute ReqMyMentoringSearchDto dto
+            ) {
+
+        System.out.println(dto);
+        return ResponseEntity.ok().body(userService.getMyMentoring(principalUser, dto));
     }
 
 }

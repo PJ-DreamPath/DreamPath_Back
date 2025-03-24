@@ -15,11 +15,8 @@
     </resultMap>
 
     <resultMap id="ticketPurchaseResultMap" type="com.korit.dreampath_back.entity.TicketPurchaseHistory">
-        <id property="purchaseId" column="purchase_id" />
-        <result property="ticketId" column="ticket_id" />
-        <result property="userId" column="user_id" />
-        <result property="createdAt" column="created_at" />
 
+        <result property="createdAt" column="created_at" />
 
         <result property="ticketName" column="ticket_name"/>
         <result property="price" column="price"/>
@@ -46,7 +43,7 @@
     </select>
     <select id="findAllTicketPurchase" resultType="java.lang.Integer">
         select
-            count(*)
+            count(purchase_id)
         from
             purchase_tb
         where

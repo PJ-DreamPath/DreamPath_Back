@@ -2,7 +2,9 @@ package com.korit.dreampath_back.service;
 
 import com.korit.dreampath_back.dto.request.ReqApplyEmailDto;
 import com.korit.dreampath_back.dto.request.ReqLoginDto;
+import com.korit.dreampath_back.dto.request.ReqMyMentoringSearchDto;
 import com.korit.dreampath_back.dto.request.ReqSignupDto;
+import com.korit.dreampath_back.dto.response.RespMyMentoringList;
 import com.korit.dreampath_back.dto.response.User.RespUserDto;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.entity.UserRole;
@@ -137,5 +139,31 @@ public class UserService {
     public void deleteUser(User user) {
         userRepository.deleteUser(user.getUserId());
     }
+
+
+    public RespMyMentoringList getMyMentoring(PrincipalUser principalUser, ReqMyMentoringSearchDto dto) {
+        int userId = principalUser.getUser().getUserId();
+
+        int totalMyMentoringListCount = userRepository.findMyMentoringCountBySearchText(userId, dto.getSearchText());
+        int totalPages = totalMyMentoringListCount % dto.getLimitCount() == 0
+                ? totalMyMentoringListCount / dto.getLimitCount()
+                : totalMyMentoringListCount / dto.getLimitCount() + 1;
+
+        int startIndex = (dto.getPage()-1) * dto.getLimitCount();
+        RespMyMentoringList respDto = RespMyMentoringList.builder()
+                .page(dto.getPage())
+                .limitCount(dto.getLimitCount())
+                .totalPages(totalPages)
+                .totalElements(totalMyMentoringListCount)
+                .isFirstPage(dto.getPage() == 1)
+                .isLastPage(dto.getPage() == totalPages)
+                .nextPage(dto.getPage() == totalPages ? totalPages : dto.getPage() + 1)
+                .myMentoringSearchList(userRepository.findAllMentoring(userId, startIndex, dto.getLimitCount(), dto.getOrder(), dto.getSearchText()))
+                .build();
+
+        return respDto;
+    }
+
+
 
 }
