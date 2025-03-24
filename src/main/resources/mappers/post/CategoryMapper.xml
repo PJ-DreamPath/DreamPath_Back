@@ -8,6 +8,7 @@
         select
             category_id as categoryId,
             category_name as categoryName,
+            category_name_kor as categoryNameKor,
             board_id as boardId
         from
             category_tb
