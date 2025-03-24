@@ -144,10 +144,10 @@
                     star_point desc,
                 </when>
                 <when test="order == 'commentDesc'">
-                    viewCount asc
+                    viewCount desc,
                 </when>
                 <when test="order == 'likeDesc'">
-                    likeCount asc
+                    likeCount desc
                 </when>
             </choose>
             post_id desc
