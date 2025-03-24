@@ -54,7 +54,7 @@ public class PostService {
                 .mentoringAddress(createDto.getMentoringAddress())
                 .startDate(createDto.getStartDate())
                 .endDate(createDto.getEndDate())
-                .status(createDto.getStartDate().isBefore(today) && createDto.getEndDate().isAfter(today) ? "recruiting" : "closedRecruitment")
+                .status((createDto.getStartDate().isBefore(today) || createDto.getStartDate().isEqual(today)) && (createDto.getEndDate().isAfter(today) || createDto.getEndDate().isEqual(today)) ? "recruiting" : "closedRecruitment")
                 .attachedFiles(saveFilename)
                 .build();
 
@@ -96,7 +96,7 @@ public class PostService {
                 .mentoringAddress(updateDto.getMentoringAddress())
                 .startDate(updateDto.getStartDate())
                 .endDate(updateDto.getEndDate())
-                .status(updateDto.getStartDate().isBefore(today) && updateDto.getEndDate().isAfter(today) ? "recruiting" : "closedRecruitment")
+                .status((updateDto.getStartDate().isBefore(today) || updateDto.getStartDate().isEqual(today)) && (updateDto.getEndDate().isAfter(today) || updateDto.getEndDate().isEqual(today)) ? "recruiting" : "closedRecruitment")
                 .attachedFiles(saveFilename)
                 .build();
 
