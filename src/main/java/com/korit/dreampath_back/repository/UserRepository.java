@@ -1,10 +1,12 @@
 package com.korit.dreampath_back.repository;
 
+import com.korit.dreampath_back.entity.MyMentoringSearch;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -89,5 +91,21 @@ public class UserRepository {
         System.out.println(user+"!!!!!!!!!!!!!!!!!");
         userMapper.insert(user);
         return user;
+    }
+
+    public int findMyMentoringCountBySearchText(int userId, String searchText) {
+        return userMapper.getMyMentoringListCountBySearchText(userId, searchText);
+    }
+
+    public List<MyMentoringSearch> findAllMentoring(int userId, int startIndex, int limitCount, String order, String searchText) {
+        System.out.println(userId);
+        System.out.println("startIndex: " + startIndex);
+        System.out.println("limitCount: " + limitCount);
+        System.out.println(order);
+        System.out.println("searchText: " +searchText);
+        List<MyMentoringSearch> myMentoringSearches = userMapper.findAllMyMentoring(userId, startIndex, limitCount, searchText, order);
+        System.out.println(myMentoringSearches);
+
+        return myMentoringSearches;
     }
 }

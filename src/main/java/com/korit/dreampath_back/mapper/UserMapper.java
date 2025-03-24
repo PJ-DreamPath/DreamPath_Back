@@ -1,9 +1,12 @@
 package com.korit.dreampath_back.mapper;
 
 
+import com.korit.dreampath_back.entity.MyMentoringSearch;
 import com.korit.dreampath_back.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -25,21 +28,33 @@ public interface UserMapper {
     User selectByTicketId(String ticketId);
     User selectByStarPoint(String starPoint);
     User selectByRoleList(String roleList);
-        int updateProfileImgById(
-                @Param("userId") int userId,
-                @Param("profileImg") String profileImg);
 
-        int updateNicknameById(
-                @Param("userId") int userId,
-                @Param("nickname") String nickname);
 
-        int updatePasswordById(
-                @Param("userId") int userId,
-                @Param("password") String password);
+    int updateProfileImgById(
+            @Param("userId") int userId,
+            @Param("profileImg") String profileImg);
 
-        int updateEmailById(
-                @Param("userId") int userId,
-                @Param("email") String email);
 
+    int updateNicknameById(
+            @Param("userId") int userId,
+            @Param("nickname") String nickname);
+
+    int updatePasswordById(
+            @Param("userId") int userId,
+            @Param("password") String password);
+
+    int updateEmailById(
+            @Param("userId") int userId,
+            @Param("email") String email);
+
+    int getMyMentoringListCountBySearchText(int userId, String searchText);
+
+    List<MyMentoringSearch> findAllMyMentoring(
+            @Param("userId") int userId,
+            @Param("startIndex") int startIndex,
+            @Param("limitCount") int limitCount,
+            @Param("searchText") String searchText,
+            @Param("order") String order
+    );
 
 }
