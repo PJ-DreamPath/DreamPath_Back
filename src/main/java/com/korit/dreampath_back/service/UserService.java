@@ -46,7 +46,9 @@ public class UserService {
                 .username(user.getUsername())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
+                .roleName(user.getRoleName())
                 .profileImg(user.getProfileImg() == null ? "default.png" : user.getProfileImg())
+                .createdAt(user.getCreatedAt())
                 .build();
     }
 
