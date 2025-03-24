@@ -20,6 +20,7 @@ public class PostDetail {
     private int userId;
     private int categoryId;
     private String categoryName;
+    private String categoryNameKor;
     private String title;
     private String content;
     private int starPoint;

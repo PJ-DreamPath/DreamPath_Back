@@ -9,6 +9,7 @@
         <result property="userId" column="user_id"/>
         <result property="categoryId" column="category_id"/>
         <result property="categoryName" column="category_name"/>
+        <result property="categoryNameKor" column="category_name_kor"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="starPoint" column="star_point"/>
@@ -109,15 +110,27 @@
             left outer join user_tb ut on(ut.user_id = pt.user_id)
             left outer join post_like_tb plt on(pt.post_id = plt.post_id)
         <where>
-            board_id = #{boardId}
+            pt.board_id = #{boardId}
             <if test="searchTxt != null and searchTxt != ''">
-                and title like concat("%", #{searchTxt} , "%")
+                and pt.title like concat("%", #{searchTxt} , "%")
             </if>
             <if test="order != null and order == 'recruiting'">
-                and status = "recruiting"
+                and pt.status = "recruiting"
             </if>
             <if test="order != null and order == 'closedRecruitment'">
-                and status = "closedRecruitment"
+                and pt.status = "closedRecruitment"
+            </if>
+            <if test="order != null and order == 'back'">
+                and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "back")
+            </if>
+            <if test="order != null and order == 'front'">
+                and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "front")
+            </if>
+            <if test="order != null and order == 'security'">
+                and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "security")
+            </if>
+            <if test="order != null and order == 'full'">
+                and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "full")
             </if>
         </where>
         group by
@@ -133,12 +146,9 @@
                 <when test="order == 'commentDesc'">
                     viewCount asc
                 </when>
-<!--                <when test="order == 'commentDesc'">-->
-<!--                    likeCount desc,-->
-<!--                </when>-->
-<!--                <when test="order == 'likeDesc'">-->
-<!--                    likeCount asc-->
-<!--                </when>-->
+                <when test="order == 'likeDesc'">
+                    likeCount asc
+                </when>
             </choose>
             post_id desc
         limit #{startIdx}, #{limitCount}
