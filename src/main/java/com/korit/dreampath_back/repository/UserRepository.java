@@ -98,14 +98,13 @@ public class UserRepository {
     }
 
     public List<MyMentoringSearch> findAllMentoring(int userId, int startIndex, int limitCount, String order, String searchText) {
-        System.out.println(userId);
-        System.out.println("startIndex: " + startIndex);
-        System.out.println("limitCount: " + limitCount);
-        System.out.println(order);
-        System.out.println("searchText: " +searchText);
         List<MyMentoringSearch> myMentoringSearches = userMapper.findAllMyMentoring(userId, startIndex, limitCount, searchText, order);
         System.out.println(myMentoringSearches);
 
         return myMentoringSearches;
+    }
+
+    public int remainingCountByUserId(int userId) {
+        return userMapper.remainingCountByUserId(userId);
     }
 }

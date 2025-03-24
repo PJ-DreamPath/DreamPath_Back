@@ -69,6 +69,14 @@
             user_id = #{userId}
     </update>
 
+    <update id="remainingCountByUserId">
+        update user_tb
+        set
+            remaining = remaining - 1
+        where
+            user_id = #{userId}
+    </update>
+
     <delete id="deleteUserById">
         delete
         from
