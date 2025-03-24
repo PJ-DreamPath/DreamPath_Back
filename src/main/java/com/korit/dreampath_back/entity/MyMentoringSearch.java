@@ -16,4 +16,5 @@ public class MyMentoringSearch {
     private int commentCount;
     private int likeCount;
     private int viewCount;
+    private int postId;
 }

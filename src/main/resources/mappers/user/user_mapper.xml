@@ -479,7 +479,8 @@
             pt.created_at as createdAt,
             (select count(*) from comment_tb ct where ct.post_id = pt.post_id) as commentCount,
             (select count(*) from post_like_tb plt where plt.post_id = pt.post_id) as likeCount,
-            pt.view_count as viewCount
+            pt.view_count as viewCount,
+            pt.post_id as postId
         from
             post_tb pt
         where
