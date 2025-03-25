@@ -106,7 +106,7 @@ public class UserRepository {
         return myMentoringSearches;
     }
 
-    public int remainingCountByUserId(int userId) {
-        return userMapper.remainingCountByUserId(userId);
+    public int updateRemainingCount(int userId) {
+        return userMapper.updateRemainingCount(userId);
     }
 }

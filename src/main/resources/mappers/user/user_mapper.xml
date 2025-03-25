@@ -70,7 +70,7 @@
             user_id = #{userId}
     </update>
 
-    <update id="remainingCountByUserId">
+    <update id="updateRemainingCount">
         update user_tb
         set
             remaining = remaining - 1
