@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.security.principal;
 
+import com.korit.dreampath_back.entity.Post;
 import com.korit.dreampath_back.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -71,6 +72,7 @@ public class PrincipalUser implements UserDetails, OAuth2User {
     public int getRoleId() {
         return user.getUserRoles().iterator().next().getRole().getRoleId();
     }
+
 }
 
 
