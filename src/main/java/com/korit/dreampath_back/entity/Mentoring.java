@@ -1,6 +1,5 @@
 package com.korit.dreampath_back.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,21 +9,11 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class MentoringComment {
-
-    private int postId;
-    private int userId;
-
-    private int commentId ;
-    private String content;
+public class Mentoring {
 
     private int starPoint;
-
-    private LocalDateTime updateAt;
+    private String content;
     private LocalDateTime createdAt;
 
-    private String nickname;
-
+    private String nickName;
 }
