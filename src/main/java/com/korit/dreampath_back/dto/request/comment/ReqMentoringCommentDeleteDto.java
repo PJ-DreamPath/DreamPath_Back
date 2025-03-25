@@ -7,6 +7,6 @@ public class ReqMentoringCommentDeleteDto {
 
     private int commentId;
     private int postId;
-    private int userId;
+
 
 }

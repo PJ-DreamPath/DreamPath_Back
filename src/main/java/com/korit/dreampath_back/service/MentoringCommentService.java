@@ -99,7 +99,6 @@ public class MentoringCommentService {
 
         MentoringComment dbComment =  mentoringCommentRepository.findCommentPostUser(
                 deleteMentoringComment.getCommentId(),
-                deleteMentoringComment.getUserId(),
                 deleteMentoringComment.getPostId());
 
 

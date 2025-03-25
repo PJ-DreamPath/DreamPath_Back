@@ -34,8 +34,8 @@ public class MentoringCommentRepository {
 
         return mentoringCommentMapper.updateComment(mentoringComment); }
 
-    public MentoringComment findCommentPostUser(int commentId, int userId, int postId) {
-        return mentoringCommentMapper.findByComment(commentId, userId, postId);
+    public MentoringComment findCommentPostUser(int commentId, int postId) {
+        return mentoringCommentMapper.findByComment(commentId,  postId);
     }
 
     // 삭제

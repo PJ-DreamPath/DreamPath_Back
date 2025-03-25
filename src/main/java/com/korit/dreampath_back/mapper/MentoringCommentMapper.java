@@ -31,7 +31,6 @@ public interface MentoringCommentMapper {
 
    MentoringComment findByComment(
             @Param("commentId") int commentId,
-            @Param("userId") int userId,
             @Param("postId") int postId
     );
     int deleteComment(MentoringComment mentoringComment);

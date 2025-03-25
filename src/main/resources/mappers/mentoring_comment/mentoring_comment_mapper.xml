@@ -101,8 +101,6 @@
         where
             comment_id = #{commentId}
         and
-            user_id = #{userId}
-        and
             post_id = #{postId}
     </select>
 
