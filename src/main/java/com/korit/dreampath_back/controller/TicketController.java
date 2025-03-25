@@ -6,6 +6,7 @@ import com.korit.dreampath_back.dto.response.RespTicketPurchaseListDto;
 import com.korit.dreampath_back.entity.TicketPurchaseHistory;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.TicketService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,7 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/purchase")
+    @Operation (summary="내 이용권 구매 내역")
     public ResponseEntity<RespTicketPurchaseListDto> findAllByUserId(
             @AuthenticationPrincipal PrincipalUser principalUser,
             @ModelAttribute ReqTicketPurchaseDto dto
@@ -31,6 +33,7 @@ public class TicketController {
     }
 
     @PutMapping("/renewal/remaining")
+    @Operation(summary = "이용권 구매하기")
     public ResponseEntity<?> updateRemainingEntryCount(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody int ticketId) {
         return ResponseEntity.ok().body(ticketService.updateRemainingEntryCount(principalUser, ticketId));
     }

@@ -21,6 +21,7 @@ public class MentoringController {
     private PostService postService;
 
     @PutMapping("/status")
+    @Operation(summary = "모집중 / 모집마감 상태 변경")
     public ResponseEntity<?> setStatus(@RequestParam int postId) {
         return ResponseEntity.ok().body(postService.updatePostStatus(postId));
     }
