@@ -85,7 +85,9 @@ public class UserRepository {
 
     public void deleteUser(int userId) {userMapper.deleteUserById(userId); }
 
+    public void updateRemainPoint(int userId, int price) { userMapper.updateRemainPoint(userId, price);}
 
+    public void updateRemaining(int userId, int entryCount) { userMapper.updateRemaining(userId, entryCount);}
 
     public User save(User user){
         System.out.println(user+"!!!!!!!!!!!!!!!!!");

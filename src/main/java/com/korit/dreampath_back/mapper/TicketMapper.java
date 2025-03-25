@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.mapper;
 
+import com.korit.dreampath_back.entity.Ticket;
 import com.korit.dreampath_back.entity.TicketPurchaseHistory;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +17,8 @@ public interface TicketMapper {
     );
 
     int findAllTicketPurchase(int userId);
+
+    Ticket selectTicketByTicketId(int ticketId);
+
+    int saveTicketPurchase(int ticketId, int userId);
 }
