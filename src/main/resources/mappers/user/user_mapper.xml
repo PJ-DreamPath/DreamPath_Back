@@ -28,6 +28,7 @@
         <result property="oAuth2Name" column="oauth2_name" />
         <result property="oAuth2Provider" column="oauth2_provider" />
         <result property="remaining" column="remaining" />
+        <result property="remainPoint" column="remain_point" />
         <result property="starPoint" column="star_point" />
         <result property="accountExpired" column="account_expired" />
         <result property="accountLocked" column="account_locked" />
@@ -119,6 +120,9 @@
             ut.email,
             ut.nickname,
             ut.oauth2_name,
+            ut.remaining,
+            ut.remain_point,
+            ut.star_point,
             ut.oauth2_provider,
             ut.profile_img,
             ut.account_expired,
