@@ -1,6 +1,8 @@
 package com.korit.dreampath_back.service;
 
 import com.korit.dreampath_back.dto.request.ReqApplyEmailDto;
+import com.korit.dreampath_back.dto.request.ReqMyApplySearchDto;
+import com.korit.dreampath_back.dto.response.RespMyApplyList;
 import com.korit.dreampath_back.entity.MentoringRegister;
 import com.korit.dreampath_back.repository.ApplyRepository;
 import com.korit.dreampath_back.security.jwt.JwtUtil;
@@ -76,5 +78,27 @@ public class ApplyService {
     public boolean isApplied (PrincipalUser principalUser, ReqApplyEmailDto reqApplyEmailDto) {
         System.out.println(applyRepository.getMentoringRegisterList(principalUser.getUser().getUserId(), reqApplyEmailDto.getPostId()).get().isEmpty());
         return applyRepository.getMentoringRegisterList(principalUser.getUser().getUserId(), reqApplyEmailDto.getPostId()).get().isEmpty();
+    }
+
+    public RespMyApplyList getMyApplyList(PrincipalUser principalUser, ReqMyApplySearchDto dto) {
+        int userId = principalUser.getUser().getUserId();
+
+        int totalMyApplyListCount = applyRepository.getMyApplyListCountBySearchText(userId, dto.getSearchText());
+        int totalPages = totalMyApplyListCount % dto.getLimitCount() == 0
+                ? totalMyApplyListCount % dto.getLimitCount()
+                : totalMyApplyListCount / dto.getLimitCount() + 1;
+        int startIndex = (dto.getPage()-1) * dto.getLimitCount();
+        RespMyApplyList respDto = RespMyApplyList.builder()
+                .page(dto.getPage())
+                .limitCount(dto.getLimitCount())
+                .totalPages(totalPages)
+                .totalElements(totalMyApplyListCount)
+                .isFirstPage(dto.getPage() == 1)
+                .isLastPage(dto.getPage() == totalPages)
+                .nextPage(dto.getPage() == totalPages ? dto.getPage() : dto.getPage() + 1)
+                .myMentoringSearchList(applyRepository.getMyApplySearchList(userId, startIndex, dto.getLimitCount(), dto.getOrder(), dto.getSearchText()))
+                .build();
+
+        return respDto;
     }
 }
