@@ -36,6 +36,7 @@ public class PostDetail {
     private String attachedFiles;
 
     private int likeCount;
+    private int commentCount;
 
     private User user;
 }
