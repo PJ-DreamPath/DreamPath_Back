@@ -33,7 +33,6 @@ public class PostController {
             @AuthenticationPrincipal PrincipalUser principalUser,
             ReqPostCreateDto createDto
     ) {
-        System.out.println(createDto);
         return postService.addPost(principalUser.getUser(), createDto)
                 ? ResponseEntity.ok().body("등록완료")
                 : ResponseEntity.badRequest().body("등록실패");

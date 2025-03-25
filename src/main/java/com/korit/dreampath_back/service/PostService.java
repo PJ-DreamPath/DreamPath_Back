@@ -42,9 +42,14 @@ public class PostService {
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
     public boolean addPost(User user, ReqPostCreateDto createDto) {
-//        remaining이 1보다 작으면 등록 안됨
-        if(user.getRemaining() < 1 ) {
-            return false;
+
+        if(createDto.getBoardId() == 1) {
+    //        remaining이 1보다 작으면 등록 안됨
+            if(user.getRemaining() < 1 ) {
+                return false;
+            }
+
+            userRepository.updateRemainingCount(user.getUserId());
         }
 
         final String PROFILE_IMG_FILE_PATH = "/upload/user/post";
@@ -52,7 +57,7 @@ public class PostService {
 
         LocalDate today = LocalDate.now();
 
-        userRepository.remainingCountByUserId(user.getUserId());
+
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
                 .userId(user.getUserId())

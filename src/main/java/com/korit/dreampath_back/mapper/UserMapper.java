@@ -67,7 +67,7 @@ public interface UserMapper {
             @Param("order") String order
     );
 
-    int remainingCountByUserId(
+    int updateRemainingCount(
             @Param("userId") int userId
     );
 
