@@ -36,6 +36,7 @@
         <result property="createdAt" column="created_at"/>
         <result property="likeCount" column="like_count"/>
         <result property="commentCount" column="comment_count"/>
+        <result property="viewCount" column="view_count"/>
         <association property="user" resultMap="userResultMap"/>
     </resultMap>
 
@@ -91,6 +92,7 @@
             pt.status,
             pt.star_point,
             pt.created_at,
+            pt.view_count,
 
             (select count(*) from comment_tb cmt where cmt.post_id = pt.post_id) as comment_count,
             (select count(*) from post_like_tb plt where plt.post_id = pt.post_id) as like_count,
