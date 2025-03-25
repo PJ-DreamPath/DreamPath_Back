@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class MyMentoringSearch {
     private String status;
     private String title;
-    private String createdAt;
+    private LocalDate createdAt;
     private int commentCount;
     private int likeCount;
     private int viewCount;
