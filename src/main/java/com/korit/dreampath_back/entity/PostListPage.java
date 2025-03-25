@@ -24,6 +24,7 @@ public class PostListPage {
 
     private int likeCount;
     private int commentCount;
+    private int viewCount;
 
     private User user;
 }
