@@ -22,6 +22,42 @@
         and
             post_id = #{postId}
     </select>
+    <select id="getMyApplySearchList" resultType="com.korit.dreampath_back.entity.MyApplySearch">
+        select
+            pt.title,
+            ut.nickname as mento,
+            mrt.apply_at as createdAt
+        from
+            mentoring_register_tb mrt
+            left outer join post_tb pt on (pt.post_id = mrt.post_id)
+            left outer join user_tb ut on (pt.user_id = ut.user_id)
+        where
+            mrt.user_id = #{userId}
+            <if test ="searchText != null and searchText != ''">
+                and pt.title like concat("%", #{searchText}, "%")
+            </if>
+        order by
+            <choose>
+                <when test="order == 'asc'">
+                    mentoring_register_id asc,
+                </when>
+            </choose>
+            mentoring_register_id desc
+        limit #{startIndex}, #{limitCount}
+
+    </select>
+    <select id="findMyApplySearchListBySearchText" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            mentoring_register_tb
+        <where>
+            user_id = #{userId}
+            <if test="searchText != null and searchText != ''">
+                and title like concat("%", #{searchText}, "%")
+            </if>
+        </where>
+    </select>
 
     <insert id="insertMentoringRegister" keyProperty="mentoringRegisterId" useGeneratedKeys="true">
         insert into mentoring_register_tb (

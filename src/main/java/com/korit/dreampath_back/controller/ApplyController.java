@@ -1,6 +1,7 @@
 package com.korit.dreampath_back.controller;
 
 import com.korit.dreampath_back.dto.request.ReqApplyEmailDto;
+import com.korit.dreampath_back.dto.request.ReqMyApplySearchDto;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.ApplyService;
 import com.korit.dreampath_back.service.UserService;
@@ -23,6 +24,11 @@ public class ApplyController {
 
         String message = applyService.sendApplyMail(reqApplyEmailDto, principalUser);
         return ResponseEntity.ok().body(message);
+    }
+
+    @GetMapping("/me/applyList")
+    public ResponseEntity<?> getMyApplyList(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqMyApplySearchDto dto){
+        return ResponseEntity.ok().body(applyService.getMyApplyList(principalUser, dto));
     }
 
 }
