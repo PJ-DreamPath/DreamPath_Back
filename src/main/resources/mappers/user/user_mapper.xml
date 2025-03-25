@@ -77,6 +77,16 @@
         where
             user_id = #{userId}
     </update>
+    <update id="updateRemainPoint">
+        update user_tb
+        set remain_point = remain_point - #{price}
+        where user_id = #{userId}
+    </update>
+    <update id="updateRemaining">
+        update user_tb
+        set remaining = remaining + #{entryCount}
+        where user_id = #{userId}
+    </update>
 
     <delete id="deleteUserById">
         delete

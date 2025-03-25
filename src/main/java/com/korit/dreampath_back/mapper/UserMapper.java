@@ -47,6 +47,16 @@ public interface UserMapper {
             @Param("userId") int userId,
             @Param("email") String email);
 
+    int updateRemainPoint(
+            @Param("userId") int userId,
+            @Param("price") int price
+    );
+
+    int updateRemaining(
+            @Param("userId") int userId,
+            @Param("entryCount") int entryCount
+    );
+
     int getMyMentoringListCountBySearchText(int userId, String searchText);
 
     List<MyMentoringSearch> findAllMyMentoring(

@@ -22,6 +22,10 @@
         <result property="price" column="price"/>
 
     </resultMap>
+    <insert id="saveTicketPurchase">
+        insert into purchase_tb
+        values(default, #{ticketId}, #{userId}, now())
+    </insert>
 
 
     <select id="getTicketPurchaseList" resultMap="ticketPurchaseResultMap">
@@ -48,5 +52,17 @@
             purchase_tb
         where
             user_id = #{userId}
+    </select>
+    <select id="selectTicketByTicketId" resultType="com.korit.dreampath_back.entity.Ticket">
+        select
+            ticket_id as ticketId,
+            ticket_name as ticketName,
+            entry_count as entryCount,
+            price,
+            created_at as createdAt
+        from
+            ticket_tb
+        where
+            ticket_id = #{ticketId}
     </select>
 </mapper>

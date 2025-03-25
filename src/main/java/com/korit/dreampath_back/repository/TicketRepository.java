@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.repository;
 
+import com.korit.dreampath_back.entity.Ticket;
 import com.korit.dreampath_back.entity.TicketPurchaseHistory;
 import com.korit.dreampath_back.mapper.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,14 @@ public class TicketRepository {
 
     public int findAllTicketPurchaseCount(int userId) {
         return ticketMapper.findAllTicketPurchase(userId);
+    }
+
+    public Ticket findTicketById(int ticketId) {
+        return ticketMapper.selectTicketByTicketId(ticketId);
+    }
+
+    public int saveTicket(int ticketId, int userId) {
+        return ticketMapper.saveTicketPurchase(ticketId, userId);
     }
 }
 
