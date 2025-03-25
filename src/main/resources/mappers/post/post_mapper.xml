@@ -22,6 +22,7 @@
         <result property="viewCount" column="view_count"/>
         <result property="attachedFiles" column="attached_files"/>
         <result property="likeCount" column="like_count"/>
+        <result property="commentCount" column="comment_count"/>
         <association property="user" resultMap="userResultMap"/>
     </resultMap>
 
@@ -34,6 +35,7 @@
         <result property="status" column="status"/>
         <result property="createdAt" column="created_at"/>
         <result property="likeCount" column="like_count"/>
+        <result property="commentCount" column="comment_count"/>
         <association property="user" resultMap="userResultMap"/>
     </resultMap>
 
@@ -90,7 +92,8 @@
             pt.star_point,
             pt.created_at,
 
-            count(plt.post_id) as like_count,
+            (select count(*) from comment_tb cmt where cmt.post_id = pt.post_id) as comment_count,
+            (select count(*) from post_like_tb plt where plt.post_id = pt.post_id) as like_count,
 
             ut.user_id,
             ut.username,
@@ -108,7 +111,6 @@
         from
             post_tb pt
             left outer join user_tb ut on(ut.user_id = pt.user_id)
-            left outer join post_like_tb plt on(plt.post_id = pt.post_id)
         <where>
             pt.board_id = #{boardId}
             <if test="searchTxt != null and searchTxt != ''">
@@ -181,7 +183,7 @@
             ptt.view_count,
             ptt.attached_files,
 
-            count(plt.post_id) as like_count,
+            (select count(*) from post_like_tb plt where plt.post_id = ptt.post_id) as like_count,
 
             ut.user_id,
             ut.username,
@@ -199,7 +201,6 @@
         from
             post_tb ptt
             left outer join user_tb ut on(ut.user_id = ptt.user_id)
-            left outer join post_like_tb plt on(ptt.post_id = plt.post_id)
             left outer join category_tb ct on(ct.category_id = ptt.category_id)
         where
             ptt.post_id = #{postId}

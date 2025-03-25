@@ -23,6 +23,7 @@ public class PostListPage {
     private LocalDateTime createdAt;
 
     private int likeCount;
+    private int commentCount;
 
     private User user;
 }
