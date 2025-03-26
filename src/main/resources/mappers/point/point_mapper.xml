@@ -33,15 +33,24 @@
         <id property="pointPurchaseId" column="point_purchase_id" />
         <result property="pointId" column="point_id" />
         <result property="userId" column="user_id" />
+        <result property="mid" column="mid" />
+        <result property="status" column="status" />
         <result property="createdAt" column="created_at" />
         <association property="point" resultMap="pointResultMap" />
         <association property="user" resultMap="userResultMap" />
     </resultMap>
 
+    <insert id="savePurchasePoint">
+        insert into point_purchase_tb
+        value(default, #{pointId}, #{userId}, #{mid}, #{status}, now())
+    </insert>
+
     <select id="getPointPurchase" resultMap="pointPurchaseResultMap">
         select
+            ppt.mid,
             pt.point_name,
             pt.point_price,
+            ppt.status,
             ppt.created_at
         from
             point_purchase_tb ppt
@@ -65,8 +74,17 @@
         where
             user_id = #{userId}
     </select>
-
-
+    <select id="selectPointByPointId" resultType="com.korit.dreampath_back.entity.Point">
+        select
+            point_id as pointId,
+            point_name as pointName,
+            point_amount as pointAmount,
+            point_price as pointPrice
+        from
+            point_tb
+        where
+            point_id = #{pointId}
+    </select>
 
 
 </mapper>

@@ -41,6 +41,8 @@ public class PostService {
         System.out.println(boardId);
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
     }
+
+    @Transactional(rollbackFor = Exception.class)
     public boolean addPost(User user, ReqPostCreateDto createDto) {
 
         if(createDto.getBoardId() == 1) {
@@ -91,6 +93,7 @@ public class PostService {
         return postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean updatedPost(User user, ReqPostUpdateDto updateDto) {
 
 
@@ -128,12 +131,16 @@ public class PostService {
 //        postRepository.updatePostViewCount(postId);
 //    }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean addPostLike(User user, int postId) {
         return postLikeRepository.addPostLike(user.getUserId(), postId) > 0 ? true : false;
     }
+
+    @Transactional(rollbackFor = Exception.class)
     public boolean deletePostLike(User user, int postId) {
         return postLikeRepository.deletePostLike(user.getUserId(), postId) > 0 ? true : false;
     }
+
     public PostLike findPostMyLike(User user, int postId) {
         return postLikeRepository.findPostLikeUserByUserId(user.getUserId(), postId);
     }
