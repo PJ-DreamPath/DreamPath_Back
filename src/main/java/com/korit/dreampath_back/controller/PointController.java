@@ -5,6 +5,7 @@ import com.korit.dreampath_back.dto.response.RespPointPurchaseListDto;
 import com.korit.dreampath_back.entity.PointPurchaseSearch;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PointService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ public class PointController {
     @Autowired
     private PointService pointService;
     @GetMapping("/purchase")
+    @Operation(summary = "내 포인트 충전 내역")
     public ResponseEntity<?> getPointPurchase(@ModelAttribute ReqPointPurchaseDto dto, @AuthenticationPrincipal PrincipalUser principalUser) {
         int userId = principalUser.getUser().getUserId();
 
