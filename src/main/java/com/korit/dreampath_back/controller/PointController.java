@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.controller;
 
+import com.korit.dreampath_back.dto.request.point.ReqPointDto;
 import com.korit.dreampath_back.dto.request.point.ReqPointPurchaseDto;
 import com.korit.dreampath_back.dto.response.RespPointPurchaseListDto;
 import com.korit.dreampath_back.entity.PointPurchaseSearch;
@@ -9,10 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class PointController {
     @Autowired
     private PointService pointService;
     @GetMapping("/purchase")
-    @Operation(summary = "내 포인트 충전 내역")
+    @Operation(summary = "내 포인트 충전 내역 조회")
     public ResponseEntity<?> getPointPurchase(@ModelAttribute ReqPointPurchaseDto dto, @AuthenticationPrincipal PrincipalUser principalUser) {
         int userId = principalUser.getUser().getUserId();
 
@@ -46,6 +44,12 @@ public class PointController {
     }
 
 
+    @PostMapping("/purchase")
+    @Operation(summary = "포인트 충전 내역 저장")
+    public ResponseEntity<String> savePointPurchase(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqPointDto dto) {
+        int save = pointService.savePointPurchase(principalUser.getUser(), dto);
+        return save > 0 ? ResponseEntity.ok().body("저장되었습니다.") : ResponseEntity.badRequest().body("실패되었습니다.");
+    }
 
 
 }

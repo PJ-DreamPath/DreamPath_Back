@@ -70,5 +70,9 @@ public interface UserMapper {
     int updateRemainingCount(
             @Param("userId") int userId
     );
+    int updatePointRemainingCount(
+            @Param("userId") int userId,
+            @Param("amount") int amount
+    );
 
 }

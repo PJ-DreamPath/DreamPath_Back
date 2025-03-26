@@ -88,6 +88,12 @@
         where user_id = #{userId}
     </update>
 
+    <update id="updatePointRemainingCount">
+        update user_tb
+        set remain_point = remain_point + #{amount}
+        where user_id = #{userId}
+    </update>
+
     <delete id="deleteUserById">
         delete
         from

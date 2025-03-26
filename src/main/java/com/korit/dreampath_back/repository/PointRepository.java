@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.repository;
 
+import com.korit.dreampath_back.entity.Point;
 import com.korit.dreampath_back.entity.PointPurchase;
 import com.korit.dreampath_back.entity.PointPurchaseSearch;
 import com.korit.dreampath_back.mapper.PointMapper;
@@ -20,6 +21,14 @@ public class PointRepository {
 
     public int findAllPointPurchase(int userId) {
         return pointMapper.findAllPointPurchase(userId);
+    }
+
+    public int savePointPurchase(int pointId, int userId, String mid, boolean status) {
+        return pointMapper.savePurchasePoint(pointId, userId, mid, status);
+    }
+
+    public Point getPointByPointId(int pointId) {
+        return pointMapper.selectPointByPointId(pointId);
     }
 
 

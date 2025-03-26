@@ -109,4 +109,7 @@ public class UserRepository {
     public int updateRemainingCount(int userId) {
         return userMapper.updateRemainingCount(userId);
     }
+    public int updatePointRemainingCount(int userId, int amount) {
+        return userMapper.updatePointRemainingCount(userId, amount);
+    }
 }
