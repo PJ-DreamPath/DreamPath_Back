@@ -61,6 +61,7 @@ public class PostController {
                 .nextPage(searchDto.getPage() != totalPages ? searchDto.getPage() + 1 : 0)
                 .postList(postService.getPostList(boardId, searchDto))
                 .build();
+
         return ResponseEntity.ok().body(newRespDto);
 
     }
