@@ -33,6 +33,7 @@
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="status" column="status"/>
+        <result property="starPoint" column="star_point" />
         <result property="createdAt" column="created_at"/>
         <result property="likeCount" column="like_count"/>
         <result property="commentCount" column="comment_count"/>
