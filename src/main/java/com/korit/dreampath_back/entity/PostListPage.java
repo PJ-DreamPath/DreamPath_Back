@@ -18,7 +18,7 @@ public class PostListPage {
     private int userId;
     private String title;
     private String content;
-    private String starPoint;
+    private int starPoint;
     private String status;
     private LocalDateTime createdAt;
 

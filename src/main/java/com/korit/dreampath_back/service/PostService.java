@@ -81,7 +81,8 @@ public class PostService {
 //        int boardId = boardRepository.findBoardIdByBoardName(boardName).getBoardId();
 
         int startIdx = (searchDto.getPage() - 1) * searchDto.getLimitCount();
-
+        System.out.println(postRepository.findPostList(boardId, startIdx, searchDto.getLimitCount(), searchDto.getOrder(), searchDto.getSearchTxt()).get()
+                );
         return postRepository.findPostList(boardId, startIdx, searchDto.getLimitCount(), searchDto.getOrder(), searchDto.getSearchTxt())
                 .orElseThrow(() -> new NotFoundException("검색된 게시글이 없습니다."));
     }
