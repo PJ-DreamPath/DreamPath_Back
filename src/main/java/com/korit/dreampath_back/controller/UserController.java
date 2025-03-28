@@ -7,6 +7,7 @@ import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -100,6 +101,12 @@ public class UserController {
 
         System.out.println(dto);
         return ResponseEntity.ok().body(userService.getMyMentoring(principalUser, dto));
+    }
+
+    @PutMapping("/user/me/phoneNumber")
+    @Operation(summary = "휴대폰 번호 인증")
+    public ResponseEntity<?> changePhoneNumber(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody Map<String, String> phoneNumber){
+        return ResponseEntity.ok().body(userService.updatePhoneNumber(principalUser, phoneNumber.get("phoneNumber")));
     }
 
 }

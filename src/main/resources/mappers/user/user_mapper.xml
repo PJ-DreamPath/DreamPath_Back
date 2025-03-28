@@ -94,6 +94,13 @@
         where user_id = #{userId}
     </update>
 
+    <update id="updatePhoneNumber">
+        update user_tb
+        set phone_number = #{phoneNumber}
+        where user_id = #{userId}
+
+    </update>
+
     <delete id="deleteUserById">
         delete
         from
