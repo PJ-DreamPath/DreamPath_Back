@@ -75,4 +75,9 @@ public interface UserMapper {
             @Param("amount") int amount
     );
 
+    boolean updatePhoneNumber(
+            @Param("userId") int userId,
+            @Param("phoneNumber") String phoneNumber
+    );
+
 }

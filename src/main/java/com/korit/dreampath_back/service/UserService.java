@@ -169,6 +169,16 @@ public class UserService {
         return respDto;
     }
 
+    public String updatePhoneNumber(PrincipalUser principalUser, String phoneNumber) {
+        String message = "";
+        if(userRepository.updatePhoneNumber(principalUser.getUser().getUserId(), phoneNumber)) {
+            message = "변경이 완료되었습니다.";
+        } else {
+            message = "변경에 실패했습니다";
+        }
+        return message;
+    }
+
 
 
 }

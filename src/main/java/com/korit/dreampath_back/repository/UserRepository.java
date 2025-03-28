@@ -112,4 +112,8 @@ public class UserRepository {
     public int updatePointRemainingCount(int userId, int amount) {
         return userMapper.updatePointRemainingCount(userId, amount);
     }
+
+    public boolean updatePhoneNumber(int userId, String phoneNumber) {
+        return userMapper.updatePhoneNumber(userId, phoneNumber);
+    }
 }
