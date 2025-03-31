@@ -62,7 +62,6 @@ public class PostRepository {
     }
 
     public boolean isRecruited(int postId) {
-        System.out.println(postMapper.getPostStatusByPostId(postId));
         return postMapper.getPostStatusByPostId(postId).equals("closedRecruitment");
     }
 }

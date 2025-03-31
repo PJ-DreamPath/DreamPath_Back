@@ -58,7 +58,6 @@ public class UserService {
     }
 
     public boolean duplicatedUsername(String username) {
-        System.out.println("서비스 duplicatedUsername 호출");
         return userRepository.findByUsername(username).isPresent(); }
 
     public boolean duplicatedNickname(String nickname) {
@@ -67,7 +66,6 @@ public class UserService {
 
     @Transactional(rollbackFor = Exception.class)
     public User save( ReqSignupDto dto){
-        System.out.println("서비스 save 호출");
         if(duplicatedUsername(dto.getUsername())){
             throw new DuplicatedValueException(List.of(FieldError.builder()
                     .field("username")

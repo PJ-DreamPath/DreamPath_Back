@@ -39,7 +39,7 @@ public class MentoringCommentRepository {
     }
 
     // 삭제
-    public int deleteComment(MentoringComment mentoringComment) { return mentoringCommentMapper.deleteComment(mentoringComment); }
+    public int deleteComment(int commentId) { return mentoringCommentMapper.deleteComment(commentId); }
 
 
 }

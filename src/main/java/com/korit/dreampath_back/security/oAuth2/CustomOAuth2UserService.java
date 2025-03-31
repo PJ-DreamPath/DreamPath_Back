@@ -34,7 +34,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String email = null;
         String oauth2Name = null;
         String oauth2Provider = userRequest.getClientRegistration().getRegistrationId();
-//        System.out.println(oauth2Provider); //구글로 로그인시 콘솔에 google 출력, 네아버는 naver 출력
 
         Map<String, Object> attributes = getDefaultOAuth2User(userRequest).getAttributes();
         if (oauth2Provider.equalsIgnoreCase("naver")){

@@ -27,7 +27,6 @@ public class AdminUserService {
 
     public String getUserRoleName(int userId) {
         String userRoleName = adminUserRepository.findUserRoleName(userId);
-        System.out.println(userRoleName);
         return userRoleName;
     }
 

@@ -76,7 +76,6 @@ public class ApplyService {
     }
 
     public boolean isApplied (PrincipalUser principalUser, ReqApplyEmailDto reqApplyEmailDto) {
-        System.out.println(applyRepository.getMentoringRegisterList(principalUser.getUser().getUserId(), reqApplyEmailDto.getPostId()).get().isEmpty());
         return applyRepository.getMentoringRegisterList(principalUser.getUser().getUserId(), reqApplyEmailDto.getPostId()).get().isEmpty();
     }
 

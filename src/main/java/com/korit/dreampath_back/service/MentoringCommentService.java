@@ -8,6 +8,7 @@ import com.korit.dreampath_back.dto.response.comment.RespMentoringCommentPageDto
 import com.korit.dreampath_back.entity.CommentSearch;
 import com.korit.dreampath_back.entity.MentoringComment;
 import com.korit.dreampath_back.entity.User;
+import com.korit.dreampath_back.entity.UserRole;
 import com.korit.dreampath_back.repository.MentoringCommentRepository;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MentoringCommentService {
@@ -65,18 +67,16 @@ public class MentoringCommentService {
                 .updateAt(LocalDateTime.now())
                 .build();
 
-        System.out.println(newComment);
 
         return mentoringCommentRepository.addComment(newComment) > 0;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateComment(User user, ReqMentoringCommentUpdateDto updateDto) {
+    public boolean updateComment(PrincipalUser principalUser, ReqMentoringCommentUpdateDto updateDto) {
 
         MentoringComment updateMentoringComment = MentoringComment.builder()
-                .postId(updateDto.getPostId())
                 .commentId(updateDto.getCommentId())
-                .userId(user.getUserId())
+                .userId(principalUser.getUser().getUserId())
                 .content(updateDto.getContent())
                 .starPoint(updateDto.getStarPoint())
                 .build();
@@ -85,32 +85,20 @@ public class MentoringCommentService {
     }
 
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public boolean deleteComment(User user, ReqMentoringCommentDeleteDto deleteDto) {
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteComment(PrincipalUser principalUser, int commentId, int userId) {
 
-//        MentoringComment deleteMentoringComment = MentoringComment.builder()
-//                .commentId(deleteDto.getCommentId())
-//                .userId(user.getUserId())
-//                .postId(deleteDto.getPostId())
-//                .build();
-//
-//        MentoringComment dbComment =  mentoringCommentRepository.findCommentPostUser(
-//                deleteMentoringComment.getCommentId(),
-//                deleteMentoringComment.getPostId());
-//
-//
-//        if (dbComment != null &&
-//            dbComment.getCommentId() == deleteDto.getCommentId() &&
-//            dbComment.getUserId() == user.getUserId() &&
-//            dbComment.getPostId() == deleteDto.getPostId()) {
-//            System.out.println("삭제 성공");
-//
-//                return mentoringCommentRepository.deleteComment(deleteMentoringComment) > 0;
-//
-//            }
-//            System.out.println("삭제 실패");
-//            return false;
-//    }
+        boolean isAdmin = false;
+        for(UserRole role : principalUser.getUser().getUserRoles()) {
+            if( role.getRoleId() == 3) {
+                isAdmin = true;
+            }
+        }
+        if(userId != principalUser.getUser().getUserId() && !isAdmin) {
+            return false;
+        }
+        return mentoringCommentRepository.deleteComment(commentId) > 0;
+    }
 
 
 }
