@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.controller;
 
+import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentDeleteDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentPageDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentUpdateDto;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -35,7 +38,7 @@ public class MentoringCommentPostController {
 
         boolean addReview = mentoringCommentService.addComment(principalUser.getUser(), commentDto);
 
-        System.out.println(commentDto);
+
 
         if (addReview) {
             return ResponseEntity.ok().body("완료");
@@ -49,30 +52,31 @@ public class MentoringCommentPostController {
     @Operation(summary = "수정")
     public ResponseEntity<String> changeContentAndStarPoint(
             @AuthenticationPrincipal PrincipalUser principalUser,
-            @ModelAttribute ReqMentoringCommentUpdateDto reqMentoringCommentUpdateDto) {
+            @RequestBody ReqMentoringCommentUpdateDto reqMentoringCommentUpdateDto) {
 
-        boolean updateContentCheck = mentoringCommentService.updateComment(principalUser.getUser(), reqMentoringCommentUpdateDto);
+        boolean updateContentCheck = mentoringCommentService.updateComment(principalUser, reqMentoringCommentUpdateDto);
 
         if (updateContentCheck) {
             return ResponseEntity.ok().body("수정 성공");
         } else {
-            return ResponseEntity.ok().body("수정 실패");
+            return ResponseEntity.badRequest().body("수정 실패");
         }
     }
 
-//    @DeleteMapping("/comments/{commentId}")
-//    @Operation(summary = "댓글 삭제")
-//    public ResponseEntity<?> deleteComment(
-//            @AuthenticationPrincipal PrincipalUser principalUser,
-//            @ModelAttribute ReqMentoringCommentDeleteDto reqMentoringCommentDeleteDto
-//        ) {
-//
-//       boolean deleteCommentCheck = mentoringCommentService.deleteComment(principalUser.getUser(), reqMentoringCommentDeleteDto);
-//       if (deleteCommentCheck) {
-//           return ResponseEntity.ok().body("삭제 성공");
-//       } else
-//           return ResponseEntity.ok().body("삭제 실패");
-//    }
+    @DeleteMapping("/comments/{commentId}")
+    @Operation(summary = "댓글 삭제")
+    public ResponseEntity<?> deleteComment(
+            @AuthenticationPrincipal PrincipalUser principalUser,
+            @PathVariable int commentId,
+            @RequestParam Map<String, String> userId
+            ) {
+
+       boolean deleteCommentCheck = mentoringCommentService.deleteComment(principalUser, commentId, Integer.parseInt(userId.get("userId")));
+       if (deleteCommentCheck) {
+           return ResponseEntity.ok().body("삭제 성공");
+       } else
+           return ResponseEntity.badRequest().body("삭제 실패");
+    }
 }
 
 

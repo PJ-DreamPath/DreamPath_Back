@@ -23,7 +23,7 @@ public interface MentoringCommentMapper {
             @Param("limitCount") int limitCount,
             @Param("postId") int postId
     );
-    int deleteComment(MentoringComment mentoringComment);
+    int deleteComment(@Param("commentId") int commentId);
 
     int getCountCommentsByPostId(int postId);
 }

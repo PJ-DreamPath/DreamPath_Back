@@ -6,9 +6,7 @@ import lombok.Data;
 public class ReqMentoringCommentUpdateDto {
 
     private int commentId;
-    private int postId;
-    private int userId;
-    private String  content;
+    private String content;
     private int starPoint;
 
 }

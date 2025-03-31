@@ -90,7 +90,6 @@ public class UserRepository {
     public void updateRemaining(int userId, int entryCount) { userMapper.updateRemaining(userId, entryCount);}
 
     public User save(User user){
-        System.out.println(user+"!!!!!!!!!!!!!!!!!");
         userMapper.insert(user);
         return user;
     }
@@ -101,7 +100,7 @@ public class UserRepository {
 
     public List<MyMentoringSearch> findAllMentoring(int userId, int startIndex, int limitCount, String order, String searchText) {
         List<MyMentoringSearch> myMentoringSearches = userMapper.findAllMyMentoring(userId, startIndex, limitCount, searchText, order);
-        System.out.println(myMentoringSearches);
+
 
         return myMentoringSearches;
     }

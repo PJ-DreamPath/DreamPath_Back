@@ -22,7 +22,7 @@ public class AuthController {
     @Operation(summary = "회원가입", description = "회원가입 설명")
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody ReqSignupDto dto) {
-        System.out.println("컨트롤러 호출");
+
         return ResponseEntity.ok().body(userService.save(dto));
     }
 
@@ -30,7 +30,7 @@ public class AuthController {
     @Operation(summary = "로그인", description = "로그인 설명")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody ReqLoginDto dto) {
-        System.out.println("요청 들어옴");
+
         RespTokenDto respTokenDto = RespTokenDto.builder()
                 .type("JWT")
                 .name("AccessToken")

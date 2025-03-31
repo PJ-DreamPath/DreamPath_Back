@@ -99,7 +99,6 @@ public class UserController {
             @ModelAttribute ReqMyMentoringSearchDto dto
             ) {
 
-        System.out.println(dto);
         return ResponseEntity.ok().body(userService.getMyMentoring(principalUser, dto));
     }
 

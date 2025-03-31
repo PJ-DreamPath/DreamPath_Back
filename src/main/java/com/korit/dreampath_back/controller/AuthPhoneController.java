@@ -41,8 +41,7 @@ public class AuthPhoneController {
             @Value(value = "${coolsms.api.key}") String apiKey,
             @Value(value = "${coolsms.api.secret}") String apiSecret
     ) {
-        System.out.println(apiKey);
-        System.out.println(apiSecret);
+
         // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret, "https://api.coolsms.co.kr");
     }
@@ -62,7 +61,7 @@ public class AuthPhoneController {
         message.setText("인증번호는 " + code + "입니다.");
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        System.out.println(response);
+
 
         return code;
     }

@@ -57,7 +57,7 @@
 
     <select id="findCommentByPostId" resultType="com.korit.dreampath_back.entity.CommentSearch">
         select
-
+        ct.comment_id,
         ct.star_point as starPoint,
         ct.content,
 

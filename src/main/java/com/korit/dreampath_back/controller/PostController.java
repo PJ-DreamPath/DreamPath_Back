@@ -118,7 +118,7 @@ public class PostController {
     @GetMapping("/posts/{postId}/my/like")
     @Operation(summary = "게시글의 내 좋아요 조회")
     public ResponseEntity<PostLike> selectPostMyLike(@AuthenticationPrincipal PrincipalUser principalUser, @PathVariable int postId) {
-        System.out.println(postId);
+
         return ResponseEntity.ok().body(postService.findPostMyLike(principalUser.getUser(), postId));
     }
 }
