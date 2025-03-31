@@ -1,6 +1,6 @@
 package com.korit.dreampath_back.repository;
 
-import com.korit.dreampath_back.entity.Mentoring;
+import com.korit.dreampath_back.entity.CommentSearch;
 import com.korit.dreampath_back.entity.MentoringComment;
 import com.korit.dreampath_back.mapper.MentoringCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,14 @@ public class MentoringCommentRepository {
     private MentoringCommentMapper mentoringCommentMapper;
 
     // 댓글 조회
-    public List<Mentoring> getCommentPageWithNickname(int userId, int startIndex, int limitCount, String nickName) {
+    public List<CommentSearch> getCommentPageWithNickname(int userId, int startIndex, int limitCount, String nickName) {
         return mentoringCommentMapper.getCommentPageWithNickname(userId, startIndex, limitCount, nickName );
     }
 
-    // 전체 댓글 수
-    public int countTotalComments() {
-        return mentoringCommentMapper.countTotalComments();
+    public int getCountsByPostId(int postId){
+        return mentoringCommentMapper.getCountCommentsByPostId(postId);
     }
+
 
     public int addComment(MentoringComment mentoringComment) {
 
@@ -34,10 +34,12 @@ public class MentoringCommentRepository {
 
         return mentoringCommentMapper.updateComment(mentoringComment); }
 
-    public MentoringComment findCommentPostUser(int commentId, int postId) {
-        return mentoringCommentMapper.findByComment(commentId,  postId);
+    public List<CommentSearch> findCommentByPostId(int startIndex, int limitCount, int postId) {
+        return mentoringCommentMapper.findCommentByPostId(startIndex, limitCount, postId);
     }
 
     // 삭제
     public int deleteComment(MentoringComment mentoringComment) { return mentoringCommentMapper.deleteComment(mentoringComment); }
+
+
 }

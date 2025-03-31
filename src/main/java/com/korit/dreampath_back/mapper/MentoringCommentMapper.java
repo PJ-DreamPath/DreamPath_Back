@@ -1,8 +1,6 @@
 package com.korit.dreampath_back.mapper;
 
-import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentUpdateDto;
-import com.korit.dreampath_back.dto.response.comment.RespMentoringCommentDto;
-import com.korit.dreampath_back.entity.Mentoring;
+import com.korit.dreampath_back.entity.CommentSearch;
 import com.korit.dreampath_back.entity.MentoringComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,14 +11,13 @@ import java.util.List;
 public interface MentoringCommentMapper {
 
     // 조회(페이지 포함)
-    List<Mentoring> getCommentPageWithNickname(
+    List<CommentSearch> getCommentPageWithNickname(
             int userId,
             @Param("startIndex") int startIndex,
             @Param("limitCount") int limitCount,
             @Param("nickname") String nickName
     );
 
-    int countTotalComments();
 
     // 후기 등록
     int createComment(MentoringComment mentoringComment);
@@ -29,10 +26,12 @@ public interface MentoringCommentMapper {
     );
 
 
-   MentoringComment findByComment(
-            @Param("commentId") int commentId,
-            @Param("postId") int postId
+   List<CommentSearch> findCommentByPostId(
+           @Param("startIndex") int startIndex,
+           @Param("limitCount") int limitCount,
+           @Param("postId") int postId
     );
     int deleteComment(MentoringComment mentoringComment);
 
+    int getCountCommentsByPostId(int postId);
 }

@@ -1,19 +1,20 @@
 package com.korit.dreampath_back.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class Mentoring {
+public class CommentSearch {
 
     private int starPoint;
     private String content;
+    private int userId;
+    private String nickname;
+    private String profileImg;
     private LocalDateTime createdAt;
 
-    private String nickName;
 }

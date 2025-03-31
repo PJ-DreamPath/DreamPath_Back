@@ -8,7 +8,6 @@ import lombok.Data;
 @Builder
 public class ReqMentoringCommentDto {
 
-    private int commentId;
     private int postId;
 
     private String content;

@@ -24,21 +24,23 @@ public class MentoringCommentPostController {
     @Autowired
     private MentoringCommentService mentoringCommentService;
 
-    @GetMapping("/comment")
+    @GetMapping("/comments/{postId}")
     @Operation(summary = "조회")
     public ResponseEntity<RespMentoringCommentPageDto> getComments(
-            @AuthenticationPrincipal PrincipalUser principalUser,
+            @PathVariable int postId,
             @ModelAttribute ReqMentoringCommentPageDto dto) {
-        return ResponseEntity.ok().body(mentoringCommentService.getCommentWithPage(principalUser, dto));
+        return ResponseEntity.ok().body(mentoringCommentService.getCommentWithPage(dto, postId));
     }
 
-    @PostMapping("/comment/me")
+    @PostMapping("/comment")
     @Operation(summary = "멘토링 후기 등록")
     public ResponseEntity<String> addComment(
             @AuthenticationPrincipal PrincipalUser principalUser,
-            ReqMentoringCommentDto commentDto) {
+            @RequestBody  ReqMentoringCommentDto commentDto) {
 
         boolean addReview = mentoringCommentService.addComment(principalUser.getUser(), commentDto);
+
+        System.out.println(commentDto);
 
         if (addReview) {
             return ResponseEntity.ok().body("완료");
@@ -48,9 +50,9 @@ public class MentoringCommentPostController {
 
     }
 
-        @PutMapping("/content")
-        @Operation(summary = "내용 수정")
-        public ResponseEntity<String> changeContent(
+        @PutMapping("/comments/{commentId}")
+        @Operation(summary = "수정")
+        public ResponseEntity<String> changeContentAndStarPoint(
             @AuthenticationPrincipal PrincipalUser principalUser,
             @ModelAttribute ReqMentoringCommentUpdateDto reqMentoringCommentUpdateDto) {
 
@@ -63,19 +65,19 @@ public class MentoringCommentPostController {
             }
     }
 
-    @DeleteMapping("/comment")
-    @Operation(summary = "댓글 삭제")
-    public ResponseEntity<?> deleteComment(
-            @AuthenticationPrincipal PrincipalUser principalUser,
-            @ModelAttribute ReqMentoringCommentDeleteDto reqMentoringCommentDeleteDto
-        ) {
-
-       boolean deleteCommentCheck = mentoringCommentService.deleteComment(principalUser.getUser(), reqMentoringCommentDeleteDto);
-       if (deleteCommentCheck) {
-           return ResponseEntity.ok().body("삭제 성공");
-       } else
-           return ResponseEntity.ok().body("삭제 실패");
-    }
+//    @DeleteMapping("/comments/{commentId}")
+//    @Operation(summary = "댓글 삭제")
+//    public ResponseEntity<?> deleteComment(
+//            @AuthenticationPrincipal PrincipalUser principalUser,
+//            @ModelAttribute ReqMentoringCommentDeleteDto reqMentoringCommentDeleteDto
+//        ) {
+//
+//       boolean deleteCommentCheck = mentoringCommentService.deleteComment(principalUser.getUser(), reqMentoringCommentDeleteDto);
+//       if (deleteCommentCheck) {
+//           return ResponseEntity.ok().body("삭제 성공");
+//       } else
+//           return ResponseEntity.ok().body("삭제 실패");
+//    }
 }
 
 
