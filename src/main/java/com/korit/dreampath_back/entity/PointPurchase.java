@@ -16,7 +16,7 @@ public class PointPurchase {
     private int pointPurchaseId;
     private int pointId;
     private int userId;
-    private int mid;
+    private String mid;
     private String status;
     private LocalDateTime createdAt;
 
