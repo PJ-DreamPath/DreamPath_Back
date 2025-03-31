@@ -20,8 +20,8 @@ public interface PointMapper {
 
 //    구매 내역 저장
     int savePurchasePoint(
-            @Param("userId") int userId,
             @Param("pointId") int pointId,
+            @Param("userId") int userId,
             @Param("mid") String mid,
             @Param("status") boolean status);
 

@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,8 +35,8 @@ public class TicketController {
 
     @PutMapping("/renewal/remaining")
     @Operation(summary = "이용권 구매하기")
-    public ResponseEntity<?> updateRemainingEntryCount(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody int ticketId) {
-        return ResponseEntity.ok().body(ticketService.updateRemainingEntryCount(principalUser, ticketId));
+    public ResponseEntity<?> updateRemainingEntryCount(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody Map<String, Integer> ticketId) {
+        return ResponseEntity.ok().body(ticketService.updateRemainingEntryCount(principalUser, ticketId.get("ticketId")));
     }
 
 }
