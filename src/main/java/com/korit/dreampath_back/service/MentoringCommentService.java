@@ -4,10 +4,8 @@ import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentDeleteDto
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentPageDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentUpdateDto;
-import com.korit.dreampath_back.dto.response.comment.RespMentoringCommentDto;
 import com.korit.dreampath_back.dto.response.comment.RespMentoringCommentPageDto;
-import com.korit.dreampath_back.entity.Comment;
-import com.korit.dreampath_back.entity.Mentoring;
+import com.korit.dreampath_back.entity.CommentSearch;
 import com.korit.dreampath_back.entity.MentoringComment;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.repository.MentoringCommentRepository;
@@ -26,17 +24,15 @@ public class MentoringCommentService {
     private MentoringCommentRepository mentoringCommentRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public RespMentoringCommentPageDto getCommentWithPage(PrincipalUser principalUser, ReqMentoringCommentPageDto dto) {
-        int userId = principalUser.getUser().getUserId();
+    public RespMentoringCommentPageDto getCommentWithPage(ReqMentoringCommentPageDto dto, int postId) {
 
-        int totalComments = mentoringCommentRepository.countTotalComments();
+
         int startIndex = (dto.getPage() - 1) * dto.getLimitCount();
+        List<CommentSearch> commentSearchLists = mentoringCommentRepository.findCommentByPostId(startIndex, dto.getLimitCount(), postId);
+        int totalComments = mentoringCommentRepository.getCountsByPostId(postId);
         int totalPages = totalComments % dto.getLimitCount() == 0
                 ? totalComments / dto.getLimitCount()
                 : totalComments / dto.getLimitCount() + 1;
-
-
-        List<Mentoring> mentoringLists = mentoringCommentRepository.getCommentPageWithNickname(userId, startIndex, dto.getLimitCount(), dto.getNickName());
 
         RespMentoringCommentPageDto respMentoringCommentPageDto =RespMentoringCommentPageDto.builder()
                 .page(dto.getPage())
@@ -44,8 +40,9 @@ public class MentoringCommentService {
                 .isFirstPage(dto.getPage() == 1)
                 .isLastPage(dto.getPage() == totalPages)
                 .totalPages(totalPages)
+                .totalElements(totalComments)
                 .nextPage(dto.getPage() == totalPages ? totalPages : dto.getPage() + 1)
-                .mentoringList(mentoringLists)
+                .commentSearchList(commentSearchLists)
                 .build();
         return respMentoringCommentPageDto;
     }
@@ -54,10 +51,10 @@ public class MentoringCommentService {
     @Transactional(rollbackFor = Exception.class)
     public boolean addComment(User user, ReqMentoringCommentDto commentDto){
 
-         if (commentDto.getStarPoint() < 1 || commentDto.getStarPoint() > 5) {
+        if (commentDto.getStarPoint() < 1 || commentDto.getStarPoint() > 5) {
 
-             return false;
-         }
+            return false;
+        }
 
         MentoringComment newComment = MentoringComment.builder()
                 .postId(commentDto.getPostId())
@@ -68,7 +65,7 @@ public class MentoringCommentService {
                 .updateAt(LocalDateTime.now())
                 .build();
 
-         System.out.println(newComment);
+        System.out.println(newComment);
 
         return mentoringCommentRepository.addComment(newComment) > 0;
     }
@@ -88,33 +85,32 @@ public class MentoringCommentService {
     }
 
 
-    @Transactional(rollbackFor = Exception.class)
-    public boolean deleteComment(User user, ReqMentoringCommentDeleteDto deleteDto) {
+//    @Transactional(rollbackFor = Exception.class)
+//    public boolean deleteComment(User user, ReqMentoringCommentDeleteDto deleteDto) {
 
-        MentoringComment deleteMentoringComment = MentoringComment.builder()
-                .commentId(deleteDto.getCommentId())
-                .userId(user.getUserId())
-                .postId(deleteDto.getPostId())
-                .build();
-
-        MentoringComment dbComment =  mentoringCommentRepository.findCommentPostUser(
-                deleteMentoringComment.getCommentId(),
-                deleteMentoringComment.getUserId(),
-                deleteMentoringComment.getPostId());
-
-
-        if (dbComment != null &&
-            dbComment.getCommentId() == deleteDto.getCommentId() &&
-            dbComment.getUserId() == user.getUserId() &&
-            dbComment.getPostId() == deleteDto.getPostId()) {
-            System.out.println("삭제 성공");
-
-                return mentoringCommentRepository.deleteComment(deleteMentoringComment) > 0;
-
-            }
-            System.out.println("삭제 실패");
-            return false;
-    }
+//        MentoringComment deleteMentoringComment = MentoringComment.builder()
+//                .commentId(deleteDto.getCommentId())
+//                .userId(user.getUserId())
+//                .postId(deleteDto.getPostId())
+//                .build();
+//
+//        MentoringComment dbComment =  mentoringCommentRepository.findCommentPostUser(
+//                deleteMentoringComment.getCommentId(),
+//                deleteMentoringComment.getPostId());
+//
+//
+//        if (dbComment != null &&
+//            dbComment.getCommentId() == deleteDto.getCommentId() &&
+//            dbComment.getUserId() == user.getUserId() &&
+//            dbComment.getPostId() == deleteDto.getPostId()) {
+//            System.out.println("삭제 성공");
+//
+//                return mentoringCommentRepository.deleteComment(deleteMentoringComment) > 0;
+//
+//            }
+//            System.out.println("삭제 실패");
+//            return false;
+//    }
 
 
 }

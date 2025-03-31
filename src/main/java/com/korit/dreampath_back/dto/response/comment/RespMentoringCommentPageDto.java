@@ -1,7 +1,6 @@
 package com.korit.dreampath_back.dto.response.comment;
 
-import com.korit.dreampath_back.entity.Mentoring;
-import com.korit.dreampath_back.entity.MentoringComment;
+import com.korit.dreampath_back.entity.CommentSearch;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +12,7 @@ public class RespMentoringCommentPageDto {
 
     private int page;
     private int limitCount;
+    private int totalElements;
     private boolean isFirstPage; // 첫 페이지
     private boolean isLastPage; // 마지막 페이지
     private int totalPages; // 전체 페이지
@@ -20,6 +20,6 @@ public class RespMentoringCommentPageDto {
 
 
 
-    private List<Mentoring> mentoringList;
+    private List<CommentSearch> commentSearchList;
 
 }

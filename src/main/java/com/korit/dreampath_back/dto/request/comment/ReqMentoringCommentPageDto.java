@@ -9,5 +9,4 @@ public class ReqMentoringCommentPageDto {
 
     private int page;
     private int limitCount;
-    private String nickName;
 }
