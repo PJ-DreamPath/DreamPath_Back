@@ -56,6 +56,8 @@
             point_purchase_tb ppt
             left outer join point_tb pt on( pt.point_id = ppt.point_id )
             left outer join user_tb ut on (ppt.user_id = ut.user_id)
+        where
+            ppt.user_id = #{userId}
         order by
             <choose>
                 <when test="order == 'asc'">
