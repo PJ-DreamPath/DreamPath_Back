@@ -101,6 +101,12 @@
 
     </update>
 
+    <update id="updateUserStarPointAvgByPostId">
+        update user_tb
+        set star_point = #{userStarPoint}
+        where user_id = #{userId}
+    </update>
+
     <delete id="deleteUserById">
         delete
         from
@@ -109,6 +115,20 @@
             user_id = #{userId}
 
     </delete>
+
+    <select id="getUserStarPointAvgByPostId" resultType="java.lang.Double">
+        select
+            ROUND(avg(star_point),1)
+        from
+            post_tb
+        where
+            board_id = 1
+        group by
+            user_id
+        having
+            user_id = #{userId}
+    </select>
+
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
@@ -568,7 +588,14 @@
         where
         ut.role_name = #{roleName}
     </select>
-
+    <select id="getUserIdByPostId" resultType="java.lang.Integer">
+        select
+            user_id
+        from
+            post_tb
+        where
+            post_id = #{postId}
+    </select>
 
 
 </mapper>

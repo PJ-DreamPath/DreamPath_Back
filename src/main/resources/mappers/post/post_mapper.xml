@@ -218,6 +218,24 @@
         where
             post_id = #{postId}
     </select>
+    <select id="getPostStarPointAvgByPostId" resultType="java.lang.Double">
+        select
+            ROUND(avg(star_point),1)
+        from
+            comment_tb
+        group by
+            post_id
+        having
+            post_id = #{postId}
+    </select>
+    <select id="selectPostIdByCommentId" resultType="java.lang.Integer">
+        select
+            post_id
+        from
+            comment_tb
+        where
+            comment_id = #{commentId}
+    </select>
 
     <update id="updatedPost">
         update post_tb
@@ -250,6 +268,11 @@
     <update id="updatePostStatusRecruiting">
         update post_tb
         set status = "recruiting"
+        where post_id = #{postId}
+    </update>
+    <update id="updatePostStarPointAvgByPostId">
+        update post_tb
+        set star_point = #{postStarPoint}
         where post_id = #{postId}
     </update>
 

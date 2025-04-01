@@ -1,6 +1,5 @@
 package com.korit.dreampath_back.service;
 
-import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentDeleteDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentPageDto;
 import com.korit.dreampath_back.dto.request.comment.ReqMentoringCommentUpdateDto;
@@ -9,7 +8,10 @@ import com.korit.dreampath_back.entity.CommentSearch;
 import com.korit.dreampath_back.entity.MentoringComment;
 import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.entity.UserRole;
+import com.korit.dreampath_back.mapper.PostMapper;
 import com.korit.dreampath_back.repository.MentoringCommentRepository;
+import com.korit.dreampath_back.repository.PostRepository;
+import com.korit.dreampath_back.repository.UserRepository;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,14 @@ public class MentoringCommentService {
 
     @Autowired
     private MentoringCommentRepository mentoringCommentRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PostMapper postMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public RespMentoringCommentPageDto getCommentWithPage(ReqMentoringCommentPageDto dto, int postId) {
@@ -67,8 +77,16 @@ public class MentoringCommentService {
                 .updateAt(LocalDateTime.now())
                 .build();
 
+        boolean isAdded = mentoringCommentRepository.addComment(newComment) > 0;
 
-        return mentoringCommentRepository.addComment(newComment) > 0;
+        double postStarPoint = postRepository.getPostStarPointAvgByPostId(commentDto.getPostId());
+        postRepository.updatePostStarPointAvgByPostId(commentDto.getPostId(), postStarPoint);
+
+        int userId = userRepository.getUserIdByPostId(commentDto.getPostId());
+        double userStarPoint = userRepository.getUserStarPointAvgByPostId(userId);
+        userRepository.updateStarPoint(userId, userStarPoint);
+
+        return isAdded;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -81,7 +99,18 @@ public class MentoringCommentService {
                 .starPoint(updateDto.getStarPoint())
                 .build();
 
-        return mentoringCommentRepository.updateComment(updateMentoringComment) > 0;
+        boolean isUpdated = mentoringCommentRepository.updateComment(updateMentoringComment) > 0;
+
+        int postId = postMapper.selectPostIdByCommentId(updateDto.getCommentId());
+
+        double postStarPoint = postRepository.getPostStarPointAvgByPostId(postId);
+        postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
+
+        int userId = userRepository.getUserIdByPostId(postId);
+        double userStarPoint = userRepository.getUserStarPointAvgByPostId(userId);
+        userRepository.updateStarPoint(userId, userStarPoint);
+
+        return isUpdated;
     }
 
 
@@ -97,7 +126,19 @@ public class MentoringCommentService {
         if(userId != principalUser.getUser().getUserId() && !isAdmin) {
             return false;
         }
-        return mentoringCommentRepository.deleteComment(commentId) > 0;
+
+        int postId = postMapper.selectPostIdByCommentId(commentId);
+
+        boolean isDeleted = mentoringCommentRepository.deleteComment(commentId) > 0;
+
+        double postStarPoint = postRepository.getPostStarPointAvgByPostId(postId);
+        postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
+
+        int mentoId = userRepository.getUserIdByPostId(postId);
+        double userStarPoint = userRepository.getUserStarPointAvgByPostId(mentoId);
+        userRepository.updateStarPoint(mentoId, userStarPoint);
+
+        return isDeleted;
     }
 
 
