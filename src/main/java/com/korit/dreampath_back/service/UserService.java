@@ -49,6 +49,7 @@ public class UserService {
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .roleName(user.getRoleName())
+                .starPoint(user.getStarPoint())
                 .remaining(user.getRemaining())
                 .remainPoint(user.getRemainPoint())
                 .profileImg(user.getProfileImg() == null ? "default.png" : user.getProfileImg())
