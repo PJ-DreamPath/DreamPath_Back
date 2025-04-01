@@ -36,6 +36,8 @@
         from
             purchase_tb pt
             left outer join ticket_tb tt on(tt.ticket_id = pt.ticket_id)
+        where
+            pt.user_id = #{userId}
         order by
             <choose>
                 <when test="order == 'asc'">

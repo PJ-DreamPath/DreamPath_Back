@@ -84,7 +84,7 @@ public class ApplyService {
 
         int totalMyApplyListCount = applyRepository.getMyApplyListCountBySearchText(userId, dto.getSearchText());
         int totalPages = totalMyApplyListCount % dto.getLimitCount() == 0
-                ? totalMyApplyListCount % dto.getLimitCount()
+                ? totalMyApplyListCount / dto.getLimitCount()
                 : totalMyApplyListCount / dto.getLimitCount() + 1;
         int startIndex = (dto.getPage()-1) * dto.getLimitCount();
         RespMyApplyList respDto = RespMyApplyList.builder()
