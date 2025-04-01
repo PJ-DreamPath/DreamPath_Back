@@ -46,4 +46,11 @@ public interface PostMapper {
     int updatePostStatusRecruiting(int postId);
 
     String getPostStatusByPostId(int postId);
+
+//    별점 가져오기
+    double getPostStarPointAvgByPostId(int postId);
+
+    int updatePostStarPointAvgByPostId(int postId, double postStarPoint);
+
+    int selectPostIdByCommentId(int commentId);
 }

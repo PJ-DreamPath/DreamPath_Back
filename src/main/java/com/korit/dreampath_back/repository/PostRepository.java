@@ -64,6 +64,17 @@ public class PostRepository {
     public boolean isRecruited(int postId) {
         return postMapper.getPostStatusByPostId(postId).equals("closedRecruitment");
     }
+
+    public double getPostStarPointAvgByPostId(int postId) {
+        return postMapper.getPostStarPointAvgByPostId(postId);
+    }
+    public int updatePostStarPointAvgByPostId(int postId, double postStarPoint) {
+        return postMapper.updatePostStarPointAvgByPostId(postId, postStarPoint);
+    }
+
+    public int selectPostIdByCommentId(int commentId) {
+        return postMapper.selectPostIdByCommentId(commentId);
+    }
 }
 
 

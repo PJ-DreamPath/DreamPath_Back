@@ -115,4 +115,16 @@ public class UserRepository {
     public boolean updatePhoneNumber(int userId, String phoneNumber) {
         return userMapper.updatePhoneNumber(userId, phoneNumber);
     }
+
+    public int updateStarPoint(int userId, double userStarPoint) {
+        return userMapper.updateUserStarPointAvgByPostId(userId, userStarPoint);
+    }
+
+    public double getUserStarPointAvgByPostId(int userId) {
+        return userMapper.getUserStarPointAvgByPostId(userId);
+    }
+
+    public int getUserIdByPostId(int postId) {
+        return userMapper.getUserIdByPostId(postId);
+    }
 }
