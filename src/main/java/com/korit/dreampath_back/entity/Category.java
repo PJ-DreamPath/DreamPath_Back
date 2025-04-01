@@ -15,4 +15,5 @@ public class Category {
     private String categoryName;
     private String categoryNameKor;
     private int boardId;
+    private String type;
 }
