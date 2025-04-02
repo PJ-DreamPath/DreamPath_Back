@@ -18,7 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/api/file")
 public class FilesController {
     @Autowired
     private FileService fileService;
