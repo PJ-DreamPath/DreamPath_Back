@@ -15,4 +15,5 @@ public class MyApplySearch {
     String title;
     String mento;
     LocalDate createdAt;
+    int postId;
 }

@@ -26,7 +26,8 @@
         select
             pt.title,
             ut.nickname as mento,
-            mrt.apply_at as createdAt
+            mrt.apply_at as createdAt,
+            mrt.post_id as postId
         from
             mentoring_register_tb mrt
             left outer join post_tb pt on (pt.post_id = mrt.post_id)

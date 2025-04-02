@@ -535,6 +535,7 @@
             <if test ="searchText != null and searchText != ''">
                 and pt.title like concat("%", #{searchText}, "%")
             </if>
+            and pt.board_id = 1
         order by
             <choose>
                 <when test="order == 'asc'">
