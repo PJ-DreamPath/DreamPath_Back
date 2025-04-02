@@ -53,4 +53,6 @@ public interface PostMapper {
     int updatePostStarPointAvgByPostId(int postId, double postStarPoint);
 
     int selectPostIdByCommentId(int commentId);
+
+    List<PostDetail> getBeforeTodayPosts();
 }
