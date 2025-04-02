@@ -81,7 +81,7 @@ public class PostService {
 
         int startIdx = (searchDto.getPage() - 1) * searchDto.getLimitCount();
 
-        return postRepository.findPostList(boardId, startIdx, searchDto.getLimitCount(), searchDto.getOrder(), searchDto.getSearchTxt())
+        return postRepository.findPostList(boardId, startIdx, searchDto.getLimitCount(), searchDto.getOrder(), searchDto.getStatus(), searchDto.getCategory(), searchDto.getSearchTxt())
                 .orElseThrow(() -> new NotFoundException("검색된 게시글이 없습니다."));
     }
 
