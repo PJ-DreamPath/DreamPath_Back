@@ -24,6 +24,8 @@ public interface PostMapper {
             @Param("startIdx") int startIdx,
             @Param("limitCount") int limitCount,
             @Param("order") String order,
+            @Param("status") String status,
+            @Param("category") String category,
             @Param("searchTxt")String searchTxt
     );
 

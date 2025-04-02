@@ -117,25 +117,27 @@
             left outer join user_tb ut on(ut.user_id = pt.user_id)
         <where>
             pt.board_id = #{boardId}
+            <if test="status != null and status == 'recruiting'">
+                and pt.status = "recruiting"
+            </if>
+            <if test="status != null and status == 'closedRecruitment'">
+                and pt.status = "closedRecruitment"
+            </if>
+
             <if test="searchTxt != null and searchTxt != ''">
                 and pt.title like concat("%", #{searchTxt} , "%")
             </if>
-            <if test="order != null and order == 'recruiting'">
-                and pt.status = "recruiting"
-            </if>
-            <if test="order != null and order == 'closedRecruitment'">
-                and pt.status = "closedRecruitment"
-            </if>
-            <if test="order != null and order == 'back'">
+
+            <if test="category != null and category == 'back'">
                 and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "back")
             </if>
-            <if test="order != null and order == 'front'">
+            <if test="category != null and category == 'front'">
                 and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "front")
             </if>
-            <if test="order != null and order == 'security'">
+            <if test="category != null and category == 'security'">
                 and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "security")
             </if>
-            <if test="order != null and order == 'full'">
+            <if test="category != null and category == 'full'">
                 and pt.category_id = (select ct.category_id from category_tb ct where ct.category_name = "full")
             </if>
         </where>
