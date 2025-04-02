@@ -33,8 +33,10 @@ public class ApplyService {
     public String sendApplyMail(ReqApplyEmailDto reqApplyEmailDto, PrincipalUser principalUser) throws MessagingException {
         String nickname = principalUser.getUser().getNickname();
         String emailToken = jwtUtil.generateToken(null, null, new Date(new Date().getTime()*1000l*60*60*24*7));
-        String email = reqApplyEmailDto.getEmail();
+        String email = principalUser.getUser().getEmail();
         String message = "";
+
+        String toEmail = reqApplyEmailDto.getEmail();
 
         final String SUBJECT = "멘토링 신청 이메일입니다.";
 
@@ -54,7 +56,7 @@ public class ApplyService {
                     </html>
                 """, nickname, email);
         if(isApplied(principalUser, reqApplyEmailDto)){
-            sendMail(email, SUBJECT, content);
+            sendMail(toEmail, SUBJECT, content);
             applyRepository.insertMentoringRegister(MentoringRegister.builder().userId(principalUser.getUser().getUserId()).postId(reqApplyEmailDto.getPostId()).build());
             message = "신청 메일 전송에 성공했습니다.";
         } else {

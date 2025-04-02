@@ -7,6 +7,8 @@ import com.korit.dreampath_back.entity.User;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -67,8 +69,11 @@ public class UserController {
     @Operation(summary = "비밀번호 수정")
     public ResponseEntity<?> changePassword(
             @AuthenticationPrincipal PrincipalUser principalUser,
-            @RequestBody ReqUserUpdateDto reqUserUpdateDto) {
-
+            @Valid @RequestBody ReqUserUpdateDto reqUserUpdateDto) throws Exception {
+//        if(reqUserUpdateDto.getPassword() == null || reqUserUpdateDto.getPassword().length() < 8) {
+//            throw new Exception("이상한 비밀번호를 입력하지마세요");
+//        }
+        System.out.println(reqUserUpdateDto);
         userService.updatePassword(principalUser.getUser(), reqUserUpdateDto.getPassword());
         return ResponseEntity.ok().build();
     }
@@ -77,7 +82,7 @@ public class UserController {
     @Operation(summary = "이메일 수정")
     public ResponseEntity<?> changeEmail(
             @AuthenticationPrincipal PrincipalUser principalUser,
-            @RequestBody ReqUserUpdateDto reqUserUpdateDto) {
+            @Valid @RequestBody ReqUserUpdateDto reqUserUpdateDto) {
 
         userService.updateEmail(principalUser.getUser(), reqUserUpdateDto.getEmail());
         return ResponseEntity.ok().build();
