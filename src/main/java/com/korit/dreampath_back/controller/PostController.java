@@ -10,6 +10,7 @@ import com.korit.dreampath_back.entity.PostDetail;
 import com.korit.dreampath_back.entity.PostLike;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PostService;
+import com.korit.dreampath_back.service.SchedulerService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private SchedulerService SchedulerService;
+    @Autowired
+    private SchedulerService schedulerService;
 
     @PostMapping("/post")
     @Operation(summary = "게시글 등록")
@@ -121,4 +127,11 @@ public class PostController {
 
         return ResponseEntity.ok().body(postService.findPostMyLike(principalUser.getUser(), postId));
     }
+
+
+//    @PostMapping("/posts/update/schedule")
+//    public ResponseEntity<?> schedule() {
+//        schedulerService.updateRecruiting();
+//        return ResponseEntity.ok().body(" 성공입니다요");
+//    }
 }

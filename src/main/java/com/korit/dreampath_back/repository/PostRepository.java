@@ -7,6 +7,7 @@ import com.korit.dreampath_back.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,10 @@ public class PostRepository {
 
     public int selectPostIdByCommentId(int commentId) {
         return postMapper.selectPostIdByCommentId(commentId);
+    }
+
+    public List<PostDetail> getBeforeTodayPosts() {
+        return postMapper.getBeforeTodayPosts();
     }
 }
 

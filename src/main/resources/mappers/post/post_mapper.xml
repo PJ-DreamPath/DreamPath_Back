@@ -238,6 +238,18 @@
             comment_id = #{commentId}
     </select>
 
+    <select id="getBeforeTodayPosts" resultMap="postDetailResultMap">
+        select
+        ptt.post_id,
+        ptt.start_date,
+        ptt.end_date
+
+        from
+        post_tb ptt
+        where
+        ptt.end_date &lt; now()
+    </select>
+
     <update id="updatedPost">
         update post_tb
         set

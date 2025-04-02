@@ -86,3 +86,7 @@ mybatis:
     - /mappers/mentoring_comment/*.xml
 springdoc:
   override-with-generic-response: false
+
+schedule:
+  cron: 0 0 10 * * *
+  use: true
