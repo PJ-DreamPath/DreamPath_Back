@@ -57,4 +57,6 @@ public interface PostMapper {
     int selectPostIdByCommentId(int commentId);
 
     List<PostDetail> getBeforeTodayPosts();
+
+    int getBoardIdByPostId(int postId);
 }

@@ -62,10 +62,13 @@ public class MentoringCommentService {
     @Transactional(rollbackFor = Exception.class)
     public boolean addComment(User user, ReqMentoringCommentDto commentDto){
 
-        if (commentDto.getStarPoint() < 1 || commentDto.getStarPoint() > 5) {
+        int boardId = postMapper.getBoardIdByPostId(commentDto.getPostId());
+
+        if ( boardId == 1 && (commentDto.getStarPoint() < 1 || commentDto.getStarPoint() > 5)) {
 
             return false;
         }
+
 
         MentoringComment newComment = MentoringComment.builder()
                 .postId(commentDto.getPostId())
@@ -78,12 +81,16 @@ public class MentoringCommentService {
 
         boolean isAdded = mentoringCommentRepository.addComment(newComment) > 0;
 
-        double postStarPoint = postRepository.getPostStarPointAvgByPostId(commentDto.getPostId());
-        postRepository.updatePostStarPointAvgByPostId(commentDto.getPostId(), postStarPoint);
 
-        int userId = userRepository.getUserIdByPostId(commentDto.getPostId());
-        double userStarPoint = userRepository.getUserStarPointAvg(userId);
-        userRepository.updateStarPoint(userId, userStarPoint);
+        if(boardId == 1){
+            double postStarPoint = postRepository.getPostStarPointAvgByPostId(commentDto.getPostId());
+            postRepository.updatePostStarPointAvgByPostId(commentDto.getPostId(), postStarPoint);
+
+            int userId = userRepository.getUserIdByPostId(commentDto.getPostId());
+            double userStarPoint = userRepository.getUserStarPointAvg(userId);
+            userRepository.updateStarPoint(userId, userStarPoint);
+        }
+
 
         return isAdded;
     }
@@ -101,13 +108,18 @@ public class MentoringCommentService {
         boolean isUpdated = mentoringCommentRepository.updateComment(updateMentoringComment) > 0;
 
         int postId = postMapper.selectPostIdByCommentId(updateDto.getCommentId());
+        int boardId = postMapper.getBoardIdByPostId(postId);
 
-        double postStarPoint = postRepository.getPostStarPointAvgByPostId(postId);
-        postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
+        if(boardId == 1) {
 
-        int userId = userRepository.getUserIdByPostId(postId);
-        double userStarPoint = userRepository.getUserStarPointAvg(userId);
-        userRepository.updateStarPoint(userId, userStarPoint);
+            double postStarPoint = postRepository.getPostStarPointAvgByPostId(postId);
+            postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
+
+            int userId = userRepository.getUserIdByPostId(postId);
+            double userStarPoint = userRepository.getUserStarPointAvg(userId);
+            userRepository.updateStarPoint(userId, userStarPoint);
+        }
+
 
         return isUpdated;
     }
@@ -127,15 +139,23 @@ public class MentoringCommentService {
         }
 
         int postId = postMapper.selectPostIdByCommentId(commentId);
+        int boardId = postMapper.getBoardIdByPostId(postId);
+
+        if(boardId == 1) {
+            double postStarPoint = postRepository.getPostStarPointAvgByPostId(postId);
+            postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
+
+            int mentoId = userRepository.getUserIdByPostId(postId);
+            double userStarPoint = userRepository.getUserStarPointAvg(mentoId);
+            userRepository.updateStarPoint(mentoId, userStarPoint);
+        }
 
         boolean isDeleted = mentoringCommentRepository.deleteComment(commentId) > 0;
 
-        double postStarPoint = postRepository.getPostStarPointAvgByPostId(postId);
-        postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
+        if(mentoringCommentRepository.getCountsByPostId(postId) == 0) {
+            postRepository.updatePostStarPointAvgByPostId(postId, 0);
+        }
 
-        int mentoId = userRepository.getUserIdByPostId(postId);
-        double userStarPoint = userRepository.getUserStarPointAvg(mentoId);
-        userRepository.updateStarPoint(mentoId, userStarPoint);
 
         return isDeleted;
     }

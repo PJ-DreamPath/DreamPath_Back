@@ -31,7 +31,7 @@ public class User {
     private String oAuth2Provider;
 
     private int remaining;
-    private int starPoint;
+    private double starPoint;
     private int remainPoint;
 
     private int accountExpired;
