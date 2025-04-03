@@ -119,6 +119,7 @@ public class UserService {
         userRepository.updateProfileImg(user.getUserId(), savedFileName);
 
         if (user.getProfileImg() == null) {return;}
+
             fileService.deleteFile(PROFILE_IMG_FILE_PATH + " / " + user.getProfileImg());
 
     }

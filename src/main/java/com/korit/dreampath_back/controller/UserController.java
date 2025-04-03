@@ -73,7 +73,6 @@ public class UserController {
 //        if(reqUserUpdateDto.getPassword() == null || reqUserUpdateDto.getPassword().length() < 8) {
 //            throw new Exception("이상한 비밀번호를 입력하지마세요");
 //        }
-        System.out.println(reqUserUpdateDto);
         userService.updatePassword(principalUser.getUser(), reqUserUpdateDto.getPassword());
         return ResponseEntity.ok().build();
     }

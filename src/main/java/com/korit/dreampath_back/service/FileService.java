@@ -52,7 +52,7 @@ public class FileService {
 
         File file = new File(rootPath + "/" + path);
 
-        if (file.exists()) {
+        if (!file.exists()) {
             file.delete();
         }
     }

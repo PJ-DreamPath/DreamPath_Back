@@ -61,7 +61,6 @@ public class PostService {
 
         LocalDate today = LocalDate.now();
 
-
         Post newPost = Post.builder()
                 .boardId(createDto.getBoardId())
                 .userId(user.getUserId())
@@ -101,14 +100,12 @@ public class PostService {
 
     @Transactional(rollbackFor = Exception.class)
     public boolean updatedPost(User user, ReqPostUpdateDto updateDto) {
-
+        PostDetail postdetail = postRepository.findPostDetail(updateDto.getPostId()).get();
 
         final String PROFILE_IMG_FILE_PATH = "/upload/user/post";
         String saveFilename = fileService.saveFile(PROFILE_IMG_FILE_PATH, updateDto.getFile()); // 폴더에 저정
 
         LocalDate today = LocalDate.now();
-
-
 
         Post newPost = Post.builder()
                 .postId(updateDto.getPostId())
@@ -123,6 +120,9 @@ public class PostService {
                 .attachedFiles(saveFilename)
                 .build();
 
+        if(postdetail.getAttachedFiles() != null) {
+            fileService.deleteFile(PROFILE_IMG_FILE_PATH + " / " + postdetail.getAttachedFiles());
+        }
 
 
         return postRepository.updatedPost(newPost) > 0 ? true : false;
