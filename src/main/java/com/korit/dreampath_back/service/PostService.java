@@ -155,6 +155,7 @@ public class PostService {
         return boardRepository.findAll();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public String updatePostStatus(int postId) {
         String status = "";
         if(postRepository.isRecruited(postId)){

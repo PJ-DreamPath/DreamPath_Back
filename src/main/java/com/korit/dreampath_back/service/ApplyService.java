@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class ApplyService {
     private ApplyRepository applyRepository;
 
     @Async
+    @Transactional(rollbackFor = Exception.class)
     public void sendApplyMail(ReqApplyEmailDto reqApplyEmailDto, PrincipalUser principalUser) throws MessagingException {
         String nickname = principalUser.getUser().getNickname();
 

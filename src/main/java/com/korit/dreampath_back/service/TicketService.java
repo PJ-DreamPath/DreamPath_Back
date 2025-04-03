@@ -8,6 +8,7 @@ import com.korit.dreampath_back.repository.UserRepository;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class TicketService {
         return respTicketPurchaseListDto;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public String updateRemainingEntryCount(PrincipalUser principalUser, int ticketId) {
         String message = "";
         int userId = principalUser.getUser().getUserId();

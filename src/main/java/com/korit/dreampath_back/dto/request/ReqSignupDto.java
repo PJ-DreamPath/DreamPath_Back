@@ -13,6 +13,7 @@ import lombok.Data;
 @Valid
 public class ReqSignupDto {
     @Min(value = 1, message = "roleId 유효성 실패")
+    @Schema(description = "분류 ID")
     private int roleId;
     @Schema(description = "사용자이름")
     @Pattern(regexp="^[a-zA-Z0-9]{3,20}$",

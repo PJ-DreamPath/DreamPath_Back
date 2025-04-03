@@ -35,7 +35,6 @@ public class MentoringCommentService {
     @Autowired
     private PostMapper postMapper;
 
-    @Transactional(rollbackFor = Exception.class)
     public RespMentoringCommentPageDto getCommentWithPage(ReqMentoringCommentPageDto dto, int postId) {
 
 

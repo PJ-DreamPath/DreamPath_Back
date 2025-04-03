@@ -18,6 +18,7 @@ public class AdminPostService {
     @Autowired
     private AdminPostRepository adminPostRepository;
 
+
     public List<PostAdmin> getAdminPostList(ReqAdminPostDto dto) {
 
         int startIndex = (dto.getPage() - 1) * dto.getLimitCount();
@@ -26,6 +27,7 @@ public class AdminPostService {
 
         return postList;
     }
+
 
     public int findAllAdminPostCount() {
         return adminPostRepository.findAllPostCount();
