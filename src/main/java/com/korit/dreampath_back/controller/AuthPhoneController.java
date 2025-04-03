@@ -1,5 +1,6 @@
 package com.korit.dreampath_back.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Balance;
@@ -50,6 +51,7 @@ public class AuthPhoneController {
      * 단일 메시지 발송 예제
      */
     @PostMapping("/api/send-one")
+    @Operation(summary = "인증메일 전송")
     public String sendOne(@RequestBody Map<String, String> requestBodyMap) {
         Message message = new Message();
         String phoneNumber = requestBodyMap.get("phoneNumber");
