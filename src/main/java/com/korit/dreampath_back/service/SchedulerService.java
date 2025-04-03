@@ -22,8 +22,6 @@ public class SchedulerService {
 //        boardId 가 1번인 post 가지고 와서 지금 날짜보다 이전인거 전부다 업데이트
         List<PostDetail> before = postRepository.getBeforeTodayPosts();
 
-        System.out.println(before);
-
         for(PostDetail detail : before) {
             postRepository.updatePostStatusClosedRecruiting(detail.getPostId());
         }

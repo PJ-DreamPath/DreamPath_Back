@@ -260,6 +260,7 @@
             category_id = #{categoryId},
             mentoring_address = #{mentoringAddress},
             end_date = #{endDate},
+            attached_files = #{attachedFiles},
             updated_at = now()
         where
             post_id = #{postId}
