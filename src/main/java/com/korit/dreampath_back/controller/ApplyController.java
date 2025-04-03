@@ -6,8 +6,10 @@ import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.ApplyService;
 import com.korit.dreampath_back.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +24,13 @@ public class ApplyController {
 
     @PostMapping("/apply")
     @Operation(summary = "신청 메일 전송")
-    public ResponseEntity<?> sendApplyMail(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqApplyEmailDto reqApplyEmailDto) throws Exception {
-
-        String message = applyService.sendApplyMail(reqApplyEmailDto, principalUser);
-        return ResponseEntity.ok().body(message);
+    @Async
+    public void sendApplyMail(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqApplyEmailDto reqApplyEmailDto) throws Exception {
+        if(applyService.isApplied(principalUser, reqApplyEmailDto.getPostId())) {
+            applyService.sendApplyMail(reqApplyEmailDto, principalUser);
+        } else {
+            System.out.println("확인");
+        }
     }
 
     @GetMapping("/me/applyList")

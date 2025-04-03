@@ -75,9 +75,10 @@ public class PostController {
     @GetMapping("/post/{postId}")
     @Operation(summary = "게시글 상세 조회")
     public ResponseEntity<PostDetail> getPostDetail(
+            @AuthenticationPrincipal PrincipalUser principalUser,
             @PathVariable int postId
     ) throws NotFoundException {
-        return ResponseEntity.ok().body(postService.getPostDetail(postId));
+        return ResponseEntity.ok().body(postService.getPostDetail(principalUser, postId));
     }
 
     @PutMapping("/posts/{postId}")

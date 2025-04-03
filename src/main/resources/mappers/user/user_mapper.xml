@@ -116,17 +116,14 @@
 
     </delete>
 
-    <select id="getUserStarPointAvgByPostId" resultType="java.lang.Double">
+    <select id="getUserStarPointAvg" resultType="java.lang.Double">
         select
-            ROUND(avg(star_point),1)
+            ROUND(avg(ct.star_point), 1)
         from
-            post_tb
-        where
-            board_id = 1
-        group by
-            user_id
-        having
-            user_id = #{userId}
+            comment_tb ct
+            left outer join post_tb pt on (ct.post_id = pt.post_id)
+        where pt.user_id = #{userId}
+        group by pt.user_id;
     </select>
 
 
@@ -556,6 +553,7 @@
             <if test="searchText != null and searchText != ''">
                 and title like concat("%", #{searchText}, "%")
             </if>
+            and board_id = 1
         </where>
     </select>
 

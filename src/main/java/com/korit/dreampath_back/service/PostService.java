@@ -1,14 +1,13 @@
 package com.korit.dreampath_back.service;
 
+import com.korit.dreampath_back.dto.request.ReqApplyEmailDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostCreateDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostLikeDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostSearchDto;
 import com.korit.dreampath_back.dto.request.post.ReqPostUpdateDto;
 import com.korit.dreampath_back.entity.*;
-import com.korit.dreampath_back.repository.BoardRepository;
-import com.korit.dreampath_back.repository.PostLikeRepository;
-import com.korit.dreampath_back.repository.PostRepository;
-import com.korit.dreampath_back.repository.UserRepository;
+import com.korit.dreampath_back.repository.*;
+import com.korit.dreampath_back.security.principal.PrincipalUser;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -36,6 +36,9 @@ public class PostService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ApplyService applyService;
 
     public int getPostListCountAllBySearchTxt(int boardId, String searchTxt) {
         return postRepository.findPostListCountAllBySearchTxt(boardId, searchTxt);
@@ -86,10 +89,14 @@ public class PostService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public PostDetail getPostDetail(int postId) throws NotFoundException {
+    public PostDetail getPostDetail(PrincipalUser principalUser, int postId) throws NotFoundException {
 //        조회수 올리기
         postRepository.updatePostViewCount(postId);
-        return postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));
+
+        boolean isApplied = applyService.isApplied(principalUser, postId);
+        PostDetail postDetail = postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));
+        postDetail.setApply(isApplied);
+        return postDetail;
     }
 
     @Transactional(rollbackFor = Exception.class)
