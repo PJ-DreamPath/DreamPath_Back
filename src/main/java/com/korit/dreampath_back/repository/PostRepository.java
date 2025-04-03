@@ -80,6 +80,10 @@ public class PostRepository {
     public List<PostDetail> getBeforeTodayPosts() {
         return postMapper.getBeforeTodayPosts();
     }
+
+    public int getBoardIdByPostId(int postId) {
+        return postMapper.getBoardIdByPostId(postId);
+    }
 }
 
 

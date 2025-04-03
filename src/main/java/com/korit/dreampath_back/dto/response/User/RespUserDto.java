@@ -33,7 +33,7 @@ public class RespUserDto {
     private String profileImg;
 
     @Schema(description = "별점", example = "5")
-    private int starPoint;
+    private double starPoint;
 
     @Schema(description = "멘토링 갯수", example = "17")
     private int remaining;

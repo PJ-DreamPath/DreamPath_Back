@@ -122,7 +122,10 @@
         from
             comment_tb ct
             left outer join post_tb pt on (ct.post_id = pt.post_id)
-        where pt.user_id = #{userId}
+        where
+            pt.user_id = #{userId}
+        and
+            ct.star_point > 0
         group by pt.user_id;
     </select>
 
