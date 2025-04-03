@@ -80,7 +80,7 @@ public interface UserMapper {
             @Param("phoneNumber") String phoneNumber
     );
 
-    double getUserStarPointAvgByPostId(int userId);
+    double getUserStarPointAvg(int userId);
 
     int updateUserStarPointAvgByPostId(int userId, double userStarPoint);
 

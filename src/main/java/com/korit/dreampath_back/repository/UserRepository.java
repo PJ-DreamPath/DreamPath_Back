@@ -120,8 +120,8 @@ public class UserRepository {
         return userMapper.updateUserStarPointAvgByPostId(userId, userStarPoint);
     }
 
-    public double getUserStarPointAvgByPostId(int userId) {
-        return userMapper.getUserStarPointAvgByPostId(userId);
+    public double getUserStarPointAvg(int userId) {
+        return userMapper.getUserStarPointAvg(userId);
     }
 
     public int getUserIdByPostId(int postId) {

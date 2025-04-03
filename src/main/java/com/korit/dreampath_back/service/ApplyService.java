@@ -4,6 +4,7 @@ import com.korit.dreampath_back.dto.request.ReqApplyEmailDto;
 import com.korit.dreampath_back.dto.request.ReqMyApplySearchDto;
 import com.korit.dreampath_back.dto.response.RespMyApplyList;
 import com.korit.dreampath_back.entity.MentoringRegister;
+import com.korit.dreampath_back.exception.DuplicatedValueException;
 import com.korit.dreampath_back.repository.ApplyRepository;
 import com.korit.dreampath_back.security.jwt.JwtUtil;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
@@ -12,6 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -30,11 +32,12 @@ public class ApplyService {
     @Autowired
     private ApplyRepository applyRepository;
 
-    public String sendApplyMail(ReqApplyEmailDto reqApplyEmailDto, PrincipalUser principalUser) throws MessagingException {
+    @Async
+    public void sendApplyMail(ReqApplyEmailDto reqApplyEmailDto, PrincipalUser principalUser) throws MessagingException {
         String nickname = principalUser.getUser().getNickname();
-        String emailToken = jwtUtil.generateToken(null, null, new Date(new Date().getTime()*1000l*60*60*24*7));
+
         String email = principalUser.getUser().getEmail();
-        String message = "";
+
 
         String toEmail = reqApplyEmailDto.getEmail();
 
@@ -55,14 +58,9 @@ public class ApplyService {
                     </body>
                     </html>
                 """, nickname, email);
-        if(isApplied(principalUser, reqApplyEmailDto)){
-            sendMail(toEmail, SUBJECT, content);
+
             applyRepository.insertMentoringRegister(MentoringRegister.builder().userId(principalUser.getUser().getUserId()).postId(reqApplyEmailDto.getPostId()).build());
-            message = "신청 메일 전송에 성공했습니다.";
-        } else {
-            message = "이미 신청한 멘토링입니다.";
-        }
-        return message;
+
     }
 
 
@@ -77,8 +75,8 @@ public class ApplyService {
         mailSender.send(mimeMessage);
     }
 
-    public boolean isApplied (PrincipalUser principalUser, ReqApplyEmailDto reqApplyEmailDto) {
-        return applyRepository.getMentoringRegisterList(principalUser.getUser().getUserId(), reqApplyEmailDto.getPostId()).get().isEmpty();
+    public boolean isApplied (PrincipalUser principalUser, int postId) {
+        return applyRepository.getMentoringRegisterList(principalUser.getUser().getUserId(), postId).get().isEmpty();
     }
 
     public RespMyApplyList getMyApplyList(PrincipalUser principalUser, ReqMyApplySearchDto dto) {

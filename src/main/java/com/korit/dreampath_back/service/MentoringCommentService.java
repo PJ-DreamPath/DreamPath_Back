@@ -83,7 +83,7 @@ public class MentoringCommentService {
         postRepository.updatePostStarPointAvgByPostId(commentDto.getPostId(), postStarPoint);
 
         int userId = userRepository.getUserIdByPostId(commentDto.getPostId());
-        double userStarPoint = userRepository.getUserStarPointAvgByPostId(userId);
+        double userStarPoint = userRepository.getUserStarPointAvg(userId);
         userRepository.updateStarPoint(userId, userStarPoint);
 
         return isAdded;
@@ -107,7 +107,7 @@ public class MentoringCommentService {
         postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
 
         int userId = userRepository.getUserIdByPostId(postId);
-        double userStarPoint = userRepository.getUserStarPointAvgByPostId(userId);
+        double userStarPoint = userRepository.getUserStarPointAvg(userId);
         userRepository.updateStarPoint(userId, userStarPoint);
 
         return isUpdated;
@@ -135,7 +135,7 @@ public class MentoringCommentService {
         postRepository.updatePostStarPointAvgByPostId(postId, postStarPoint);
 
         int mentoId = userRepository.getUserIdByPostId(postId);
-        double userStarPoint = userRepository.getUserStarPointAvgByPostId(mentoId);
+        double userStarPoint = userRepository.getUserStarPointAvg(mentoId);
         userRepository.updateStarPoint(mentoId, userStarPoint);
 
         return isDeleted;

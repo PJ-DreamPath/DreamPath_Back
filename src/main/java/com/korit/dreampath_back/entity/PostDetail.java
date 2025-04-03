@@ -38,5 +38,7 @@ public class PostDetail {
     private int likeCount;
     private int commentCount;
 
+    private boolean isApply;
+
     private User user;
 }
