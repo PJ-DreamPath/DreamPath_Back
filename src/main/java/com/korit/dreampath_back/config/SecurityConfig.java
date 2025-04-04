@@ -1,6 +1,7 @@
 package com.korit.dreampath_back.config;
 
 import com.korit.dreampath_back.security.filter.JwtAuthenticationFilter;
+import com.korit.dreampath_back.security.handler.CustomAccessDeniedHandler;
 import com.korit.dreampath_back.security.handler.CustomAuthenticationEntryPoint;
 import com.korit.dreampath_back.security.oAuth2.CustomOAuth2SuccessHandler;
 import com.korit.dreampath_back.security.oAuth2.CustomOAuth2UserService;
@@ -25,6 +26,8 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     @Autowired
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
     @Autowired
     private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     @Autowired
@@ -57,11 +60,14 @@ public class SecurityConfig {
 
         http.exceptionHandling(exception -> {
             exception.authenticationEntryPoint(customAuthenticationEntryPoint);
+            exception.accessDeniedHandler(customAccessDeniedHandler);
         });
 
         http.authorizeHttpRequests(authorizeRequests ->{
             authorizeRequests.requestMatchers("/api/auth/**", "/image/**", "/api/category/list", "api/boards").permitAll().requestMatchers(HttpMethod.GET,"/api/posts/**").permitAll()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
+                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/api/point/**", "/api/ticket/**", "/api/user/me/mentoring", "/api/mentoring/status").hasRole("MENTO")
                     .anyRequest().authenticated();
         });
         return http.build();

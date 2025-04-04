@@ -42,6 +42,7 @@ public class JwtAuthenticationFilter implements Filter {
         PrincipalUser principalUser = PrincipalUser.builder().user(user).build();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
+        System.out.println(principalUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
