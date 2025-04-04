@@ -44,14 +44,15 @@ public class AdminUserController {
     public ResponseEntity<?> deleteUser(
             @Min(value = 1, message = "회원 ID는 1 이상의 정수입니다.")
             @ApiParam(value = "회원 ID 번호", example = "1", required = true)
-            @PathVariable int userId) throws NotFoundException {
+            @PathVariable int userId,
+            @AuthenticationPrincipal PrincipalUser principalUser) throws NotFoundException {
+
         return ResponseEntity.ok().body(adminUserService.deleteUser(userId));
     }
 
     @GetMapping("/posts")
     @Operation(summary = "관리자 게시글 전체 조회")
     public ResponseEntity<?> findAllPosts(@ModelAttribute ReqAdminPostDto dto, @AuthenticationPrincipal PrincipalUser principalUser) {
-        int userId = principalUser.getUser().getUserId();
 
         int totalPostListCount = adminPostService.findAllAdminPostCount();
         int totalPages = totalPostListCount % dto.getLimitCount() == 0
@@ -77,14 +78,15 @@ public class AdminUserController {
     public ResponseEntity<?> deletePost(
             @Min(value = 1, message = "게시글 ID는 1 이상의 정수입니다.")
             @ApiParam(value = "게시글 ID 번호", example = "1", required = true)
-            @PathVariable int postId) throws NotFoundException {
+            @PathVariable int postId,
+            @AuthenticationPrincipal PrincipalUser principalUser) throws NotFoundException {
+
         return ResponseEntity.ok().body(adminPostService.deletePost(postId));
     }
 
     @GetMapping("/users")
     @Operation(summary = "관리자 회원 전체 조회")
     public ResponseEntity<?> getUserPageList(@ModelAttribute ReqAdminUserDto dto, @AuthenticationPrincipal PrincipalUser principalUser) {
-        int userId = principalUser.getUser().getUserId();
 
         int totalUserListCount = adminUserService.findAllAdminUser();
         int totalPages = totalUserListCount % dto.getLimitCount() == 0

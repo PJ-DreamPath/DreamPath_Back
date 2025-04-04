@@ -52,6 +52,9 @@ public class PostService {
             if(user.getRemaining() < 1 ) {
                 return false;
             }
+            if(!user.getRoleName().equals("ROLE_MENTO")) {
+                return false;
+            }
 
             userRepository.updateRemainingCount(user.getUserId());
         }
