@@ -29,7 +29,12 @@ public interface PostMapper {
             @Param("searchTxt")String searchTxt
     );
 
-//    게시글 상세 조회
+
+    PostListPage getPostByPostId(
+            @Param("postId") int postId
+    );
+
+    //    게시글 상세 조회
     PostDetail selectPostDetail(
             @Param("postId") int postId
     );

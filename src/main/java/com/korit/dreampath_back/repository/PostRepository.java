@@ -32,6 +32,9 @@ public class PostRepository {
     public Optional<List<PostListPage>> findPostList(int boardId, int startIdx, int limitCount, String order, String status, String category, String searchTxt) {
         return Optional.ofNullable(postMapper.selectPostList(boardId, startIdx, limitCount, order,status, category, searchTxt));
     }
+    public PostListPage getPostByPostId(int postId) {
+        return postMapper.getPostByPostId(postId);
+    }
 
 //    게시글 상세 조회
     public Optional<PostDetail> findPostDetail(int postId) {

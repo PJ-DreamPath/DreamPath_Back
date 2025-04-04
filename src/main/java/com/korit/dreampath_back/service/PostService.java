@@ -138,7 +138,13 @@ public class PostService {
 //    }
 
     @Transactional(rollbackFor = Exception.class)
-    public boolean addPostLike(User user, int postId) {
+    public boolean addPostLike(User user, int postId) throws Exception {
+         int postUserId = postRepository.getPostByPostId(postId).getUserId();
+
+         if(postUserId == user.getUserId()) {
+             throw new Exception("본인이 작성한 게시글은 좋아요할 수 없습니다.");
+         }
+
         return postLikeRepository.addPostLike(user.getUserId(), postId) > 0 ? true : false;
     }
 
