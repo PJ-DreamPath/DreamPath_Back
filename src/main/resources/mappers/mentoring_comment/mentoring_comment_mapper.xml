@@ -44,6 +44,8 @@
         update_at = now()
         where
         comment_id = #{commentId}
+        and
+        user_id = #{userId}
     </update>
 
 
