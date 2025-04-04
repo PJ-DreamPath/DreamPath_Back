@@ -116,22 +116,26 @@ public class UserService {
     public void updateProfileImg(User user, MultipartFile file) {
         final String PROFILE_IMG_FILE_PATH = "/upload/user/profile";
         String savedFileName = fileService.saveFile(PROFILE_IMG_FILE_PATH, file);
+
         userRepository.updateProfileImg(user.getUserId(), savedFileName);
 
         if (user.getProfileImg() == null) {return;}
+        fileService.deleteFile(PROFILE_IMG_FILE_PATH + "/" + user.getProfileImg());
 
-            fileService.deleteFile(PROFILE_IMG_FILE_PATH + " / " + user.getProfileImg());
 
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void updateNickname(User user, String nickname) {
         userRepository.updateNickname(user.getUserId(), nickname);
+
+
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void updatePassword(User user, String password) {
         String encodedPassword = passwordEncoder.encode(password);
+
         userRepository.updatePassword(user.getUserId(), encodedPassword);
     }
 
@@ -155,6 +159,7 @@ public class UserService {
                 : totalMyMentoringListCount / dto.getLimitCount() + 1;
 
         int startIndex = (dto.getPage()-1) * dto.getLimitCount();
+
         RespMyMentoringList respDto = RespMyMentoringList.builder()
                 .page(dto.getPage())
                 .limitCount(dto.getLimitCount())
