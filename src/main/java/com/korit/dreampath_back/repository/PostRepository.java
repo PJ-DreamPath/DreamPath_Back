@@ -44,8 +44,8 @@ public class PostRepository {
     }
 
 //    게시글 삭제
-    public int deletePost(int postId) {
-        return postMapper.deletePost(postId);
+    public int deletePost(int postId, int userId) {
+        return postMapper.deletePost(postId, userId);
     }
 
 //    게시글 조회수
@@ -54,12 +54,12 @@ public class PostRepository {
     }
 
 //    게시글 상태 수정
-    public int updatePostStatusClosedRecruiting(int postId) {
-        return postMapper.updatePostStatusClosedRecruiting(postId);
+    public int updatePostStatusClosedRecruiting(int postId,  int userId) {
+        return postMapper.updatePostStatusClosedRecruiting(postId, userId);
     }
 
-    public int updatePostStatusRecruiting(int postId) {
-        return postMapper.updatePostStatusRecruiting(postId);
+    public int updatePostStatusRecruiting(int postId,  int userId) {
+        return postMapper.updatePostStatusRecruiting(postId, userId);
     }
 
     public boolean isRecruited(int postId) {

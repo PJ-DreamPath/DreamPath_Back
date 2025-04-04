@@ -23,7 +23,7 @@ public class SchedulerService {
         List<PostDetail> before = postRepository.getBeforeTodayPosts();
 
         for(PostDetail detail : before) {
-            postRepository.updatePostStatusClosedRecruiting(detail.getPostId());
+            postRepository.updatePostStatusClosedRecruiting(detail.getPostId(), 0);
         }
 
 
