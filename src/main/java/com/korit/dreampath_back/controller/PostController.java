@@ -107,7 +107,7 @@ public class PostController {
     @Operation(summary = "게시글 좋아요")
     public ResponseEntity<String> likePost(
             @AuthenticationPrincipal PrincipalUser principalUser,
-            @PathVariable int postId) {
+            @PathVariable int postId) throws Exception {
 
         return postService.addPostLike(principalUser.getUser(), postId)
                 ? ResponseEntity.ok().body("좋아요완료")
