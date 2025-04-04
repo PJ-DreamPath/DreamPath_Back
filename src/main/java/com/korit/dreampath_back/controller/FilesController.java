@@ -28,20 +28,20 @@ public class FilesController {
 
     @Operation(summary = "파일 다운로드 API")
     @GetMapping("/download/{fileName}")
-        public ResponseEntity<Resource> fileDownloadApi(@PathVariable("fileName") String fileName) throws IOException {
+    public ResponseEntity<Resource> fileDownloadApi(@PathVariable("fileName") String fileName) throws IOException {
 //        파일 경로
-            Path filePath = Paths.get(rootPath + "/upload/user/post/" + fileName);
+        Path filePath = Paths.get(rootPath + "/upload/user/post/" + fileName);
 
-//            실제 피일 데이터 가져옴
-            InputStreamResource resource = new InputStreamResource(new FileInputStream(filePath.toString()));
+//            실제 파일 데이터 가져옴
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(filePath.toString()));
 
-    //        String fileName = "<file_name_string>";
-    //        logger.info("Success download input excel file : " + filePath);
+        //        String fileName = "<file_name_string>";
+        //        logger.info("Success download input excel file : " + filePath);
 //        응답 헤더 셋팅
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .cacheControl(CacheControl.noCache())
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                    .body(resource);
-        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .cacheControl(CacheControl.noCache())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+                .body(resource);
+    }
 }
