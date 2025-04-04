@@ -47,12 +47,12 @@ public class PostService {
     @Transactional(rollbackFor = Exception.class)
     public boolean addPost(User user, ReqPostCreateDto createDto) {
 
-        if(createDto.getBoardId() == 1) {
-    //        remaining이 1보다 작으면 등록 안됨
-            if(user.getRemaining() < 1 ) {
+        if (createDto.getBoardId() == 1) {
+            //        remaining이 1보다 작으면 등록 안됨
+            if (user.getRemaining() < 1) {
                 return false;
             }
-            if(!user.getRoleName().equals("ROLE_MENTO")) {
+            if (!user.getRoleName().equals("ROLE_MENTO")) {
                 return false;
             }
 
@@ -103,13 +103,17 @@ public class PostService {
 
     @Transactional(rollbackFor = Exception.class)
     public boolean updatedPost(User user, ReqPostUpdateDto updateDto) {
+        if (updateDto.getFile() != null) {
+        }
+
+        System.out.println(updateDto);
+
         PostDetail postdetail = postRepository.findPostDetail(updateDto.getPostId()).get();
 
         final String PROFILE_IMG_FILE_PATH = "/upload/user/post";
         String saveFilename = fileService.saveFile(PROFILE_IMG_FILE_PATH, updateDto.getFile()); // 폴더에 저정
 
         LocalDate today = LocalDate.now();
-
         Post newPost = Post.builder()
                 .postId(updateDto.getPostId())
                 .userId(user.getUserId())
@@ -123,7 +127,8 @@ public class PostService {
                 .attachedFiles(saveFilename)
                 .build();
 
-        if(postdetail.getAttachedFiles() != null) {
+
+        if (postdetail.getAttachedFiles() != null) {
             fileService.deleteFile(PROFILE_IMG_FILE_PATH + " / " + postdetail.getAttachedFiles());
         }
 
@@ -142,11 +147,11 @@ public class PostService {
 
     @Transactional(rollbackFor = Exception.class)
     public boolean addPostLike(User user, int postId) throws Exception {
-         int postUserId = postRepository.getPostByPostId(postId).getUserId();
+        int postUserId = postRepository.getPostByPostId(postId).getUserId();
 
-         if(postUserId == user.getUserId()) {
-             throw new Exception("본인이 작성한 게시글은 좋아요할 수 없습니다.");
-         }
+        if (postUserId == user.getUserId()) {
+            throw new Exception("본인이 작성한 게시글은 좋아요할 수 없습니다.");
+        }
 
         return postLikeRepository.addPostLike(user.getUserId(), postId) > 0 ? true : false;
     }
@@ -167,7 +172,7 @@ public class PostService {
     @Transactional(rollbackFor = Exception.class)
     public String updatePostStatus(int postId, User user) {
         String status = "";
-        if(postRepository.isRecruited(postId)){
+        if (postRepository.isRecruited(postId)) {
             postRepository.updatePostStatusRecruiting(postId, user.getUserId());
             status = "recruiting";
         } else {
@@ -176,7 +181,6 @@ public class PostService {
         }
         return status;
     }
-
 
 
 }
