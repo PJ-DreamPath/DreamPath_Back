@@ -23,7 +23,7 @@ public class PostDetail {
     private String categoryNameKor;
     private String title;
     private String content;
-    private int starPoint;
+    private double starPoint;
     private String mentoringAddress;
     private LocalDate startDate;
     private LocalDate endDate;
