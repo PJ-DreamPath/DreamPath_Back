@@ -30,6 +30,9 @@
         <id property="postId" column="post_id"/>
         <result property="boardId" column="board_id"/>
         <result property="userId" column="user_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="categoryNameKor" column="category_name_kor"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="status" column="status"/>
@@ -88,6 +91,8 @@
             pt.board_id,
             pt.user_id,
             pt.category_id,
+            ct.category_name as category_name,
+            ct.category_name_kor as category_name_kor,
             pt.title,
             pt.content,
             pt.status,
@@ -115,6 +120,7 @@
         from
             post_tb pt
             left outer join user_tb ut on(ut.user_id = pt.user_id)
+            left outer join category_tb ct on(ct.category_id = pt.category_id)
         <where>
             pt.board_id = #{boardId}
             <if test="status != null and status == 'recruiting'">
