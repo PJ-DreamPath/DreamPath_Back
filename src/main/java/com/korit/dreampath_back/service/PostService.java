@@ -128,8 +128,8 @@ public class PostService {
         return postRepository.updatedPost(newPost) > 0 ? true : false;
     }
 
-    public boolean deletePost(int postId) {
-        return postRepository.deletePost(postId) > 0 ? true : false;
+    public boolean deletePost(int postId, User user) {
+        return postRepository.deletePost(postId, user.getUserId()) > 0 ? true : false;
     }
 
 
@@ -156,13 +156,13 @@ public class PostService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public String updatePostStatus(int postId) {
+    public String updatePostStatus(int postId, User user) {
         String status = "";
         if(postRepository.isRecruited(postId)){
-            postRepository.updatePostStatusRecruiting(postId);
+            postRepository.updatePostStatusRecruiting(postId, user.getUserId());
             status = "recruiting";
         } else {
-            postRepository.updatePostStatusClosedRecruiting(postId);
+            postRepository.updatePostStatusClosedRecruiting(postId, user.getUserId());
             status = "closedRecruitment";
         }
         return status;

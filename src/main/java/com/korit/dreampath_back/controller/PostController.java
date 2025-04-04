@@ -91,8 +91,8 @@ public class PostController {
 
     @DeleteMapping("/posts/{postId}")
     @Operation(summary = "게시글 삭제")
-    public ResponseEntity<String> deletePost(@PathVariable int postId) {
-        return postService.deletePost(postId)
+    public ResponseEntity<String> deletePost(@PathVariable int postId, @AuthenticationPrincipal PrincipalUser principalUser) {
+        return postService.deletePost(postId, principalUser.getUser())
                 ? ResponseEntity.ok().body("삭제완료")
                 : ResponseEntity.badRequest().body("삭제실패");
     }

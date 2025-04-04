@@ -38,14 +38,14 @@ public interface PostMapper {
     int updatedPost(Post post);
 
 //    게시글 삭제
-    int deletePost(int postId);
+    int deletePost(int postId, int userId);
 
 //    게시글 조회수
     int updatePostViewCount(int postId);
 
-    int updatePostStatusClosedRecruiting(int postId);
+    int updatePostStatusClosedRecruiting(int postId, int userId);
 
-    int updatePostStatusRecruiting(int postId);
+    int updatePostStatusRecruiting(int postId, int userId);
 
     String getPostStatusByPostId(int postId);
 
