@@ -15,8 +15,8 @@ public class ApplyRepository {
     @Autowired
     private ApplyMapper applyMapper;
 
-    public Optional<List<MentoringRegister>> getMentoringRegisterList(int userId, int postId){
-        System.out.println(Optional.ofNullable(applyMapper.getMentoringRegisterList(userId, postId)));
+    public Optional<List<MentoringRegister>> getMentoringRegisterList(int userId, int postId) {
+
         return Optional.ofNullable(applyMapper.getMentoringRegisterList(userId, postId));
     }
 

@@ -106,8 +106,6 @@ public class PostService {
         if (updateDto.getFile() != null) {
         }
 
-        System.out.println(updateDto);
-
         PostDetail postdetail = postRepository.findPostDetail(updateDto.getPostId()).get();
 
         final String PROFILE_IMG_FILE_PATH = "/upload/user/post";

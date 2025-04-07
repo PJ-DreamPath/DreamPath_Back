@@ -33,7 +33,9 @@ public class JwtAuthenticationFilter implements Filter {
     }
 
     private void jwtAuthentication(String accessToken) {
-        if(accessToken == null) {return;}
+        if (accessToken == null) {
+            return;
+        }
         Claims claims = jwtUtil.parseToken(accessToken);
 
         int userId = Integer.parseInt(claims.getId());
@@ -42,7 +44,7 @@ public class JwtAuthenticationFilter implements Filter {
         PrincipalUser principalUser = PrincipalUser.builder().user(user).build();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
-        System.out.println(principalUser.getAuthorities());
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 

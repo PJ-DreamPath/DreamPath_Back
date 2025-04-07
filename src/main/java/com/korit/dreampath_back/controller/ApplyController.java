@@ -26,16 +26,16 @@ public class ApplyController {
     @Operation(summary = "신청 메일 전송")
     @Async
     public void sendApplyMail(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody ReqApplyEmailDto reqApplyEmailDto) throws Exception {
-        if(applyService.isApplied(principalUser, reqApplyEmailDto.getPostId())) {
+        if (applyService.isApplied(principalUser, reqApplyEmailDto.getPostId())) {
             applyService.sendApplyMail(reqApplyEmailDto, principalUser);
         } else {
-            System.out.println("확인");
+
         }
     }
 
     @GetMapping("/me/applyList")
     @Operation(summary = "내가 신청한 멘토링 내역")
-    public ResponseEntity<?> getMyApplyList(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqMyApplySearchDto dto){
+    public ResponseEntity<?> getMyApplyList(@AuthenticationPrincipal PrincipalUser principalUser, @ModelAttribute ReqMyApplySearchDto dto) {
         return ResponseEntity.ok().body(applyService.getMyApplyList(principalUser, dto));
     }
 
