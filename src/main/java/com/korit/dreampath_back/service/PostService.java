@@ -93,7 +93,7 @@ public class PostService {
     @Transactional(rollbackFor = Exception.class)
     public PostDetail getPostDetail(PrincipalUser principalUser, int postId) throws NotFoundException {
 //        조회수 올리기
-        postRepository.updatePostViewCount(postId);
+//        postRepository.updatePostViewCount(postId);
 
         boolean isApplied = applyService.isApplied(principalUser, postId);
         PostDetail postDetail = postRepository.findPostDetail(postId).orElseThrow(() -> new NotFoundException("잘못된 postId 입니다."));

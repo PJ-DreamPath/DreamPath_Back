@@ -5,6 +5,7 @@ import com.korit.dreampath_back.entity.PostDetail;
 import com.korit.dreampath_back.entity.PostListPage;
 import com.korit.dreampath_back.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -52,7 +53,10 @@ public class PostRepository {
     }
 
 //    게시글 조회수
+
+    @Async
     public void updatePostViewCount(int postId) {
+
         postMapper.updatePostViewCount(postId);
     }
 

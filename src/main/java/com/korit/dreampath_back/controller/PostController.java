@@ -8,6 +8,7 @@ import com.korit.dreampath_back.dto.response.post.RespPostListDto;
 import com.korit.dreampath_back.entity.Post;
 import com.korit.dreampath_back.entity.PostDetail;
 import com.korit.dreampath_back.entity.PostLike;
+import com.korit.dreampath_back.repository.PostRepository;
 import com.korit.dreampath_back.security.principal.PrincipalUser;
 import com.korit.dreampath_back.service.PostService;
 import com.korit.dreampath_back.service.SchedulerService;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +34,9 @@ public class PostController {
     private SchedulerService SchedulerService;
     @Autowired
     private SchedulerService schedulerService;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @PostMapping("/post")
     @Operation(summary = "게시글 등록")
@@ -79,6 +84,12 @@ public class PostController {
             @PathVariable int postId
     ) throws NotFoundException {
         return ResponseEntity.ok().body(postService.getPostDetail(principalUser, postId));
+    }
+
+    @PutMapping("/post/{postId}")
+    @Operation(summary = "조회수 갱신")
+    public void updatePost(@PathVariable int postId) {
+         postRepository.updatePostViewCount(postId);
     }
 
     @PutMapping("/posts/{postId}")
