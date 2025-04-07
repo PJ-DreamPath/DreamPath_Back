@@ -33,8 +33,6 @@ public class ApplyService {
     @Autowired
     private ApplyRepository applyRepository;
 
-    @Async
-    @Transactional(rollbackFor = Exception.class)
     public void sendApplyMail(ReqApplyEmailDto reqApplyEmailDto, PrincipalUser principalUser) throws MessagingException {
         String nickname = principalUser.getUser().getNickname();
 
@@ -65,7 +63,7 @@ public class ApplyService {
             sendMail(toEmail, SUBJECT, content);
     }
 
-
+    @Async
     public void sendMail(String to, String subject, String content) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 
