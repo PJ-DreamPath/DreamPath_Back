@@ -62,7 +62,7 @@ public class ApplyService {
                 """, nickname, email);
 
             applyRepository.insertMentoringRegister(MentoringRegister.builder().userId(principalUser.getUser().getUserId()).postId(reqApplyEmailDto.getPostId()).build());
-
+            sendMail(toEmail, SUBJECT, content);
     }
 
 
